@@ -27,9 +27,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     public State currentState = State.Iddle;
 
-    private float runSpeed = 10;
+    private float runSpeed = 5;
     private float jumpSpeed = 5;
     private float dashSpeed = 50;
+    public bool onGround;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -44,7 +45,6 @@ public class PlayerBehaviour : MonoBehaviour
     private float lastSkillTime = -10f;
 
     private Vector2 bcSize = new Vector2(0.35f, 0.98f);
-    //public static bool dashing = false;
     private float initPos;
 
     public static event Action Bubble;
@@ -53,13 +53,13 @@ public class PlayerBehaviour : MonoBehaviour
     public static event Action RockPunch;
 
     // TEMPORAL
-    public Text tiempo;
-    public Text lastTime;
-    private void Tempo()
-    {
-        tiempo.text = Time.time.ToString();
-        lastTime.text = "CD: " + lastSkillTime.ToString();
-    }
+    //public Text tiempo;
+    //public Text lastTime;
+    //private void Tempo()
+    //{
+    //    tiempo.text = Time.time.ToString();
+    //    lastTime.text = "CD: " + lastSkillTime.ToString();
+    //}
     ////////////////////////////////
 
     private void Start()
@@ -75,7 +75,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         float moveInput = Input.GetAxis("Horizontal");
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         switch (currentState)
         {
             case State.Iddle:
@@ -85,7 +85,7 @@ public class PlayerBehaviour : MonoBehaviour
                 HandleMoving(moveInput);
                 break;
             case State.Jumping:
-                HandleJumping();
+                HandleJumping(moveInput);
                 break;
             case State.Dashing:
                 HandleDashing();
@@ -137,7 +137,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void Update()
     {
         // TEMPORAL
-        Tempo();
+        //Tempo();
         // ________
 
         if (Input.GetKey(KeyCode.Tab))
@@ -152,12 +152,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void HandleIddle(float moveInput)
     {
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+
         if (moveInput != 0f)
         {
             currentState = State.Moving;
         }
 
-        if (Input.GetButton("Jump") && CheckGround.onGround)
+        if (Input.GetButton("Jump") && onGround)
         {
             currentState = State.Jumping;
         }
@@ -180,7 +182,7 @@ public class PlayerBehaviour : MonoBehaviour
             hitController.transform.localPosition = new Vector2(0.5f, hitController.transform.localPosition.y);
         }
 
-        if (Input.GetButton("Jump") && CheckGround.onGround)
+        if (Input.GetButton("Jump") && onGround)
         {
             currentState = State.Jumping;
             return;
@@ -192,13 +194,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    private void HandleJumping()
+    private void HandleJumping(float moveInput)
     {
-        if (CheckGround.onGround && rb.velocity.y <= 0f)
-            currentState = State.Iddle;
-
-        if (CheckGround.onGround)
+        if (Input.GetButton("Jump") && onGround)
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        if (onGround && rb.velocity.y <= 0f)
+            currentState = State.Iddle;
+        if (moveInput != 0f)
+            currentState = State.Moving;
     }
 
     private void HandleDashing()

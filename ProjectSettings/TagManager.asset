@@ -7,6 +7,7 @@ TagManager:
   - Flammable
   - Floor
   - Enemy
+  - Seeker
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Checker
+  - Enemy
+  - Player
+  - HostileAttack
   - 
   - 
   - 

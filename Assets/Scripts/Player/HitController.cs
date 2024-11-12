@@ -22,7 +22,7 @@ public class HitController : MonoBehaviour
         {
             if (c.CompareTag("Enemy"))
             {
-                c.GetComponent<SpriteRenderer>().color += new Color(0.1f, 0.1f, 0.1f);
+                c.GetComponent<Enemy>().UpdateLife(-3f);
             }
         }
 
