@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class MagmaBall : MonoBehaviour
 {
-    public GameObject flamarkos;
-    public Vector2 playerPos;
+    private GameObject flamarko;
+    private Vector2 playerPos;
 
     private float magmaSpeed = 5f;
     private Vector2 origin;
     private Vector2 direction;
+
+    public void Initialize(GameObject flamarko, Vector2 playerPos)
+    {
+        this.flamarko = flamarko;
+        this.playerPos = playerPos;
+    }
 
     private void Start()
     {
@@ -29,7 +35,7 @@ public class MagmaBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject != flamarkos)
+        if (collision.gameObject != flamarko)
             Destroy(gameObject);
     }
 }

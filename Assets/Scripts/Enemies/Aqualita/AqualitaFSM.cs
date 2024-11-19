@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlamarkosFSM : MonoBehaviour
+public class AqualitaFSM : MonoBehaviour
 {
-    public enum FSM1State { PATROL, SHOOT, RELOAD };
+    public enum FSM1State { PATROL, CHASE, ATTACK, HEAL };
     public FSM1State fsm1State;
 
-    private Flamarkos flamarkos;
+    private Aqualita aqualita;
 
     private void Start()
     {
         fsm1State = FSM1State.PATROL;
-        flamarkos = gameObject.GetComponent<Flamarkos>();
+        aqualita = gameObject.GetComponent<Aqualita>();
     }
 
     private void FixedUpdate()
@@ -26,15 +26,19 @@ public class FlamarkosFSM : MonoBehaviour
         switch (fsm1State)
         {
             case FSM1State.PATROL:
-                flamarkos.Patrol();
+                aqualita.Patrol();
                 break;
 
-            case FSM1State.SHOOT:
-                flamarkos.Shoot();
+            case FSM1State.CHASE:
+                aqualita.Chase();
                 break;
 
-            case FSM1State.RELOAD:
-                flamarkos.Reload();
+            case FSM1State.ATTACK:
+                aqualita.Attack();
+                break;
+
+            case FSM1State.HEAL:
+                aqualita.Heal();
                 break;
         }
     }

@@ -1579,7 +1579,7 @@ Transform:
   - {fileID: 1446795629}
   - {fileID: 1819805267}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204731821
 GameObject:
@@ -1668,7 +1668,7 @@ Transform:
   - {fileID: 279834626}
   - {fileID: 1773216520}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &204731824
 BoxCollider2D:
@@ -1731,9 +1731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentElement: 4
   currentState: 0
+  onGround: 0
   fireBall: {fileID: 8047802494813223245, guid: cbbe2ac4e2cedc94cbadcf2687c6c032, type: 3}
-  tiempo: {fileID: 1170450076}
-  lastTime: {fileID: 1631234490}
 --- !u!1 &246303181
 GameObject:
   m_ObjectHideFlags: 0
