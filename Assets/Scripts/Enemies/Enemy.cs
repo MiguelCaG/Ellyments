@@ -46,19 +46,12 @@ public class Enemy : MonoBehaviour
 
     protected void Patrol()
     {
-        if (iddleTime >= Time.time - 3f)
+        if (changeDirection)
         {
-            return;
+            direction = direction == 1 ? -1 : 1;
         }
-        else
-        {
-            if (changeDirection)
-            {
-                direction = direction == 1 ? -1 : 1;
-            }
-            rb.velocity = new Vector2(speed * direction, rb.velocity.y);
-            transform.localScale = new Vector2(direction, transform.localScale.y);
-        }
+        rb.velocity = new Vector2(speed * direction, rb.velocity.y);
+        transform.localScale = new Vector2(direction, transform.localScale.y);
     }
 
     protected void Attack()
@@ -75,6 +68,12 @@ public class Enemy : MonoBehaviour
             restAttack = Time.time + 5f;
             prepareAttack = restAttack + 2f;
         }
+    }
+
+    protected void Chase()
+    {
+        transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
+        rb.velocity = new Vector2(speed * 2f * lookAtPlayer, rb.velocity.y);
     }
 
     public void UpdateLife(float life)

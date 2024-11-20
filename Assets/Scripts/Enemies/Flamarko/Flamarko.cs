@@ -8,7 +8,7 @@ public class Flamarko : Enemy
     
     private float shootCooldown = -3f;
     private float reloadTime = 0f;
-    private Vector2 scapeStartPos;
+    private Vector2 escapeStartPos;
     private int ammo = 3;
     const int maxAmmo = 3;
 
@@ -26,7 +26,14 @@ public class Flamarko : Enemy
 
     public new void Patrol()
     {
-        base.Patrol();
+        if (iddleTime >= Time.time - 3f)
+        {
+            return;
+        }
+        else
+        {
+            base.Patrol();
+        }
 
         if (playerInRange)
         {
@@ -56,7 +63,7 @@ public class Flamarko : Enemy
         }
         else if (ammo <= 0)
         {
-            scapeStartPos = transform.position;
+            escapeStartPos = transform.position;
             changeDirection = false;
             flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.RELOAD;
         }
@@ -67,11 +74,19 @@ public class Flamarko : Enemy
         if (ammo == maxAmmo)
         {
             smoke.SetActive(false);
-            flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.SHOOT;
+            if (!playerInRange)
+            {
+                iddleTime = Time.time;
+                flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.PATROL;
+            }
+            else
+            {
+                flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.SHOOT;
+            }
             return;
         }
 
-        if (!changeDirection && (Mathf.Abs(scapeStartPos.x - transform.position.x) <= 3f))
+        if (!changeDirection && (Mathf.Abs(escapeStartPos.x - transform.position.x) <= 3f))
         {
             rb.velocity = new Vector2(-lookAtPlayer * 2f, rb.velocity.y);
             transform.localScale = new Vector2(-lookAtPlayer, transform.localScale.y);

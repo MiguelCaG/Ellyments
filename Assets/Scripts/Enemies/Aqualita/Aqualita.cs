@@ -30,7 +30,14 @@ public class Aqualita : Enemy
             return;
         }
 
-        base.Patrol();
+        if (iddleTime >= Time.time - 3f)
+        {
+            return;
+        }
+        else
+        {
+            base.Patrol();
+        }
 
         if (playerInRange)
         {
@@ -38,7 +45,7 @@ public class Aqualita : Enemy
         }
     }
 
-    public void Chase() // I THINK THE BASE METHOD SHOULD BE IN ENEMY AS IT IS USED IN TWO MORE TYPES OF ENEMIES.
+    public new void Chase()
     {
         if (currentLife <= maxLife * lifePercenatage)
         {
@@ -56,8 +63,7 @@ public class Aqualita : Enemy
             return;
         }
 
-        transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
-        rb.velocity = new Vector2(speed * 2f * lookAtPlayer, rb.velocity.y);
+        base.Chase();
 
         if (attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
@@ -84,16 +90,16 @@ public class Aqualita : Enemy
                 return;
             }
 
-            if (attackRange < Mathf.Abs(playerPos.x - transform.position.x))
-            {
-                aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.CHASE;
-                return;
-            }
-
             if (!playerInRange)
             {
                 iddleTime = Time.time;
                 aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.PATROL;
+                return;
+            }
+
+            if (attackRange < Mathf.Abs(playerPos.x - transform.position.x))
+            {
+                aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.CHASE;
                 return;
             }
         }
@@ -101,18 +107,26 @@ public class Aqualita : Enemy
 
     public void Heal()
     {
-        if (currentLife == maxLife)
-        {
-            bubble.SetActive(false);
-            aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.PATROL;
-            return;
-        }
-        else if (currentLife > maxLife * lifePercenatage && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
+        if (currentLife > maxLife * lifePercenatage && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             bubble.SetActive(false);
             prepareAttack = Time.time + 2f;
             restAttack = Time.time;
             aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.ATTACK;
+            return;
+        }
+        else if (currentLife == maxLife)
+        {
+            bubble.SetActive(false);
+            if (!playerInRange)
+            {
+                iddleTime = Time.time;
+                aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.PATROL;
+            }
+            else
+            {
+                aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.CHASE;
+            }
             return;
         }
         else
