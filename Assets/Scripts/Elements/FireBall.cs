@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
+    private GameObject player;
     private bool playerDir; // [True] Left : [False] Right
     private float initPos;
 
     private void Awake()
     {
-        playerDir = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>().flipX;
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerDir = player.GetComponent<SpriteRenderer>().flipX;
         GetComponent<SpriteRenderer>().flipX = playerDir;
         initPos = transform.position.x;
     }
@@ -30,12 +32,14 @@ public class FireBall : MonoBehaviour
         if (collision.gameObject.tag == "Flammable")
         {
             collision.gameObject.SetActive(false);
-            Destroy(this.gameObject);
         }
         else if (collision.gameObject.tag == "Enemy")
         {
-            // TO DO
-            Debug.Log("Enemy Hit");
+            collision.GetComponent<Enemy>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+        }
+
+        if (collision.gameObject != player)
+        {
             Destroy(this.gameObject);
         }
     }

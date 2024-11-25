@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Aeroide : Enemy
 {
-    private float attackRange = 1f;
     private float lifePercenatage = 0.5f;
     private float escapingTime = 0f;
 

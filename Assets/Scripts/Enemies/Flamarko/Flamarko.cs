@@ -12,6 +12,8 @@ public class Flamarko : Enemy
     private int ammo = 3;
     const int maxAmmo = 3;
 
+    public float magmaBallDamage = -5f;
+
     private GameObject smoke;
 
     public FlamarkoFSM flamarkoFSM;

@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7099014078639732377}
   - component: {fileID: 2061801523994946968}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BubbleShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Aqualita : Enemy
 {
-    private float attackRange = 1f;
     private float lifePercenatage = 0.5f;
     private float healTime = 0f;
     private float healPercentage = 0.25f;

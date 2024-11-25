@@ -27,10 +27,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     public State currentState = State.Iddle;
 
+    private float maxLife = 20f;
+    [SerializeField] private float currentLife;
+
     private float runSpeed = 5;
     private float jumpSpeed = 5;
     private float dashSpeed = 50;
-    public bool onGround;
+    [HideInInspector] public bool onGround;
 
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -39,6 +42,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private GameObject fireBall;
     private GameObject hitController;
     private GameObject checkCollision;
+
+    private float rockPunchDamage = -5f;
+    [HideInInspector] public float fireBallDamage = -5f;
+    private Hit rockPunchHit;
 
     private float fireCooldown = 3f;
     private float bubbleCooldown = 10f;
@@ -50,7 +57,7 @@ public class PlayerBehaviour : MonoBehaviour
     public static event Action Bubble;
     public static event Action OpenElements;
     public static event Action CloseElements;
-    public static event Action RockPunch;
+    public static event Action<Hit> Damage;
 
     // TEMPORAL
     //public Text tiempo;
@@ -70,6 +77,8 @@ public class PlayerBehaviour : MonoBehaviour
         bc = GetComponent<BoxCollider2D>();
         checkCollision = transform.GetChild(2).gameObject;
         hitController = transform.GetChild(3).gameObject;
+        rockPunchHit = new Hit(hitController.transform.position, 0.5f, rockPunchDamage);
+        currentLife = maxLife;
     }
 
     private void FixedUpdate()
@@ -114,7 +123,8 @@ public class PlayerBehaviour : MonoBehaviour
                     if (lastSkillTime <= Time.time - fireCooldown)
                     {
                         hitController.GetComponent<SpriteRenderer>().enabled = true;
-                        RockPunch?.Invoke();
+                        rockPunchHit.SetHitOrign(hitController.transform.position);
+                        Damage?.Invoke(rockPunchHit);
                         lastSkillTime = Time.time;
                     }
                     break;
@@ -218,7 +228,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (Enum.TryParse(typeElement, true, out Element newElement))
         {
             currentElement = newElement;
-            Debug.Log("Elemento cambiado a: " + currentElement);
+            //Debug.Log("Element changed to: " + currentElement);
         }
     }
 
@@ -229,5 +239,15 @@ public class PlayerBehaviour : MonoBehaviour
         rb.gravityScale = 1;
         rb.velocity = new Vector2(0, 0);
         currentState = State.Iddle;
+    }
+
+    public void UpdateLife(float life)
+    {
+        currentLife += life;
+
+        if (currentLife <= 0)
+        {
+            Debug.Log("DEAD");
+        }
     }
 }

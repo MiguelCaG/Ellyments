@@ -5,20 +5,14 @@ using UnityEngine;
 
 public class HitController : MonoBehaviour
 {
-    private Transform hitController;
-    private float hitRadius;
-
     private GameObject attackerGO;
 
     private void Start()
     {
-        hitController = gameObject.GetComponent<Transform>();
-        hitRadius = 0.5f;
-
         attackerGO = transform.parent.gameObject;
         if (attackerGO.CompareTag("Player"))
         {
-            PlayerBehaviour.RockPunch += Hit;
+            PlayerBehaviour.Damage += Hit;
         }
         else if (attackerGO.CompareTag("Enemy"))
         {
@@ -26,30 +20,33 @@ public class HitController : MonoBehaviour
             if (enemy != null)
             {
                 enemy.Damage += Hit;
-
             }
         }
 
     }
 
-    private void Hit()
+    private void Hit(Hit hit)
     {
-        Collider2D[] collides = Physics2D.OverlapCircleAll(hitController.position, hitRadius);
+        Vector3 origin = hit.GetHitOrigin();
+        float radius = hit.GetHitRadius();
+        float damage = hit.GetHitDamage();
+
+        Collider2D[] collides = Physics2D.OverlapCircleAll(origin, radius);
 
         foreach (Collider2D c in collides)
         {
             if (attackerGO.CompareTag("Player") && c.CompareTag("Enemy"))
             {
-                c.GetComponent<Enemy>().UpdateLife(-5f);
+                c.GetComponent<Enemy>().UpdateLife(damage);
             }
             else if (attackerGO.CompareTag("Enemy") && c.CompareTag("Player"))
             {
-                Debug.Log("PLAYER HIT");
+                c.GetComponent<PlayerBehaviour>().UpdateLife(damage);
             }
         }
 
         // TEMPORAL -------------------------------------
-        StartCoroutine(ExampleCoroutine());
+        StartCoroutine(ExampleCoroutine(hit.GetHitDamage()));
         // ----------------------------------------------
     }
 
@@ -66,11 +63,19 @@ public class HitController : MonoBehaviour
     }
 
     // TEMPORAL -------------------------------------
-    IEnumerator ExampleCoroutine()
+    IEnumerator ExampleCoroutine(float damage)
     {
         yield return new WaitForSeconds(0.5f);
 
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        if (damage == -5f)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else if (damage == -10f)
+        {
+            transform.parent.transform.GetChild(4).gameObject.SetActive(false);
+            transform.parent.transform.GetChild(4).gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
     }
     // ----------------------------------------------
 }

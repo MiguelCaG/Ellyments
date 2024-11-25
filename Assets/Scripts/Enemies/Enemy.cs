@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public event Action Damage;
+    public event Action<Hit> Damage;
+    public event Action Damaged;
 
     protected Rigidbody2D rb;
 
     private GameObject hitController;
+    protected float attackRange = 1f;
+    protected float attackDamage = -5f;
+    private Hit attackHit;
 
     private PlayerSeeker playerSeeker;
     protected Vector2 playerPos;
@@ -24,7 +28,7 @@ public class Enemy : MonoBehaviour
     protected float prepareAttack = 1f;
     protected float restAttack = 0f;
 
-    protected float maxLife;
+    protected float maxLife = 10f;
     protected float currentLife;
 
     protected void Start()
@@ -34,6 +38,7 @@ public class Enemy : MonoBehaviour
         playerPos = Vector2.zero;
         playerSeeker = transform.GetChild(2).gameObject.GetComponent<PlayerSeeker>();
         hitController = transform.GetChild(3).gameObject;
+        attackHit = new Hit(hitController.transform.position, attackRange / 2f, attackDamage);
     }
 
     private void FixedUpdate()
@@ -63,7 +68,8 @@ public class Enemy : MonoBehaviour
         /////////////
         if (prepareAttack <= Time.time)
         {
-            Damage?.Invoke();
+            attackHit.SetHitOrign(hitController.transform.position);
+            HurtPlayer(attackHit);
             hitController.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f);
             restAttack = Time.time + 5f;
             prepareAttack = restAttack + 2f;
@@ -84,5 +90,15 @@ public class Enemy : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if (life < 0)
+        {
+            Damaged?.Invoke();
+        }
+    }
+
+    protected void HurtPlayer(Hit hit)
+    {
+        Damage?.Invoke(hit);
     }
 }
