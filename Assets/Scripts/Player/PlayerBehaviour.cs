@@ -31,7 +31,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private float currentLife;
 
     private float runSpeed = 5;
-    private float jumpSpeed = 5;
+    private float jumpSpeed = 5.5f;
     private float dashSpeed = 50;
     [HideInInspector] public bool onGround;
 
@@ -41,7 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] private GameObject fireBall;
     private GameObject hitController;
-    private GameObject checkCollision;
+    private BoxCollider2D checkCollision;
 
     private float rockPunchDamage = -5f;
     [HideInInspector] public float fireBallDamage = -5f;
@@ -51,7 +51,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float bubbleCooldown = 10f;
     private float lastSkillTime = -10f;
 
-    private Vector2 bcSize = new Vector2(0.35f, 0.98f);
+    private Vector2 bcSize;
     private float initPos;
 
     public static event Action Bubble;
@@ -75,10 +75,11 @@ public class PlayerBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         bc = GetComponent<BoxCollider2D>();
-        checkCollision = transform.GetChild(2).gameObject;
+        checkCollision = transform.GetChild(2).gameObject.GetComponent<BoxCollider2D>();
         hitController = transform.GetChild(3).gameObject;
         rockPunchHit = new Hit(hitController.transform.position, 0.5f, rockPunchDamage);
         currentLife = maxLife;
+        bcSize = bc.size;
     }
 
     private void FixedUpdate()
@@ -123,7 +124,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (lastSkillTime <= Time.time - fireCooldown)
                     {
                         hitController.GetComponent<SpriteRenderer>().enabled = true;
-                        rockPunchHit.SetHitOrign(hitController.transform.position);
+                        rockPunchHit.SetHitOrigin(hitController.transform.position);
                         Damage?.Invoke(rockPunchHit);
                         lastSkillTime = Time.time;
                     }
@@ -131,7 +132,7 @@ public class PlayerBehaviour : MonoBehaviour
                 case Element.Air:
                     if (lastSkillTime <= Time.time - fireCooldown)
                     {
-                        checkCollision.SetActive(true);
+                        checkCollision.enabled = true;
                         initPos = transform.position.x;
                         currentState = State.Dashing;
                         lastSkillTime = Time.time;
@@ -234,7 +235,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void StopDashing()
     {
-        checkCollision.SetActive(false);
+        checkCollision.enabled = false;
         bc.size = bcSize;
         rb.gravityScale = 1;
         rb.velocity = new Vector2(0, 0);

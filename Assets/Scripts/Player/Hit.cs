@@ -20,7 +20,7 @@ public class Hit
         return this.hitOrigin;
     }
 
-    public void SetHitOrign(Vector3 newHitOrigin)
+    public void SetHitOrigin(Vector3 newHitOrigin)
     {
         this.hitOrigin = newHitOrigin;
     }

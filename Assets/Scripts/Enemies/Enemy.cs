@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         /////////////
         if (prepareAttack <= Time.time)
         {
-            attackHit.SetHitOrign(hitController.transform.position);
+            attackHit.SetHitOrigin(hitController.transform.position);
             HurtPlayer(attackHit);
             hitController.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f);
             restAttack = Time.time + 5f;

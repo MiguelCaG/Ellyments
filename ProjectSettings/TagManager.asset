@@ -8,18 +8,19 @@ TagManager:
   - Floor
   - Enemy
   - Seeker
+  - VolcanicRock
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CameraBounds
   - Water
   - UI
   - Checker
   - Enemy
   - Player
   - HostileAttack
-  - 
+  - FriendlyAttack
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2682880513
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

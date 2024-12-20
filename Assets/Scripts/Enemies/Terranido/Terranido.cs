@@ -49,7 +49,7 @@ public class Terranido : Enemy
             transform.GetChild(4).gameObject.SetActive(true);
             transform.GetChild(4).gameObject.transform.localScale = new Vector3(3f, 3f, 1f);
             /////////////
-            expansionHit.SetHitOrign(transform.position);
+            expansionHit.SetHitOrigin(transform.position);
             HurtPlayer(expansionHit);
             transform.localScale = new Vector3(1f, 1f, 1f);
             if (playerInRange)
