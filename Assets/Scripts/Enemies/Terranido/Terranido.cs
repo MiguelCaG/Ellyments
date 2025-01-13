@@ -7,7 +7,7 @@ public class Terranido : Enemy
     private bool stopSleeping = false;
 
     private float expansionRadius = 2.5f;
-    private float expansionDamage = -10f;
+    private float expansionDamage = -2f;
     private Hit expansionHit;
 
     public TerranidoFSM terranidoFSM;
@@ -52,11 +52,24 @@ public class Terranido : Enemy
             expansionHit.SetHitOrigin(transform.position);
             HurtPlayer(expansionHit);
             transform.localScale = new Vector3(1f, 1f, 1f);
+
+            //
+            StartCoroutine(RestoreExplosion(transform.GetChild(4)));
+            //
+
             if (playerInRange)
                 terranidoFSM.fsm1State = TerranidoFSM.FSM1State.CHASE;
             else
                 terranidoFSM.fsm1State = TerranidoFSM.FSM1State.SLEEP;
         }
+    }
+
+    private IEnumerator RestoreExplosion(Transform explosion)
+    {
+        yield return new WaitForSeconds(1f);
+
+        explosion.localScale = new Vector3(1f, 1f, 1f);
+        explosion.gameObject.SetActive(false);
     }
 
     public new void Chase()

@@ -70,6 +70,7 @@ public class Enemy : MonoBehaviour
         {
             attackHit.SetHitOrigin(hitController.transform.position);
             HurtPlayer(attackHit);
+            hitController.GetComponent<SpriteRenderer>().enabled = false;
             hitController.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f);
             restAttack = Time.time + 5f;
             prepareAttack = restAttack + 2f;
@@ -84,7 +85,10 @@ public class Enemy : MonoBehaviour
 
     public void UpdateLife(float life)
     {
-        currentLife += life;
+        if (currentLife + life > maxLife)
+            currentLife = maxLife;
+        else
+            currentLife += life;
         Debug.Log($"{currentLife}/{maxLife}");
         if (currentLife <= 0f)
         {
