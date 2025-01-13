@@ -9,6 +9,10 @@ TagManager:
   - Enemy
   - Seeker
   - VolcanicRock
+  - Heart
+  - Boss
+  - Hazzard
+  - EmerginFire
   layers:
   - Default
   - TransparentFX

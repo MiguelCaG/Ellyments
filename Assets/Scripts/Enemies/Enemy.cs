@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     private GameObject hitController;
     protected float attackRange = 1f;
-    protected float attackDamage = -5f;
+    protected float attackDamage = -1f;
     private Hit attackHit;
 
     private PlayerSeeker playerSeeker;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     protected float speed = 1f;
     protected int direction = 1;
-    public bool changeDirection;
+    [HideInInspector] public bool changeDirection;
 
     protected float iddleTime = 0f;
     protected float prepareAttack = 1f;

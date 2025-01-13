@@ -107,7 +107,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.25, y: -0.025}
+  m_Offset: {x: 0.25, y: -0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -177,7 +177,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2, y: 0.05}
+  m_Offset: {x: 0.22, y: 0.075}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -188,7 +188,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 1}
+  m_Size: {x: 0.05, y: 1.2}
   m_EdgeRadius: 0
 --- !u!114 &1191491783141215315
 MonoBehaviour:
@@ -487,14 +487,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1.6, y: 1.6}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35, y: 0.98}
+  m_Size: {x: 0.4, y: 1.2}
   m_EdgeRadius: 0
 --- !u!50 &8535446724260919928
 Rigidbody2D:
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeDirection: 0
   magmaBallPrefab: {fileID: 1737705657149378762, guid: 70be46b9c28b9e44dbab8926409f2da9, type: 3}
-  magmaBallDamage: -5
+  magmaBallDamage: -1
   flamarkoFSM: {fileID: 0}
 --- !u!114 &5433394359014041701
 MonoBehaviour:

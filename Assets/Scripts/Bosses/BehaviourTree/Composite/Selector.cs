@@ -5,29 +5,38 @@ using UnityEngine;
 public class Selector : BTNode
 {
     private List<BTNode> childrens;
+    private List<BTNode> failedChildrens;
     private Dictionary<BTNode, float> childrensProbabilities;
     private int childrenExecuting = 0;
-    private float randomChildren = Random.Range(1f, 100f);
-    private float actualProbability = 0f;
+    private float totalProbability = 0f;
+    private float maxProbability;
+    private float randomChildren;
+    private float currentProbability = 0f;
 
-    public Selector(List<BTNode> childrens)
+    public Selector(List<BTNode> childrens, List<float> probabilities = null)
     {
         this.childrens = childrens;
+        failedChildrens = new List<BTNode>();
         childrensProbabilities = new Dictionary<BTNode, float>();
-        foreach (BTNode child in childrens)
-        {
-            childrensProbabilities[child] = 100f;
-        }
-    }
 
-    public Selector(List<BTNode> childrens, List<float> probabilities)
-    {
-        this.childrens = childrens;
-        childrensProbabilities = new Dictionary<BTNode, float>();
-        for (int i = 0; i < childrens.Count; i++)
+        if (probabilities == null)
         {
-            childrensProbabilities[childrens[i]] = probabilities[i];
+            foreach (BTNode child in childrens)
+            {
+                childrensProbabilities[child] = 0f;
+            }
         }
+        else
+        {
+            for (int i = 0; i < childrens.Count; i++)
+            {
+                childrensProbabilities[childrens[i]] = probabilities[i];
+                totalProbability += probabilities[i];
+            }
+        }
+
+        randomChildren = Random.Range(0f, totalProbability);
+        maxProbability = totalProbability;
     }
 
     public override BTStatus Execute()
@@ -36,24 +45,37 @@ public class Selector : BTNode
 
         for (; childrenExecuting < childrens.Count; childrenExecuting++)
         {
-            actualProbability += childrensProbabilities[childrens[childrenExecuting]];
-            //Debug.Log($"{actualProbability} /// {randomChildren} /// {childrenExecuting}");
-            if (actualProbability >= randomChildren)
+            BTNode currentChild = childrens[childrenExecuting];
+            if (failedChildrens.Contains(currentChild)) continue;
+
+            currentProbability += childrensProbabilities[currentChild];
+            //Debug.Log($"{currentProbability} /// {randomChildren} /// {childrenExecuting}");
+            if (currentProbability >= randomChildren)
             {
-                status = childrens[childrenExecuting].Execute();
+                status = currentChild.Execute();
                 if (status == BTStatus.Success || status == BTStatus.Running)
                 {
-                    actualProbability -= childrensProbabilities[childrens[childrenExecuting]];
+                    currentProbability -= childrensProbabilities[currentChild];
                     break;
+                }
+                if (status == BTStatus.Failure)
+                {
+                    failedChildrens.Add(currentChild);
+                    maxProbability -= childrensProbabilities[currentChild];
+                    randomChildren = Random.Range(0f, maxProbability);
+                    currentProbability = 0;
+                    childrenExecuting = -1;
                 }
             }
         }
 
         if (status != BTStatus.Running)
         {
+            failedChildrens.Clear();
             childrenExecuting = 0;
-            randomChildren = Random.Range(1f, 100f);
-            actualProbability = 0f;
+            maxProbability = totalProbability;
+            randomChildren = Random.Range(0f, totalProbability);
+            currentProbability = 0f;
         }
         return status;
     }

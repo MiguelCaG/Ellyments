@@ -10,7 +10,7 @@ public class Aeroide : Enemy
     public AeroideFSM aeroideFSM;
     private new void Start()
     {
-        maxLife = 20f;
+        maxLife = 30f;
         base.Start();
         aeroideFSM = GetComponent<AeroideFSM>();
     }

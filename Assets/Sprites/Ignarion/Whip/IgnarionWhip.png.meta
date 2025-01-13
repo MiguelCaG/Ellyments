@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: 3b85c1a2b2101e042993b1137d8e01f1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -507599361330256134
+    second: IgnarionIdle_0
+  - first:
+      213: -5909731927037664093
+    second: IgnarionIdle_1
+  - first:
+      213: -7514832221561822409
+    second: IgnarionIdle_2
+  - first:
+      213: -4822376686779101100
+    second: IgnarionIdle_3
+  - first:
+      213: -5492811681024696647
+    second: IgnarionIdle_4
+  - first:
+      213: 7970646402120404829
+    second: IgnarionIdle_5
+  - first:
+      213: -1793650927817643412
+    second: IgnarionIdle_6
+  - first:
+      213: 400793216126145638
+    second: IgnarionIdle_7
+  - first:
+      213: -6114604603307527846
+    second: IgnarionIdle_8
+  - first:
+      213: -1496730509299553803
+    second: IgnarionIdle_9
+  - first:
+      213: 1521715547292699912
+    second: IgnarionIdle_10
+  - first:
+      213: -7725946828554691910
+    second: IgnarionIdle_11
+  - first:
+      213: 6460980198217688066
+    second: IgnarionIdle_12
+  - first:
+      213: 159876490665834916
+    second: IgnarionIdle_13
+  - first:
+      213: -2887350848877861551
+    second: IgnarionIdle_14
+  - first:
+      213: -1274585449305948533
+    second: IgnarionIdle_15
+  - first:
+      213: -3370503152834601619
+    second: IgnarionIdle_16
+  - first:
+      213: -7716629223180359312
+    second: IgnarionIdle_17
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IgnarionIdle_0
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af6e1bbf115a4f8f0800000000000000
+      internalID: -507599361330256134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_1
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a4a22b9f1a6cfda0800000000000000
+      internalID: -5909731927037664093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_2
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 733e527e8e3f5b790800000000000000
+      internalID: -7514832221561822409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_3
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 450186314f9731db0800000000000000
+      internalID: -4822376686779101100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_4
+      rect:
+        serializedVersion: 2
+        x: 2490
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9be1866d0ec95c3b0800000000000000
+      internalID: -5492811681024696647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_5
+      rect:
+        serializedVersion: 2
+        x: 3090
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5fc1a42cac6d9e60800000000000000
+      internalID: 7970646402120404829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_6
+      rect:
+        serializedVersion: 2
+        x: 3690
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a216cfbfbab17e0800000000000000
+      internalID: -1793650927817643412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_7
+      rect:
+        serializedVersion: 2
+        x: 4290
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664d59b7e47ef8500800000000000000
+      internalID: 400793216126145638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_8
+      rect:
+        serializedVersion: 2
+        x: 4890
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a51f2e5828f842ba0800000000000000
+      internalID: -6114604603307527846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_9
+      rect:
+        serializedVersion: 2
+        x: 5490
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9e5b4288b8a3be0800000000000000
+      internalID: -1496730509299553803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_10
+      rect:
+        serializedVersion: 2
+        x: 6090
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d02955a383e1510800000000000000
+      internalID: 1521715547292699912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_11
+      rect:
+        serializedVersion: 2
+        x: 6690
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aba11721b4ce7c490800000000000000
+      internalID: -7725946828554691910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_12
+      rect:
+        serializedVersion: 2
+        x: 7290
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 204299f22430aa950800000000000000
+      internalID: 6460980198217688066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_13
+      rect:
+        serializedVersion: 2
+        x: 7890
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a9b21a32def73200800000000000000
+      internalID: 159876490665834916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_14
+      rect:
+        serializedVersion: 2
+        x: 8490
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15566b663b11ee7d0800000000000000
+      internalID: -2887350848877861551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_15
+      rect:
+        serializedVersion: 2
+        x: 9090
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ebc327943cf4ee0800000000000000
+      internalID: -1274585449305948533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_16
+      rect:
+        serializedVersion: 2
+        x: 9690
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6d95fc7d319931d0800000000000000
+      internalID: -3370503152834601619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionIdle_17
+      rect:
+        serializedVersion: 2
+        x: 10290
+        y: 0
+        width: 390
+        height: 525
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 079afe02b9609e490800000000000000
+      internalID: -7716629223180359312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

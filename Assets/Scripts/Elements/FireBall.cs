@@ -29,13 +29,16 @@ public class FireBall : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Flammable")
+        if (collision.gameObject.CompareTag("Flammable"))
         {
             collision.gameObject.SetActive(false);
         }
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.GetComponent<Enemy>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+        } else if (collision.gameObject.CompareTag("Boss"))
+        {
+            collision.GetComponent<Boss>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
         }
 
         if (collision.gameObject != player)

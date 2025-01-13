@@ -12,7 +12,7 @@ public class IgnarionBT : MonoBehaviour
     {
         ignarion = GetComponent<Ignarion>();
 
-        // FIRST FASE
+        // FIRST PHASE
         Leaf lifeChecker = new Leaf(() =>
         {
             if (ignarion.life > ignarion.maxLife * 0.6f)
@@ -28,8 +28,7 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf emerginFire = new Leaf(() =>
         {
-            Debug.Log("EMERGIN FIRE");
-            return ignarion.EmerginFire() ? BTStatus.Running : BTStatus.Success;
+            return ignarion.EmerginFireAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
         Sequence emerginFireSequence = new Sequence(new List<BTNode>()
@@ -40,8 +39,7 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf volcanicRock = new Leaf(() =>
         {
-            Debug.Log("VOLCANIC ROCK");
-            return ignarion.VolcanicRain() ? BTStatus.Running : BTStatus.Success;
+            return ignarion.VolcanicRainAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
         Sequence volcanicRockSequence = new Sequence(new List<BTNode>()
@@ -52,13 +50,19 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf approachPlayer = new Leaf(() =>
         {
-            return ignarion.ApproachPlayer() ? BTStatus.Running : BTStatus.Success;
+            int status = ignarion.ApproachPlayer();
+            return status switch
+            {
+                0 => BTStatus.Failure,
+                1 => BTStatus.Running,
+                2 => BTStatus.Success,
+                _ => BTStatus.Failure,
+            };
         });
 
         Leaf flameWhip = new Leaf(() =>
         {
-            Debug.Log("FLAME WHIP");
-            return BTStatus.Success;
+            return ignarion.FlameWhipAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
         Sequence flameWhipSequence = new Sequence(new List<BTNode>()
@@ -67,37 +71,95 @@ public class IgnarionBT : MonoBehaviour
             flameWhip
         });
 
-        Selector firstFaseSelector = new Selector(new List<BTNode>()
+        // FIRST PHASE SELECTOR
+
+        Selector firstPhaseSelector = new Selector(new List<BTNode>()
         {
             emerginFireSequence,
             volcanicRockSequence,
             flameWhipSequence
         }, new List<float> { 30f, 30f, 40f });
 
-        Sequence firstFaseSequence = new Sequence(new List<BTNode>()
+        Sequence firstPhaseSequence = new Sequence(new List<BTNode>()
         {
             lifeChecker,
-            firstFaseSelector
+            firstPhaseSelector
         });
 
-        // CHANGE FASE
-        Sequence changeFaseSequence = new Sequence(new List<BTNode>()
+        // CHANGE PHASE
+
+        Leaf hasPhaseChanged = new Leaf(() =>
         {
-            approachPlayer
+            if (ignarion.secondPhase)
+                return BTStatus.Failure;
+            return BTStatus.Success;
         });
 
-        // SECOND FASE
-        Selector secondFaseSelector = new Selector(new List<BTNode>()
+        Leaf changeIgnarion = new Leaf(() =>
         {
-
+            return ignarion.ChangeIgnarion() ? BTStatus.Running : BTStatus.Success;
         });
+
+        Leaf changeScenery = new Leaf(() =>
+        {
+            return ignarion.ChangeScenery() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        // CHANGE PHASE SELECTOR
+        Sequence changePhaseSequence = new Sequence(new List<BTNode>()
+        {
+            hasPhaseChanged,
+            changeIgnarion,
+            changeScenery
+        });
+
+        // SECOND PHASE
+        Leaf heatWave = new Leaf(() =>
+        {
+            return ignarion.HeatWaveAttack() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        Leaf rest = new Leaf(() =>
+        {
+            return ignarion.Rest() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        Sequence heatWaveSequence = new Sequence(new List<BTNode>()
+        {
+            heatWave,
+            rest
+        });
+
+        Leaf moltenSpires = new Leaf(() =>
+        {
+            return ignarion.MoltenSpiresAttack() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        Leaf changeSide = new Leaf(() =>
+        {
+            return ignarion.ChangeSide() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        Sequence changeSideSequence = new Sequence(new List<BTNode>()
+        {
+            changeSide,
+            rest
+        });
+
+        // SECOND PHASE SELECTOR
+        Selector secondPhaseSelector = new Selector(new List<BTNode>()
+        {
+            heatWaveSequence,
+            moltenSpires,
+            changeSideSequence
+        }, new List<float> { 40f, 40f, 20f });
 
         // ROOT SELECTOR
         rootNode = new Selector(new List<BTNode>()
         {
-            firstFaseSequence,
-            changeFaseSequence,
-            secondFaseSelector
+            firstPhaseSequence,
+            changePhaseSequence,
+            secondPhaseSelector
         });
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class VolcanicRock : MonoBehaviour
 {
     private float fallingSpeed = 5f;
-    public bool fallen = true;
+    [HideInInspector] public bool fallen = true;
     public void Fall(float maxBottom, float maxLeft)
     {
         StartCoroutine(FallDown(maxBottom, maxLeft));
@@ -37,5 +37,14 @@ public class VolcanicRock : MonoBehaviour
         }
 
         fallen = true;
+        transform.position = new Vector3(transform.position.x, 10f); ;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<HealthManager>().UpdateLife(-1);
+        }
     }
 }

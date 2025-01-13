@@ -6,13 +6,13 @@ public class Flamarko : Enemy
 {
     [SerializeField] private GameObject magmaBallPrefab;
     
-    private float shootCooldown = -3f;
+    private float shootCooldown = -2f;
     private float reloadTime = 0f;
     private Vector2 escapeStartPos;
-    private int ammo = 3;
-    const int maxAmmo = 3;
+    private int ammo = 4;
+    const int maxAmmo = 4;
 
-    public float magmaBallDamage = -5f;
+    [HideInInspector] public int magmaBallDamage = -1;
 
     private GameObject smoke;
 
@@ -20,7 +20,7 @@ public class Flamarko : Enemy
 
     private new void Start()
     {
-        maxLife = 10f;
+        maxLife = 20f;
         base.Start();
         smoke = transform.GetChild(4).gameObject;
         flamarkoFSM = GetComponent<FlamarkoFSM>();

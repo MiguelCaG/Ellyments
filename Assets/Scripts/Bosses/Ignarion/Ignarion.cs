@@ -1,53 +1,84 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Ignarion : MonoBehaviour
+public class Ignarion : Boss
 {
     // BOSS PROPERTIES
     private Rigidbody2D rb;
-    private float speed = 1f;
-    private float attackRange = 2f;
-    public float maxLife = 100f;
-    public float life;
     private Animator ignarionAnim;
+    private SpriteRenderer sr;
+    private BoxCollider2D bc;
+
+    private float speed = 1f;
+    private float approachTime = -1f;
+    private float restTime = -1f;
+    private float attackRange = 4f;
 
     // FIGHT ELEMENTS
     //// EMERGIN FIRE
-    public static event Action Emerge;
-    private bool isEmerging = false;
-    private bool emerged = false;
+    private GameObject[] emerginFires;
+    private int emerging = -1; // -1 => Not Emerging, 0 => Emerging, x => X Fires Emerged.
 
     //// VOLCANIC ROCKS
     private GameObject[] volcanicRocks;
     private int rocksFallen = 0;
 
+    //// FLAME WHIP
+    private int whipping = 0; // 0 => Not Whipping, 1 => Whipping, 2 => Whipped.
+
+    //// CHANGE PHASE
+    [HideInInspector] public bool secondPhase = false;
+    public static event Action<GameObject[], float[]> Flood;
+    private bool flooding = false;
+
+    //// HEAT WAVE
+    private int waving = 0; // 0 => Not Waving, 1 => Waving, 2 => Waved.
+
+    //// MOLTEN SPIRES
+    private int spires = 2;
+
+    //// CHANGE SIDE
+    private Vector3 changeTo = Vector3.zero;
+
     // SCENE PROPERTIES
     private float maxLeft = -11f;
-    private float maxRight = 11.5f;
+    private float maxRight = 11f;
     private float maxBottom = -2.6f;
     private float maxTop = 4.5f;
+    private Vector3 leftFixedPos = new Vector3(-9f, -0.8f, 0f);
+    private Vector3 rightFixedPos = new Vector3(9f, -0.8f, 0f);
 
     // PLAYER PROPERTIES
-    private GameObject player;
     private int lookAtPlayer;
 
-    private void Start()
+    private new void Start()
     {
+        transform.position = rightFixedPos;
+        maxLife = 200f;
+        base.Start();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        life = maxLife;
         ignarionAnim = GetComponent<Animator>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        bc = gameObject.GetComponent<BoxCollider2D>();
+
+        emerginFires = GameObject.FindGameObjectsWithTag("EmerginFire");
+        EmerginFire.EmerginCompleted += () => emerging++;
 
         volcanicRocks = GameObject.FindGameObjectsWithTag("VolcanicRock");
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        IgnarionSceneryManagement.sceneryChanged += () => { secondPhase = true; changingPhase = false; };
     }
 
     // LOOK AT PLAYER
     private void FixedUpdate()
     {
         lookAtPlayer = player.transform.position.x - transform.position.x >= 0 ? 1 : -1;
+
+        if (!secondPhase && life <= maxLife * 0.6f) changingPhase = true;
     }
 
     public void LookAtPlayer()
@@ -56,15 +87,15 @@ public class Ignarion : MonoBehaviour
     }
 
     // EMERGIN FIRE ATTACK
-    public bool EmerginFire()
+    public bool EmerginFireAttack()
     {
-        if (emerged)
+        if (emerging == emerginFires.Count() || changingPhase)
         {
-            emerged = false;
+            emerging = -1;
             return false;
         }
 
-        if (!isEmerging && !emerged)
+        if (emerging == -1)
         {
             StartCoroutine(HandleEmerginFire());
         }
@@ -72,9 +103,9 @@ public class Ignarion : MonoBehaviour
         return true;
     }
 
-    private IEnumerator HandleEmerginFire()
+    private IEnumerator HandleEmerginFire(int moltenSpires = 0)
     {
-        isEmerging = true;
+        emerging = 0;
 
         rb.velocity = new Vector2(0f, rb.velocity.y);
         ignarionAnim.SetTrigger("EmerginFire");
@@ -83,21 +114,48 @@ public class Ignarion : MonoBehaviour
 
         yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Kick"));
 
-        Emerge?.Invoke();
+        foreach (GameObject fire in emerginFires)
+        {
+            Vector3 fireScale = fire.transform.localScale;
+            float target;
+            if (moltenSpires > 0)
+            {
+                if (moltenSpires % 2 == 0)
+                {
+                    fire.transform.rotation = Quaternion.Euler(0, 0, 90f);
+                    fire.transform.position = new Vector2(maxRight, UnityEngine.Random.Range(maxBottom + (fireScale.x / 2f), maxTop - (fireScale.x / 2f)));
+                    target = maxLeft - maxRight;
+                }
+                else
+                {
+                    fire.transform.rotation = Quaternion.Euler(0, 0, -90f);
+                    fire.transform.position = new Vector2(maxLeft, UnityEngine.Random.Range(maxBottom + (fireScale.x / 2f), maxTop - (fireScale.x / 2f)));
+                    target = maxRight - maxLeft;
+                }
+                moltenSpires -= 1;
+            }
+            else
+            {
+                Vector2 firePos;
 
-        yield return new WaitForSeconds(3f);
+                do
+                {
+                    firePos = new Vector2(UnityEngine.Random.Range(maxLeft + (fireScale.x / 2f), maxRight - (fireScale.x / 2f)), maxBottom);
+                } while (PositionOccupied(firePos, fireScale.x, emerginFires));
+                fire.transform.position = firePos;
+                target = maxTop - maxBottom;
+            }
 
-        emerged = true;
-        isEmerging = false;
+            fire.GetComponent<EmerginFire>().Emerge(target);
+        }
     }
 
     // VOLCANIC RAIN ATTACK
-    public bool VolcanicRain()
+    public bool VolcanicRainAttack()
     {
-        if (rocksFallen >= 8 && AllRocksFallen())
+        if (rocksFallen >= 12 && AllRocksFallen() || changingPhase)
         {
             rocksFallen = 0;
-            foreach (GameObject rock in volcanicRocks) rock.transform.position = new Vector3(rock.transform.position.x, maxTop + 1.5f);
             return false;
         }
         if (rocksFallen == 0) ignarionAnim.SetTrigger("VolcanicRain");
@@ -105,14 +163,14 @@ public class Ignarion : MonoBehaviour
         rb.velocity = new Vector2(0f, rb.velocity.y);
         foreach (GameObject rock in volcanicRocks)
         {
-            if (rocksFallen < 8 && rock.GetComponent<VolcanicRock>().fallen)
+            if (rocksFallen < 12 && rock.GetComponent<VolcanicRock>().fallen)
             {
                 Vector3 rockScale = rock.transform.localScale;
                 Vector2 rockPos;
                 do
                 {
                     rockPos = new Vector2(UnityEngine.Random.Range(maxLeft + (rockScale.x / 2f), maxRight - (rockScale.x / 2f)), maxTop + 1.5f);
-                } while (PositionOccupied(rockPos, rockScale.x));
+                } while (PositionOccupied(rockPos, rockScale.x, volcanicRocks));
                 rock.transform.position = rockPos;
 
                 rock.GetComponent<VolcanicRock>().Fall(maxBottom, maxLeft);
@@ -132,21 +190,235 @@ public class Ignarion : MonoBehaviour
         return true;
     }
 
-    private bool PositionOccupied(Vector2 position, float originalScale)
+    private bool PositionOccupied(Vector2 position, float originalScale, GameObject[] attackElement)
     {
-        foreach (GameObject rock in volcanicRocks)
+        foreach (GameObject element in attackElement)
         {
-            if (Vector2.Distance(rock.transform.position, position) <= originalScale)
+            if (Vector2.Distance(element.transform.position, position) <= originalScale)
                 return true;
         }
         return false;
     }
 
-    public bool ApproachPlayer()
+    // FLAME WHIP ATTACK
+    public int ApproachPlayer()
     {
+        if (approachTime < 0f)
+        {
+            approachTime = Time.time;
+        }
+
+        if (Time.time - approachTime >= 6f || changingPhase)
+        {
+            approachTime = -1f;
+            return 0;
+        }
+
         transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
         rb.velocity = new Vector2(speed * lookAtPlayer, rb.velocity.y);
 
-        return !(attackRange >= Mathf.Abs(player.transform.position.x - transform.position.x));
+        return (attackRange >= Mathf.Abs(player.transform.position.x - transform.position.x)) ? 2 : 1;
+    }
+
+    public bool FlameWhipAttack()
+    {
+        if (whipping == 2)
+        {
+            whipping = 0;
+            return false;
+        }
+
+        if (whipping == 0)
+        {
+            StartCoroutine(HandleFlameWhip());
+        }
+
+        return true;
+    }
+
+    private IEnumerator HandleFlameWhip()
+    {
+        whipping = 1;
+
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        for (int i = 0; i < 2; i++)
+        {
+            ignarionAnim.SetTrigger("FlameWhip");
+
+            yield return new WaitUntil(() => ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
+            yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
+        }
+        whipping = 2;
+    }
+
+    // CHANGE PHASE
+    public bool ChangeIgnarion()
+    {
+        int direction = (Vector2.Distance(transform.position, leftFixedPos) < Vector2.Distance(transform.position, rightFixedPos)) ? -1 : 1;
+        speed = 3f;
+
+        if (transform.position.x <= leftFixedPos.x || transform.position.x >= rightFixedPos.x)
+        {
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+            transform.position = direction == -1 ? leftFixedPos : rightFixedPos;
+            transform.localScale = new Vector2(-direction, transform.localScale.y);
+
+            sr.color -= new Color(0f, 0.02f, 0.02f, 0f);
+        }
+        else
+        {
+            transform.localScale = new Vector2(direction, transform.localScale.y);
+            rb.velocity = new Vector2(speed * direction, rb.velocity.y);
+        }
+
+        return sr.color != Color.red;
+    }
+
+    public bool ChangeScenery()
+    {
+        if (!flooding)
+        {
+            flooding = true;
+            maxBottom = -1.6f;
+            float[] sceneryLimits = { maxLeft, maxRight, maxBottom, maxTop };
+            Flood?.Invoke(volcanicRocks, sceneryLimits);
+        }
+
+        return !secondPhase;
+    }
+
+    // HEAT WAVE ATTACK
+    public bool HeatWaveAttack()
+    {
+        if (waving == 2)
+        {
+            waving = 0;
+            return false;
+        }
+
+        if (waving == 0)
+        {
+            StartCoroutine(HandleHeatWave());
+        }
+
+        return true;
+    }
+
+    private IEnumerator HandleHeatWave()
+    {
+        waving = 1;
+
+        ignarionAnim.SetTrigger("HeatWave");
+
+        yield return new WaitUntil(() => ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
+        yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
+
+        waving = 2;
+    }
+
+    public bool Rest()
+    {
+        if (restTime < 0f)
+        {
+            restTime = Time.time;
+        }
+
+        if (Time.time - restTime >= 4f)
+        {
+            if (sr.color.a < 1f)
+            {
+                sr.color += new Color(0f, 0f, 0f, 0.05f);
+            }
+            else
+            {
+                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
+                restTime = -1f;
+                return false;
+            }
+        }
+        else if (sr.color.a > 0.5)
+        {
+            sr.color -= new Color(0f, 0f, 0f, 0.05f);
+        }
+
+        return true;
+    }
+
+    // MOLTEN SPIRES ATTACK
+    public bool MoltenSpiresAttack()
+    {
+        if (emerging == emerginFires.Count())
+        {
+            emerging = -1;
+            return false;
+        }
+
+        if (emerging == -1)
+        {
+            StartCoroutine(HandleEmerginFire(spires));
+        }
+
+        return true;
+    }
+
+    // CHANGE SIDE
+    public bool ChangeSide()
+    {
+        if ((transform.position.x == leftFixedPos.x && changeTo == leftFixedPos) || (transform.position.x == rightFixedPos.x && changeTo == rightFixedPos))
+        {
+            changeTo = Vector3.zero;
+            bc.isTrigger = false;
+            rb.gravityScale = 1f;
+            return false;
+        }
+
+        if (transform.position.x == leftFixedPos.x && Math.Abs(transform.position.y - leftFixedPos.y) <= 0.01 && changeTo == Vector3.zero)
+        {
+            changeTo = rightFixedPos;
+            StartCoroutine(HandleChangeSide(rightFixedPos, 1));
+        }
+        else if (transform.position.x == rightFixedPos.x && Math.Abs(transform.position.y - rightFixedPos.y) <= 0.01 && changeTo == Vector3.zero)
+        {
+            changeTo = leftFixedPos;
+            StartCoroutine(HandleChangeSide(leftFixedPos, -1));
+        }
+
+        return true;
+    }
+
+    private IEnumerator HandleChangeSide(Vector3 destiny, int direction)
+    {
+        rb.gravityScale = 0f;
+        bc.isTrigger = true;
+
+        while (transform.position.y > -2.5f)
+        {
+            transform.position += new Vector3(0f, -0.02f, 0f);
+            yield return null;
+        }
+
+        speed = 5f;
+        do
+        {
+            rb.velocity = new Vector2(speed * direction, rb.velocity.y);
+            yield return null;
+        }
+        while (Math.Abs(transform.position.x - destiny.x) > 0.01f);
+
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        while (transform.position.y < destiny.y)
+        {
+            transform.position += new Vector3(0f, 0.02f, 0f);
+            yield return null;
+        }
+
+        transform.position = destiny;
+        transform.localScale = new Vector2(-direction, transform.localScale.y);
+    }
+
+    private void OnDestroy()
+    {
+        EmerginFire.EmerginCompleted -= () => emerging++;
+        IgnarionSceneryManagement.sceneryChanged -= () => { secondPhase = true; changingPhase = false; };
     }
 }

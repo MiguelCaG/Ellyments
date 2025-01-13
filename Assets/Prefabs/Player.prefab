@@ -39,7 +39,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9205623005481211739}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.15}
+  m_Size: {x: 0.6, y: 0.15}
   m_EdgeRadius: 0
 --- !u!114 &9205623005481211737
 MonoBehaviour:
@@ -191,7 +191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9205623006495380363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.6, z: 0}
   m_LocalScale: {x: 0.75, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9205623007012702045}
@@ -221,7 +221,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.36, y: 0.05}
+  m_Size: {x: 0.55, y: 0.05}
   m_EdgeRadius: 0
 --- !u!114 &9205623006495380361
 MonoBehaviour:
@@ -245,9 +245,12 @@ GameObject:
   m_Component:
   - component: {fileID: 9205623007012702045}
   - component: {fileID: 9205623007012702046}
+  - component: {fileID: 7651790759274842868}
   - component: {fileID: 9205623007012702047}
   - component: {fileID: 9205623007012702040}
   - component: {fileID: 9205623007012702041}
+  - component: {fileID: 8263158518593908269}
+  - component: {fileID: 4240269875270826844}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -324,6 +327,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7651790759274842868
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205623007012702042}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4d61574226b63844fb7ea6b122363139, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &9205623007012702047
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -337,7 +359,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.03}
+  m_Offset: {x: 0, y: 0.04}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -348,7 +370,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35, y: 0.98}
+  m_Size: {x: 0.5, y: 1.23}
   m_EdgeRadius: 0
 --- !u!50 &9205623007012702040
 Rigidbody2D:
@@ -385,10 +407,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentElement: 4
   currentState: 0
-  currentLife: 0
   onGround: 0
   fireBall: {fileID: 8047802494813223245, guid: cbbe2ac4e2cedc94cbadcf2687c6c032, type: 3}
   fireBallDamage: -5
+--- !u!114 &8263158518593908269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205623007012702042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b538a693cc14645b2fc257768da883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hearts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  fullHeart: {fileID: -8770001503089466214, guid: dd0fe7c073b4a8c4cb15ff4a0180b254, type: 3}
+  emptyHeart: {fileID: 4974403084737825917, guid: dd0fe7c073b4a8c4cb15ff4a0180b254, type: 3}
+--- !u!114 &4240269875270826844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205623007012702042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca4377f49bd43f45a4a3bed268e1602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  auraTransform: {fileID: 0}
+  auraSlider: {fileID: 0}
 --- !u!1001 &9205623006220024802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -399,6 +457,10 @@ PrefabInstance:
     - target: {fileID: 404447501663080084, guid: be853b3a993d62742942057fbb3b582f, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404447501663080084, guid: be853b3a993d62742942057fbb3b582f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 404447501663080084, guid: be853b3a993d62742942057fbb3b582f, type: 3}
       propertyPath: m_LocalRotation.w

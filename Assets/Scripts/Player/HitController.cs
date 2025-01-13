@@ -27,6 +27,11 @@ public class HitController : MonoBehaviour
 
     private void Hit(Hit hit)
     {
+        Hit(hit, false);
+    }
+
+    private void Hit(Hit hit, bool restoreAura)
+    {
         Vector3 origin = hit.GetHitOrigin();
         float radius = hit.GetHitRadius();
         float damage = hit.GetHitDamage();
@@ -35,13 +40,15 @@ public class HitController : MonoBehaviour
 
         foreach (Collider2D c in collides)
         {
-            if (attackerGO.CompareTag("Player") && c.CompareTag("Enemy"))
+            if (attackerGO.CompareTag("Player"))
             {
-                c.GetComponent<Enemy>().UpdateLife(damage);
+                if(c.CompareTag("Enemy")) c.GetComponent<Enemy>().UpdateLife(damage);
+                else if(c.CompareTag("Boss")) c.GetComponent<Boss>().UpdateLife(damage);
+                if ((c.CompareTag("Enemy") || c.CompareTag("Boss")) && restoreAura) attackerGO.GetComponent<AuraManager>().UpdateAura(1f);
             }
             else if (attackerGO.CompareTag("Enemy") && c.CompareTag("Player"))
             {
-                c.GetComponent<PlayerBehaviour>().UpdateLife(damage);
+                c.GetComponent<HealthManager>().UpdateLife((int)damage);
             }
         }
 
@@ -52,7 +59,11 @@ public class HitController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (attackerGO != null && attackerGO.CompareTag("Enemy"))
+        if (attackerGO.CompareTag("Player"))
+        {
+            PlayerBehaviour.Damage -= Hit;
+        }
+        else if (attackerGO != null && attackerGO.CompareTag("Enemy"))
         {
             Enemy enemy = attackerGO.GetComponent<Enemy>();
             if (enemy != null)
@@ -67,7 +78,7 @@ public class HitController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        if (damage == -5f)
+        if (damage == -5f || damage == -15f)
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }

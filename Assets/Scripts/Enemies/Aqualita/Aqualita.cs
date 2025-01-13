@@ -13,7 +13,7 @@ public class Aqualita : Enemy
     public AqualitaFSM aqualitaFSM;
     private new void Start()
     {
-        maxLife = 20f;
+        maxLife = 30f;
         base.Start();
         bubble = transform.GetChild(4).gameObject;
         aqualitaFSM = GetComponent<AqualitaFSM>();

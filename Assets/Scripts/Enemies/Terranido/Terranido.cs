@@ -14,7 +14,7 @@ public class Terranido : Enemy
     private new void Start()
     {
         speed = 0.5f;
-        maxLife = 30f;
+        maxLife = 40f;
         base.Start();
         Damaged += Awakened;
         terranidoFSM = GetComponent<TerranidoFSM>();

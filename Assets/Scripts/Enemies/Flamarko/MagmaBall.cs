@@ -36,7 +36,7 @@ public class MagmaBall : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            collision.gameObject.GetComponent<PlayerBehaviour>().UpdateLife(flamarko.GetComponent<Flamarko>().magmaBallDamage);
+            collision.gameObject.GetComponent<HealthManager>().UpdateLife(flamarko.GetComponent<Flamarko>().magmaBallDamage);
 
         if (collision.gameObject != flamarko)
             Destroy(gameObject);
