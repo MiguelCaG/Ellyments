@@ -8,14 +8,9 @@ using UnityEngine.UIElements;
 public class Ignarion : Boss
 {
     // BOSS PROPERTIES
-    private Rigidbody2D rb;
     private Animator ignarionAnim;
-    private SpriteRenderer sr;
-    private BoxCollider2D bc;
 
-    private float speed = 1f;
     private float approachTime = -1f;
-    private float restTime = -1f;
     private float attackRange = 4f;
 
     // FIGHT ELEMENTS
@@ -31,7 +26,6 @@ public class Ignarion : Boss
     private int whipping = 0; // 0 => Not Whipping, 1 => Whipping, 2 => Whipped.
 
     //// CHANGE PHASE
-    [HideInInspector] public bool secondPhase = false;
     public static event Action<GameObject[], float[]> Flood;
     private bool flooding = false;
 
@@ -52,18 +46,15 @@ public class Ignarion : Boss
     private Vector3 leftFixedPos = new Vector3(-9f, -0.8f, 0f);
     private Vector3 rightFixedPos = new Vector3(9f, -0.8f, 0f);
 
-    // PLAYER PROPERTIES
-    private int lookAtPlayer;
-
     private new void Start()
     {
         transform.position = rightFixedPos;
+        restTime = 4f;
         maxLife = 200f;
+        changePhasePercentage = 0.6f;
         base.Start();
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        
         ignarionAnim = GetComponent<Animator>();
-        sr = gameObject.GetComponent<SpriteRenderer>();
-        bc = gameObject.GetComponent<BoxCollider2D>();
 
         emerginFires = GameObject.FindGameObjectsWithTag("EmerginFire");
         EmerginFire.EmerginCompleted += () => emerging++;
@@ -71,19 +62,6 @@ public class Ignarion : Boss
         volcanicRocks = GameObject.FindGameObjectsWithTag("VolcanicRock");
 
         IgnarionSceneryManagement.sceneryChanged += () => { secondPhase = true; changingPhase = false; };
-    }
-
-    // LOOK AT PLAYER
-    private void FixedUpdate()
-    {
-        lookAtPlayer = player.transform.position.x - transform.position.x >= 0 ? 1 : -1;
-
-        if (!secondPhase && life <= maxLife * 0.6f) changingPhase = true;
-    }
-
-    public void LookAtPlayer()
-    {
-        transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
     }
 
     // EMERGIN FIRE ATTACK
@@ -217,7 +195,13 @@ public class Ignarion : Boss
         transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
         rb.velocity = new Vector2(speed * lookAtPlayer, rb.velocity.y);
 
-        return (attackRange >= Mathf.Abs(player.transform.position.x - transform.position.x)) ? 2 : 1;
+        if (attackRange >= Mathf.Abs(player.transform.position.x - transform.position.x))
+        {
+            approachTime = -1f;
+            return 2;
+        }
+
+        return 1;
     }
 
     public bool FlameWhipAttack()
@@ -314,34 +298,6 @@ public class Ignarion : Boss
         yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
 
         waving = 2;
-    }
-
-    public bool Rest()
-    {
-        if (restTime < 0f)
-        {
-            restTime = Time.time;
-        }
-
-        if (Time.time - restTime >= 4f)
-        {
-            if (sr.color.a < 1f)
-            {
-                sr.color += new Color(0f, 0f, 0f, 0.05f);
-            }
-            else
-            {
-                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 1f);
-                restTime = -1f;
-                return false;
-            }
-        }
-        else if (sr.color.a > 0.5)
-        {
-            sr.color -= new Color(0f, 0f, 0f, 0.05f);
-        }
-
-        return true;
     }
 
     // MOLTEN SPIRES ATTACK

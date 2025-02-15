@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Zones/IgnarionBossFight/IgnarionBossFight.unity
     guid: 3308a1f128cbb8d48b2b19d78455fee7
   - enabled: 1
+    path: Assets/Scenes/Zones/ZephyrosBossFight/ZephyrosBossFight.unity
+    guid: 572c2a1a8a682db4c899ff7595976812
+  - enabled: 1
     path: Assets/Scenes/TestScenes/FlamarkoScene.unity
     guid: 2da1c1e1271e0ef438c7f64dc91fdc97
   - enabled: 1

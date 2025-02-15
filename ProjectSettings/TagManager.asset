@@ -25,6 +25,8 @@ TagManager:
   - Player
   - HostileAttack
   - FriendlyAttack
+  - OneWayPlatform
+  - IgnoreNotEnemy
   - 
   - 
   - 
@@ -43,9 +45,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - IgnoreMost
   m_SortingLayers:
   - name: Background
     uniqueID: 2682880513

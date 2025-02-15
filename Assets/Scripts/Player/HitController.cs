@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HitController : MonoBehaviour
 {
+    [SerializeField] private PlayerActionsData pAD;
+
     private GameObject attackerGO;
 
     private void Start()
@@ -44,7 +46,12 @@ public class HitController : MonoBehaviour
             {
                 if(c.CompareTag("Enemy")) c.GetComponent<Enemy>().UpdateLife(damage);
                 else if(c.CompareTag("Boss")) c.GetComponent<Boss>().UpdateLife(damage);
-                if ((c.CompareTag("Enemy") || c.CompareTag("Boss")) && restoreAura) attackerGO.GetComponent<AuraManager>().UpdateAura(1f);
+                if ((c.CompareTag("Enemy") || c.CompareTag("Boss")))
+                {
+                    pAD.attackingDistance -= damage / -10f;
+                    pAD.aggressiveness += 0.1f;
+                    if (restoreAura) attackerGO.GetComponent<AuraManager>().UpdateAura(1f);
+                } 
             }
             else if (attackerGO.CompareTag("Enemy") && c.CompareTag("Player"))
             {

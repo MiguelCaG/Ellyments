@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static AbilityManager;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [SerializeField] PlayerActionsData pAD;
+
     public enum Element
     {
         Fire,
@@ -19,21 +22,27 @@ public class PlayerBehaviour : MonoBehaviour
 
     public enum State
     {
-        Iddle,
+        Idle,
         Moving,
         Jumping,
         Dashing,
-        Diying
+        Diying,
+        Immobile
     }
 
-    public State currentState = State.Iddle;
+    public State currentState = State.Idle;
+
+    private AbilityManager abilityM;
+    private HealthManager healthM;
 
     private bool radialMenuOpen = false;
 
     private float runSpeed = 5;
     private float jumpSpeed = 5.5f;
     private float dashSpeed = 50;
+    private bool jumpPressed = false;
     [HideInInspector] public bool onGround;
+    private bool doubleJump = false;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -53,8 +62,8 @@ public class PlayerBehaviour : MonoBehaviour
     private AuraManager auraManager;
 
     private float fireCooldown = 3f;
-    private float bubbleCooldown = 10f;
-    private float lastSkillTime = -10f;
+    private float bubbleCooldown = 5f;
+    private float lastSkillTime = -5f;
     private float hitCooldown = 1f;
     private float lastHitTime = -1f;
 
@@ -79,8 +88,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Start()
     {
+        abilityM = GetComponent<AbilityManager>();
+        healthM = GetComponent<HealthManager>();
+
         CheckCollision.Stamp += StopDashing;
         HealthManager.Die += Die;
+        BubblePlatform.Bubble += () => healthM.UpdateLife(1);
+        Zephyros.StopMove += StopMovePlayer;
 
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -100,13 +114,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState == State.Diying) return;
+        if (currentState == State.Diying || currentState == State.Immobile) return;
 
         float moveInput = Input.GetAxis("Horizontal");
+
         //Debug.Log(currentState);
         switch (currentState)
         {
-            case State.Iddle:
+            case State.Idle:
                 HandleIdle(moveInput);
                 break;
             case State.Moving:
@@ -142,6 +157,7 @@ public class PlayerBehaviour : MonoBehaviour
                 case Element.Water:
                     if (lastSkillTime <= Time.time - bubbleCooldown && auraManager.CanUseAura(5f))
                     {
+                        pAD.aggressiveness -= 0.1f;
                         auraManager.UpdateAura(-5f);
                         Bubble?.Invoke();
                         transform.GetChild(1).gameObject.SetActive(true);
@@ -162,6 +178,7 @@ public class PlayerBehaviour : MonoBehaviour
                 case Element.Air:
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
                     {
+                        pAD.aggressiveness -= 0.1f;
                         auraManager.UpdateAura(-5f);
                         checkCollision.enabled = true;
                         initPos = transform.position.x;
@@ -182,6 +199,11 @@ public class PlayerBehaviour : MonoBehaviour
         //Tempo();
         // ________
 
+        if (Input.GetButtonDown("Jump") && (onGround || doubleJump))
+        {
+            jumpPressed = true;
+        }
+
         if (Input.GetKey(KeyCode.Tab) && currentState != State.Diying)
         {
             radialMenuOpen = true;
@@ -191,6 +213,15 @@ public class PlayerBehaviour : MonoBehaviour
         {
             radialMenuOpen = false;
             CloseElements?.Invoke();
+        }
+
+        if (Input.GetAxis("Vertical") < 0f)
+        {
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), true);
+        }
+        else if (Input.GetAxis("Vertical") > 0f)
+        {
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), false);
         }
     }
 
@@ -228,7 +259,7 @@ public class PlayerBehaviour : MonoBehaviour
             hitController.transform.localPosition = new Vector2(0.5f, hitController.transform.localPosition.y);
         }
 
-        if (Input.GetButton("Jump") && onGround)
+        if (Input.GetButton("Jump") && (onGround || doubleJump))
         {
             currentState = State.Jumping;
             return;
@@ -236,7 +267,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (rb.velocity.x == 0f)
         {
-            currentState = State.Iddle;
+            currentState = State.Idle;
         }
     }
 
@@ -244,10 +275,17 @@ public class PlayerBehaviour : MonoBehaviour
     {
         playerAnim.SetTrigger("Moving");
 
-        if (Input.GetButton("Jump") && onGround)
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        if (jumpPressed && (onGround || (abilityM.IsAbilityUnlocked(Ability.DoubleJump) && doubleJump)))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, doubleJump? jumpSpeed * 1.5f : jumpSpeed);
+            doubleJump = abilityM.IsAbilityUnlocked(Ability.DoubleJump) && !doubleJump;
+            jumpPressed = false;
+        }
         if (onGround && rb.velocity.y <= 0f)
-            currentState = State.Iddle;
+        {
+            doubleJump = false;
+            currentState = State.Idle;
+        }
         if (moveInput != 0f)
             currentState = State.Moving;
     }
@@ -278,7 +316,13 @@ public class PlayerBehaviour : MonoBehaviour
         bc.size = bcSize;
         rb.gravityScale = 1;
         rb.velocity = new Vector2(0, 0);
-        currentState = State.Iddle;
+        currentState = State.Idle;
+    }
+
+    private void StopMovePlayer()
+    {
+        rb.velocity = Vector2.zero;
+        currentState = (currentState != State.Immobile) ? State.Immobile : State.Idle;
     }
 
     private void Die(bool dead)
@@ -316,12 +360,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
-            GetComponent<HealthManager>().UpdateLife(-1);
+            healthM.UpdateLife(-1);
         }
     }
 
     private void OnDestroy()
     {
+        CheckCollision.Stamp -= StopDashing;
         HealthManager.Die -= Die;
+        BubblePlatform.Bubble -= () => healthM.UpdateLife(1);
+        Zephyros.StopMove -= StopMovePlayer;
     }
 }

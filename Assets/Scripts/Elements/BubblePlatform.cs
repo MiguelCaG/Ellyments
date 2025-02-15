@@ -5,27 +5,28 @@ using UnityEngine;
 
 public class BubblePlatform : MonoBehaviour
 {
-    [SerializeField] private float useTime;
-    [SerializeField] private float maxTime;
+    private float useTime;
+    private float maxTime;
 
     public static event Action Bubble;
 
     private void Awake()
     {
-        useTime = Time.time;
-        maxTime = Time.time + 10f;
+        useTime = -1f;
+        maxTime = 3f;
     }
 
     private void Update()
     {
-        if (maxTime <= useTime)
+        if (useTime < 0)
         {
+            useTime = Time.time;
+        }
+        if (useTime + maxTime <= Time.time)
+        {
+            useTime = -1f;
             Bubble?.Invoke();
             gameObject.SetActive(false);
-        }
-        else
-        {
-            useTime += Time.deltaTime;
         }
     }
 }

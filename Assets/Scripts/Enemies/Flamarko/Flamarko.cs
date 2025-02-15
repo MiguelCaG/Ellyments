@@ -53,7 +53,7 @@ public class Flamarko : Enemy
             return;
         }
 
-        if (ammo > 0 && shootCooldown <= Time.time - 3f)
+        if (ammo > 0 && shootCooldown <= Time.time - 2f)
         {
             transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
             GameObject magmaBall = Instantiate(magmaBallPrefab, gameObject.transform.position, Quaternion.identity);

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
+    [SerializeField] private PlayerActionsData pAD;
+
     private GameObject player;
     private bool playerDir; // [True] Left : [False] Right
     private float initPos;
@@ -33,12 +35,18 @@ public class FireBall : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
-            collision.GetComponent<Enemy>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
-        } else if (collision.gameObject.CompareTag("Boss"))
-        {
-            collision.GetComponent<Boss>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+            pAD.attackingDistance++;
+            pAD.aggressiveness += 0.1f;
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                collision.GetComponent<Enemy>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+            }
+            else if (collision.gameObject.CompareTag("Boss"))
+            {
+                collision.GetComponent<Boss>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+            }
         }
 
         if (collision.gameObject != player)

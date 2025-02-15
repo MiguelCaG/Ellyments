@@ -15,7 +15,7 @@ public class IgnarionBT : MonoBehaviour
         // FIRST PHASE
         Leaf lifeChecker = new Leaf(() =>
         {
-            if (ignarion.life > ignarion.maxLife * 0.6f)
+            if (ignarion.life > ignarion.maxLife * ignarion.changePhasePercentage)
                 return BTStatus.Success;
             return BTStatus.Failure;
         });
@@ -37,15 +37,15 @@ public class IgnarionBT : MonoBehaviour
             emerginFire
         });
 
-        Leaf volcanicRock = new Leaf(() =>
+        Leaf volcanicRain = new Leaf(() =>
         {
             return ignarion.VolcanicRainAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
-        Sequence volcanicRockSequence = new Sequence(new List<BTNode>()
+        Sequence volcanicRainSequence = new Sequence(new List<BTNode>()
         {
             lookAtPlayer,
-            volcanicRock
+            volcanicRain
         });
 
         Leaf approachPlayer = new Leaf(() =>
@@ -72,11 +72,10 @@ public class IgnarionBT : MonoBehaviour
         });
 
         // FIRST PHASE SELECTOR
-
         Selector firstPhaseSelector = new Selector(new List<BTNode>()
         {
             emerginFireSequence,
-            volcanicRockSequence,
+            volcanicRainSequence,
             flameWhipSequence
         }, new List<float> { 30f, 30f, 40f });
 
@@ -87,7 +86,6 @@ public class IgnarionBT : MonoBehaviour
         });
 
         // CHANGE PHASE
-
         Leaf hasPhaseChanged = new Leaf(() =>
         {
             if (ignarion.secondPhase)
@@ -105,7 +103,7 @@ public class IgnarionBT : MonoBehaviour
             return ignarion.ChangeScenery() ? BTStatus.Running : BTStatus.Success;
         });
 
-        // CHANGE PHASE SELECTOR
+        // CHANGE PHASE SEQUENCE
         Sequence changePhaseSequence = new Sequence(new List<BTNode>()
         {
             hasPhaseChanged,

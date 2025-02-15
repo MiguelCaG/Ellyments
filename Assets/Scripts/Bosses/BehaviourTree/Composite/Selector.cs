@@ -13,9 +13,12 @@ public class Selector : BTNode
     private float randomChildren;
     private float currentProbability = 0f;
 
+    public List<BTNode> Childrens { get; set; }
+
     public Selector(List<BTNode> childrens, List<float> probabilities = null)
     {
         this.childrens = childrens;
+        Childrens = this.childrens;
         failedChildrens = new List<BTNode>();
         childrensProbabilities = new Dictionary<BTNode, float>();
 
@@ -78,5 +81,22 @@ public class Selector : BTNode
             currentProbability = 0f;
         }
         return status;
+    }
+
+    public void SetWeight(BTNode child, float weight)
+    {
+        totalProbability -= childrensProbabilities[child];
+        childrensProbabilities[child] = weight;
+        totalProbability += weight;
+    }
+
+    public void SetWeights(List<BTNode> childs, List<float> weights)
+    {
+        for (int i = 0; i < childs.Count; i++)
+        {
+            totalProbability -= childrensProbabilities[childs[i]];
+            childrensProbabilities[childs[i]] = weights[i];
+            totalProbability += weights[i];
+        }
     }
 }

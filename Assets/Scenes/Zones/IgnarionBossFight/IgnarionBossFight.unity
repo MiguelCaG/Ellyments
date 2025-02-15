@@ -3672,11 +3672,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2855942220268716715, guid: 7d6d6ba3ee7e38945a301d382e172057, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0011491776
+      value: -0.0010762215
       objectReference: {fileID: 0}
     - target: {fileID: 2855942220268716715, guid: 7d6d6ba3ee7e38945a301d382e172057, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.46375942
+      value: -0.48152494
       objectReference: {fileID: 0}
     - target: {fileID: 2855942220268716715, guid: 7d6d6ba3ee7e38945a301d382e172057, type: 3}
       propertyPath: m_LocalPosition.z
@@ -53675,6 +53675,14 @@ PrefabInstance:
       value: InGameCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 2568663775365584444, guid: b7f3471a89383a24aa3d235e0b8a7ab6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176972093417749713, guid: b7f3471a89383a24aa3d235e0b8a7ab6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176972093739121908, guid: b7f3471a89383a24aa3d235e0b8a7ab6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}

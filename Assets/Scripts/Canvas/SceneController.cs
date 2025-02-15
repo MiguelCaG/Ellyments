@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using static AbilityManager;
 
 public class SceneController : MonoBehaviour
 {
@@ -10,13 +11,23 @@ public class SceneController : MonoBehaviour
     [SerializeField] private GameObject restartPanel;
     private TextMeshProUGUI restartText;
 
+    // TEMPORAL
+    AbilityManager abilityM;
+    //
+
     private void Start()
     {
+        Time.timeScale = 1f;
         PlayerBehaviour.Restart += RestartPanel;
         Boss.Restart += RestartPanel;
 
         if (restartPanel != null)
             restartText = restartPanel.GetComponentInChildren<TextMeshProUGUI>();
+
+        // TEMPORAL
+        if (SceneManager.GetActiveScene().name == "ZephyrosBossFight")
+            abilityM = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityManager>();
+        //
     }
 
     private void Update()
@@ -25,6 +36,11 @@ public class SceneController : MonoBehaviour
         {
             QuitPanel();
         }
+
+        // TEMPORAL
+        if (SceneManager.GetActiveScene().name == "ZephyrosBossFight" && !abilityM.IsAbilityUnlocked(Ability.DoubleJump))
+            abilityM.UnlockAbility(Ability.DoubleJump);
+        //
     }
 
     public void LoadScene(string sceneName)

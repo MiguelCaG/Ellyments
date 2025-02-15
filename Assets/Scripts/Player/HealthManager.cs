@@ -61,16 +61,10 @@ public class HealthManager : MonoBehaviour
     {
         if (life < 0 && anim.GetCurrentAnimatorStateInfo(1).IsName("Hit")) return;
         
-        health += life;
+        if (health != 0)
+            health = Mathf.Clamp(health + life, 0, heartsCount);
 
-        if (health <= 0)
-        {
-            health = 0;
-            Die?.Invoke(true);
-        }
-        else
-        {
-            Die?.Invoke(false);
-        }
+        if (life < 0)
+            Die?.Invoke(health == 0);
     }
 }
