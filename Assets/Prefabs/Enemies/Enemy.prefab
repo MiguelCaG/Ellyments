@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1149902408774810408}
   - component: {fileID: 6734326315940201391}
   - component: {fileID: 1355582394510830667}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HitController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473e4ad6bb5bb7a43b2977180bf00246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pAD: {fileID: 11400000, guid: 24d8782e689aa5b4fb3cd9aa321b14da, type: 2}
 --- !u!1 &700460173725339942
 GameObject:
   m_ObjectHideFlags: 0

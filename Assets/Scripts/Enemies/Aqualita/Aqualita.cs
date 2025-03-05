@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class Aqualita : Enemy
 {
+    // LIFE PROPERTIES
     private float lifePercenatage = 0.5f;
     private float healTime = 0f;
     private float healPercentage = 0.25f;
 
+    // BUBBLE
     private GameObject bubble;
 
+    // FSM
     public AqualitaFSM aqualitaFSM;
     private new void Start()
     {
-        maxLife = 30f;
+        maxLife = 35f;
+
+        elemStrength = PlayerBehaviour.Element.Fire;
+        elemWeakness = PlayerBehaviour.Element.Earth;
+
         base.Start();
-        bubble = transform.GetChild(4).gameObject;
+
+        bubble = transform.GetChild(5).gameObject;
+
         aqualitaFSM = GetComponent<AqualitaFSM>();
     }
 
+    // PATROL STATE
     public new void Patrol()
     {
         if (currentLife <= maxLife * lifePercenatage)
@@ -44,6 +54,7 @@ public class Aqualita : Enemy
         }
     }
 
+    // CHASE STATE
     public new void Chase()
     {
         if (currentLife <= maxLife * lifePercenatage)
@@ -73,6 +84,7 @@ public class Aqualita : Enemy
         }
     }
 
+    // ATTACK STATE
     public new void Attack()
     {
         if (restAttack <= Time.time)
@@ -81,7 +93,7 @@ public class Aqualita : Enemy
         }
         else
         {
-            Debug.Log("RESTING");
+            //Debug.Log("RESTING");
             if (currentLife <= maxLife * lifePercenatage)
             {
                 healTime = Time.time + 4f;
@@ -104,6 +116,7 @@ public class Aqualita : Enemy
         }
     }
 
+    // HEAL STATE
     public void Heal()
     {
         if (currentLife > maxLife * lifePercenatage && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
@@ -133,7 +146,7 @@ public class Aqualita : Enemy
             bubble.SetActive(true);
             if (healTime <= Time.time)
             {
-                UpdateLife(maxLife * healPercentage);
+                UpdateLife(maxLife * healPercentage, PlayerBehaviour.Element.None);
                 healTime = Time.time + 4f;
             }
         }

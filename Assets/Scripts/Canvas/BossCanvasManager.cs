@@ -9,10 +9,22 @@ public class BossCanvasManager : MonoBehaviour
 
     private void Start()
     {
+        IgnarionSceneryManagement.InitHealthBar += BossHealthBar;
+        ZephyrosSceneryManagement.InitHealthBar += BossHealthBar;
+    }
+
+    private void BossHealthBar()
+    {
         boss = GameObject.FindGameObjectWithTag("Boss");
         if (boss != null)
         {
             bossHealtBar.SetActive(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        IgnarionSceneryManagement.InitHealthBar -= BossHealthBar;
+        ZephyrosSceneryManagement.InitHealthBar -= BossHealthBar;
     }
 }

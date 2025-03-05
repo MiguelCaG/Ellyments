@@ -3,75 +3,83 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using static AbilityManager;
 
 public class SceneController : MonoBehaviour
 {
+    [SerializeField] private PlayerData pD;
+
     [SerializeField] private GameObject quitPanel;
+    [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject restartPanel;
     private TextMeshProUGUI restartText;
-
-    // TEMPORAL
-    AbilityManager abilityM;
-    //
 
     private void Start()
     {
         Time.timeScale = 1f;
+
+        ZoneChanger.ChangeScene += ChangeScene;
         PlayerBehaviour.Restart += RestartPanel;
-        Boss.Restart += RestartPanel;
 
         if (restartPanel != null)
             restartText = restartPanel.GetComponentInChildren<TextMeshProUGUI>();
-
-        // TEMPORAL
-        if (SceneManager.GetActiveScene().name == "ZephyrosBossFight")
-            abilityM = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityManager>();
-        //
     }
 
     private void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            QuitPanel();
+            if (SceneManager.GetActiveScene().name == "MainMenu") ShowPanel(quitPanel);
+            else ShowPanel(optionsPanel);
         }
-
-        // TEMPORAL
-        if (SceneManager.GetActiveScene().name == "ZephyrosBossFight" && !abilityM.IsAbilityUnlocked(Ability.DoubleJump))
-            abilityM.UnlockAbility(Ability.DoubleJump);
-        //
     }
 
-    public void LoadScene(string sceneName)
+    public void StartButton()
     {
+        Time.timeScale = 1f;
+        pD.lastCheckpoint.respawn = true;
+        SceneManager.LoadScene(pD.lastCheckpoint.scene);
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(sceneName);
     }
 
     public void ReloadScene()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        Time.timeScale = 1f;
+        if (pD.lastCheckpoint.respawn)
+        {
+            SceneManager.LoadScene(pD.lastCheckpoint.scene);
+        }
+        else
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
     }
 
-    public void QuitPanel()
+    public void ShowPanel(GameObject panel)
     {
-        if (quitPanel.activeSelf)
+        if (panel.activeSelf)
         {
-            quitPanel.SetActive(false);
+            panel.SetActive(false);
             Time.timeScale = 1f;
         }
         else
         {
-            quitPanel.SetActive(true);
+            panel.SetActive(true);
             Time.timeScale = 0f;
         }
     }
 
     private void RestartPanel(string result)
     {
+        Time.timeScale = 0f;
         restartPanel.SetActive(true);
         restartText.text += result;
+        pD.lastCheckpoint.respawn = true;
     }
 
     public void QuitGame()
@@ -81,7 +89,7 @@ public class SceneController : MonoBehaviour
 
     private void OnDestroy()
     {
+        ZoneChanger.ChangeScene -= ChangeScene;
         PlayerBehaviour.Restart -= RestartPanel;
-        Boss.Restart -= RestartPanel;
     }
 }

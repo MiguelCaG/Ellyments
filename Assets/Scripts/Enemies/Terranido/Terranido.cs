@@ -4,25 +4,52 @@ using UnityEngine;
 
 public class Terranido : Enemy
 {
+    // FLAGS
     private bool stopSleeping = false;
+    private bool isExpanding = false;
 
-    private float expansionRadius = 2.5f;
+    // EXPANSION ATTACK
+    private float expansionRadius = 2f;
     private float expansionDamage = -2f;
     private Hit expansionHit;
 
+    // ANIMATOR
+    private Animator terranidoAnim;
+
+    // SLEEPING COLLIDER
+    private GameObject rockModeCollider;
+
+    // FSM
     public TerranidoFSM terranidoFSM;
+
     private new void Start()
     {
         speed = 0.5f;
+
         maxLife = 40f;
+
+        elemStrength = PlayerBehaviour.Element.Water;
+        elemWeakness = PlayerBehaviour.Element.Air;
+
         base.Start();
-        Damaged += Awakened;
+
+        expansionHit = new Hit(transform.position, expansionRadius, expansionDamage, PlayerBehaviour.Element.Earth);
+
+        terranidoAnim = GetComponent<Animator>();
+
+        rockModeCollider = transform.GetChild(6).gameObject;
+
         terranidoFSM = GetComponent<TerranidoFSM>();
-        expansionHit = new Hit(transform.position, expansionRadius, expansionDamage);
+
+        Damaged += Awakened;
     }
 
+    // SLEEP STATE
     public void Sleep()
     {
+        rockModeCollider.SetActive(true);
+        rb.bodyType = RigidbodyType2D.Static;
+
         if (stopSleeping)
         {
             terranidoFSM.fsm1State = TerranidoFSM.FSM1State.EXPAND;
@@ -37,41 +64,42 @@ public class Terranido : Enemy
             stopSleeping = true;
     }
 
+    // EXPAND STATE
     public void Expand()
     {
-        if (transform.localScale.x <= 1.5f)
-        {
-            transform.localScale += new Vector3(0.01f, 0.01f, 0f);
-        }
-        else
-        {
-            // TEMPORAL
-            transform.GetChild(4).gameObject.SetActive(true);
-            transform.GetChild(4).gameObject.transform.localScale = new Vector3(3f, 3f, 1f);
-            /////////////
-            expansionHit.SetHitOrigin(transform.position);
-            HurtPlayer(expansionHit);
-            transform.localScale = new Vector3(1f, 1f, 1f);
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rockModeCollider.SetActive(false);
 
-            //
-            StartCoroutine(RestoreExplosion(transform.GetChild(4)));
-            //
+        if (isExpanding) return;
 
-            if (playerInRange)
-                terranidoFSM.fsm1State = TerranidoFSM.FSM1State.CHASE;
-            else
-                terranidoFSM.fsm1State = TerranidoFSM.FSM1State.SLEEP;
-        }
+        isExpanding = true;
+        StartCoroutine(Expanding());
     }
 
-    private IEnumerator RestoreExplosion(Transform explosion)
+    private IEnumerator Expanding()
     {
-        yield return new WaitForSeconds(1f);
+        terranidoAnim.SetTrigger("Expand");
 
-        explosion.localScale = new Vector3(1f, 1f, 1f);
-        explosion.gameObject.SetActive(false);
+        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("ExpandTerranido"));
+
+        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("ExpandTerranido"));
+
+        expansionHit.SetHitOrigin(transform.position);
+        HurtPlayer(expansionHit);
+
+        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("RestoreTerranido"));
+
+        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("RestoreTerranido"));
+
+        if (playerInRange)
+            terranidoFSM.fsm1State = TerranidoFSM.FSM1State.CHASE;
+        else
+            terranidoFSM.fsm1State = TerranidoFSM.FSM1State.SLEEP;
+
+        isExpanding = false;
     }
 
+    // CHASE STATE
     public new void Chase()
     {
         if (!playerInRange)
@@ -92,6 +120,7 @@ public class Terranido : Enemy
         }
     }
 
+    // ATTACK STATE
     public new void Attack()
     {
         if (restAttack <= Time.time)

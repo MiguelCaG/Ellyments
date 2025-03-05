@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class Flamarko : Enemy
 {
+    // MAGMA BALL
     [SerializeField] private GameObject magmaBallPrefab;
     
+    // TIMERS
     private float shootCooldown = -2f;
     private float reloadTime = 0f;
+
+    // RELOAD PROPERTIES
     private Vector2 escapeStartPos;
+
     private int ammo = 4;
     const int maxAmmo = 4;
 
-    [HideInInspector] public int magmaBallDamage = -1;
-
     private GameObject smoke;
 
+    // FSM
     public FlamarkoFSM flamarkoFSM;
 
     private new void Start()
     {
         maxLife = 20f;
+
+        elemStrength = PlayerBehaviour.Element.Air;
+        elemWeakness = PlayerBehaviour.Element.Water;
+
         base.Start();
-        smoke = transform.GetChild(4).gameObject;
+
+        smoke = transform.GetChild(5).gameObject;
+
         flamarkoFSM = GetComponent<FlamarkoFSM>();
     }
 
+    // PATROL STATE
     public new void Patrol()
     {
         if (iddleTime >= Time.time - 3f)
@@ -44,6 +55,7 @@ public class Flamarko : Enemy
         }
     }
 
+    // SHOOT STATE
     public void Shoot()
     {
         if (!playerInRange)
@@ -71,6 +83,7 @@ public class Flamarko : Enemy
         }
     }
 
+    // RELOAD STATE
     public void Reload()
     {
         if (ammo == maxAmmo)

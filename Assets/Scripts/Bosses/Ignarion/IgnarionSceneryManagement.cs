@@ -2,13 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IgnarionSceneryManagement : MonoBehaviour
 {
+    [SerializeField] private SceneData sD;
+
     private GameObject grid;
     private GameObject lava;
     private GameObject platform;
     private GameObject wallPlatform;
+    private GameObject bossDoors;
+
+    private Vector3[] originalPositions = new Vector3[4];
 
     private GameObject[] volcanicRocks;
     private float maxLeft;
@@ -20,7 +26,16 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
     private int direction = 1;
 
-    public static event Action sceneryChanged;
+    [SerializeField] private GameObject ignarion;
+    private GameObject player;
+
+    private bool fightStarted = false;
+
+    private string sceneName;
+
+    public static event Action StopMove;
+    public static event Action InitHealthBar;
+    public static event Action SceneryChanged;
     
     private void Start()
     {
@@ -29,12 +44,31 @@ public class IgnarionSceneryManagement : MonoBehaviour
         lava = grid.transform.GetChild(1).gameObject;
         platform = grid.transform.GetChild(2).gameObject;
         wallPlatform = grid.transform.GetChild(3).gameObject;
+        bossDoors = grid.transform.GetChild(4).gameObject;
+
+        for(int i = 1; i < grid.transform.childCount; i++)
+        {
+            originalPositions[i - 1] = grid.transform.GetChild(i).transform.position;
+        }
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        sceneName = SceneManager.GetActiveScene().name;
 
         Ignarion.Flood += Flood;
+        Boss.BossKilled += () => StartCoroutine(HandleFinishFight());
     }
 
     private void Update()
     {
+        if (player.transform.position.x >= -10.5f && !fightStarted)
+        {
+            fightStarted = true;
+
+            if (!sD.IsObjectDestroyed(sceneName, ignarion.name))
+                StartCoroutine(HandleCloseDoors());
+        }
+
         if (finishFlood)
         {
             if (platform.transform.position.y >= 4.6f)
@@ -87,11 +121,11 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
     private IEnumerator HandleFlood()
     {
-        while (lava.transform.position.y < 4.2)
+        while (lava.transform.position.y < 4.2f)
         {
-            lava.transform.position += new Vector3(0f, 0.02f, 0f);
-            platform.transform.position += new Vector3(0f, 0.02f, 0f);
-            wallPlatform.transform.position += new Vector3(0f, -0.03f, 0f);
+            lava.transform.position += new Vector3(0f, 0.8f, 0f) * Time.fixedDeltaTime;
+            platform.transform.position += new Vector3(0f, 0.8f, 0f) * Time.fixedDeltaTime;
+            wallPlatform.transform.position += new Vector3(0f, -1.2f, 0f) * Time.fixedDeltaTime;
             yield return null;
         }
 
@@ -100,11 +134,64 @@ public class IgnarionSceneryManagement : MonoBehaviour
         wallPlatform.transform.position = new Vector3(0f, -6.4f, 0f);
 
         finishFlood = true;
-        sceneryChanged?.Invoke();
+        SceneryChanged?.Invoke();
+    }
+
+    private IEnumerator HandleCloseDoors()
+    {
+        StopMove?.Invoke();
+
+        while (bossDoors.transform.position.y > -1.91f)
+        {
+            bossDoors.transform.position -= new Vector3(0f, 1f, 0f) * Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        bossDoors.transform.position = new Vector3(0f, -1.92f, 0f);
+
+        ignarion.SetActive(true);
+        InitHealthBar?.Invoke();
+        StopMove?.Invoke();
+    }
+
+    private IEnumerator HandleFinishFight()
+    {
+        finishFlood = false;
+        sD.MarkObjectDestroyed(sceneName, ignarion.name);
+
+        while (lava.transform.position.y > originalPositions[0].y)
+        {
+            lava.transform.position -= new Vector3(0f, 0.4f, 0f) * Time.fixedDeltaTime;
+            platform.transform.position -= new Vector3(0f, 0.4f, 0f) * Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        lava.transform.position = originalPositions[0];
+        platform.transform.position = originalPositions[1];
+
+        wallPlatform.GetComponent<CompositeCollider2D>().isTrigger = true;
+        while (wallPlatform.transform.position.y < originalPositions[2].y)
+        {
+            wallPlatform.transform.position += new Vector3(0f, 0.6f, 0f) * Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        wallPlatform.transform.position = originalPositions[2];
+
+        yield return new WaitForSeconds(2);
+
+        while (bossDoors.transform.position.y < originalPositions[3].y)
+        {
+            bossDoors.transform.position += new Vector3(0f, 1f, 0f) * Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        bossDoors.transform.position = originalPositions[3];
     }
 
     private void OnDestroy()
     {
         Ignarion.Flood -= Flood;
+        Boss.BossKilled -= () => StartCoroutine(HandleFinishFight());
     }
 }

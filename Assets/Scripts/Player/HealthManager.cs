@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    private int health;
-    private int heartsCount;
+    [SerializeField] private PlayerData pD;
+
+    //private int health;
+    //private int heartsCount;
 
     [SerializeField] private Image[] hearts;
     [SerializeField] private Sprite fullHeart;
@@ -19,8 +21,8 @@ public class HealthManager : MonoBehaviour
 
     private void Start()
     {
-        health = 5;
-        heartsCount = health;
+        //health = pD.health;
+        //heartsCount = pD.heartsCount;
 
         anim = gameObject.GetComponent<Animator>();
     }
@@ -29,7 +31,7 @@ public class HealthManager : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < health)
+            if (i < pD.health)
             {
                 hearts[i].sprite = fullHeart;
             }
@@ -38,7 +40,7 @@ public class HealthManager : MonoBehaviour
                 hearts[i].sprite = emptyHeart;
             }
 
-            if (i < heartsCount)
+            if (i < pD.heartsCount)
             {
                 hearts[i].enabled = true;
             }
@@ -49,22 +51,22 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-    public int GetHealth() { return health; }
+    public int GetHealth() { return pD.health; }
 
     public void AddHeart(int add = 1)
     {
-        heartsCount += add;
-        health = heartsCount;
+        pD.heartsCount += add;
+        pD.health = pD.heartsCount;
     }
 
     public void UpdateLife(int life)
     {
         if (life < 0 && anim.GetCurrentAnimatorStateInfo(1).IsName("Hit")) return;
         
-        if (health != 0)
-            health = Mathf.Clamp(health + life, 0, heartsCount);
+        if (pD.health != 0)
+            pD.health = Mathf.Clamp(pD.health + life, 0, pD.heartsCount);
 
         if (life < 0)
-            Die?.Invoke(health == 0);
+            Die?.Invoke(pD.health == 0);
     }
 }

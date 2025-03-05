@@ -13,6 +13,9 @@ TagManager:
   - Boss
   - Hazzard
   - EmerginFire
+  - Breakable
+  - Dummy
+  - Water
   layers:
   - Default
   - TransparentFX

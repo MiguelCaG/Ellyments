@@ -7,7 +7,9 @@ using static AbilityManager;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [SerializeField] AbilityManager aM;
     [SerializeField] PlayerActionsData pAD;
+    [SerializeField] PlayerData pD;
 
     public enum Element
     {
@@ -18,21 +20,19 @@ public class PlayerBehaviour : MonoBehaviour
         None
     }
 
-    public Element currentElement = Element.None;
-
     public enum State
     {
         Idle,
         Moving,
         Jumping,
         Dashing,
+        Swimming,
         Diying,
         Immobile
     }
 
     public State currentState = State.Idle;
 
-    private AbilityManager abilityM;
     private HealthManager healthM;
 
     private bool radialMenuOpen = false;
@@ -52,6 +52,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private GameObject fireBall;
     private BoxCollider2D checkCollision;
     private GameObject hitController;
+    private BoxCollider2D playerCollider;
 
     private float normalDamage = -5f;
     private float rockPunchDamage = -15f;
@@ -64,7 +65,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float fireCooldown = 3f;
     private float bubbleCooldown = 5f;
     private float lastSkillTime = -5f;
-    private float hitCooldown = 1f;
+    private float hitCooldown = 0.5f;
     private float lastHitTime = -1f;
 
     private Vector2 bcSize;
@@ -73,28 +74,32 @@ public class PlayerBehaviour : MonoBehaviour
     public static event Action Bubble;
     public static event Action OpenElements;
     public static event Action CloseElements;
+    public static event Action<Element> ElemChanged;
     public static event Action<Hit, bool> Damage;
     public static event Action<string> Restart;
 
-    // TEMPORAL
-    //public Text tiempo;
-    //public Text lastTime;
-    //private void Tempo()
-    //{
-    //    tiempo.text = Time.time.ToString();
-    //    lastTime.text = "CD: " + lastSkillTime.ToString();
-    //}
-    ////////////////////////////////
-
     private void Start()
     {
-        abilityM = GetComponent<AbilityManager>();
+        if(pD.lastCheckpoint.respawn)
+        {
+            transform.position = pD.lastCheckpoint.position;
+            pD.lastCheckpoint.respawn = false;
+        }
+        else if (pD.newTravelZone.travel)
+        {
+            transform.position = pD.newTravelZone.newPosition;
+            transform.localScale = new Vector2(pD.newTravelZone.newDirection, transform.localScale.y);
+            pD.newTravelZone.travel = false;
+        }
+
         healthM = GetComponent<HealthManager>();
 
         CheckCollision.Stamp += StopDashing;
         HealthManager.Die += Die;
-        BubblePlatform.Bubble += () => healthM.UpdateLife(1);
+        BubblePlatform.Bubble += BubbleFinished;
         Zephyros.StopMove += StopMovePlayer;
+        IgnarionSceneryManagement.StopMove += StopMovePlayer;
+        ZephyrosSceneryManagement.StopMove += StopMovePlayer;
 
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -103,35 +108,42 @@ public class PlayerBehaviour : MonoBehaviour
 
         checkCollision = transform.GetChild(2).gameObject.GetComponent<BoxCollider2D>();
         hitController = transform.GetChild(3).gameObject;
+        playerCollider = transform.GetChild(4).gameObject.GetComponent<BoxCollider2D>();
 
-        normalHit = new Hit(hitController.transform.position, 0.5f, normalDamage);
-        rockPunchHit = new Hit(hitController.transform.position, 0.75f, rockPunchDamage);
+        normalHit = new Hit(hitController.transform.position, 0.5f, normalDamage, Element.None);
+        rockPunchHit = new Hit(hitController.transform.position, 0.75f, rockPunchDamage, Element.Earth);
 
         auraManager = GetComponent<AuraManager>();
 
         bcSize = bc.size;
+
+        ElemChanged?.Invoke(pD.currentElement);
     }
 
     private void FixedUpdate()
     {
         if (currentState == State.Diying || currentState == State.Immobile) return;
 
-        float moveInput = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
         //Debug.Log(currentState);
         switch (currentState)
         {
             case State.Idle:
-                HandleIdle(moveInput);
+                HandleIdle(horizontalInput);
                 break;
             case State.Moving:
-                HandleMoving(moveInput);
+                HandleMoving(horizontalInput);
                 break;
             case State.Jumping:
-                HandleJumping(moveInput);
+                HandleJumping(horizontalInput);
                 break;
             case State.Dashing:
                 HandleDashing();
+                break;
+            case State.Swimming:
+                HandleSwimming(horizontalInput, verticalInput);
                 break;
         }
         if (Input.GetButton("Fire1") && !radialMenuOpen && lastHitTime <= Time.time - hitCooldown)
@@ -144,7 +156,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetButton("Fire2") && !radialMenuOpen)
         {
-            switch (currentElement)
+            switch (pD.currentElement)
             {
                 case Element.Fire:
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
@@ -157,7 +169,7 @@ public class PlayerBehaviour : MonoBehaviour
                 case Element.Water:
                     if (lastSkillTime <= Time.time - bubbleCooldown && auraManager.CanUseAura(5f))
                     {
-                        pAD.aggressiveness -= 0.1f;
+                        pAD.aggressiveness = Mathf.Round((pAD.aggressiveness - 0.1f) * 10f) / 10f;
                         auraManager.UpdateAura(-5f);
                         Bubble?.Invoke();
                         transform.GetChild(1).gameObject.SetActive(true);
@@ -178,7 +190,7 @@ public class PlayerBehaviour : MonoBehaviour
                 case Element.Air:
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
                     {
-                        pAD.aggressiveness -= 0.1f;
+                        pAD.aggressiveness = Mathf.Round((pAD.aggressiveness - 0.1f) * 10f) / 10f;
                         auraManager.UpdateAura(-5f);
                         checkCollision.enabled = true;
                         initPos = transform.position.x;
@@ -195,10 +207,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        // TEMPORAL
-        //Tempo();
-        // ________
-
         if (Input.GetButtonDown("Jump") && (onGround || doubleJump))
         {
             jumpPressed = true;
@@ -219,7 +227,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), true);
         }
-        else if (Input.GetAxis("Vertical") > 0f)
+        else
         {
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), false);
         }
@@ -230,12 +238,17 @@ public class PlayerBehaviour : MonoBehaviour
         rb.velocity = new Vector2(0f, rb.velocity.y);
         playerAnim.SetTrigger("Idle");
 
+        if (onGround)
+        {
+            doubleJump = false;
+        }
+
         if (moveInput != 0f)
         {
             currentState = State.Moving;
         }
 
-        if (Input.GetButton("Jump") && onGround)
+        if (Input.GetButton("Jump") && (onGround || doubleJump))
         {
             currentState = State.Jumping;
         }
@@ -246,24 +259,15 @@ public class PlayerBehaviour : MonoBehaviour
         rb.velocity = new Vector2(moveInput * runSpeed, rb.velocity.y);
         playerAnim.SetTrigger("Moving");
 
-        if (rb.velocity.x < 0f)
-        {
-            sr.flipX = true;
-            checkCollision.transform.Rotate(0, 180, 0);
-            hitController.transform.localPosition = new Vector2(-0.5f, hitController.transform.localPosition.y);
-        }
-        else if (rb.velocity.x > 0f)
-        {
-            sr.flipX = false;
-            checkCollision.transform.Rotate(0, 0, 0);
-            hitController.transform.localPosition = new Vector2(0.5f, hitController.transform.localPosition.y);
-        }
+        transform.localScale = new Vector2(rb.velocity.x < 0f ? -1f : rb.velocity.x > 0f ? 1f : rb.transform.localScale.x, rb.transform.localScale.y);
 
         if (Input.GetButton("Jump") && (onGround || doubleJump))
         {
             currentState = State.Jumping;
             return;
         }
+        if (onGround && rb.velocity.y <= 0f)
+            doubleJump = false;
 
         if (rb.velocity.x == 0f)
         {
@@ -275,10 +279,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         playerAnim.SetTrigger("Moving");
 
-        if (jumpPressed && (onGround || (abilityM.IsAbilityUnlocked(Ability.DoubleJump) && doubleJump)))
+        if (jumpPressed && (onGround || (aM.IsAbilityUnlocked(Ability.DoubleJump) && doubleJump)))
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJump? jumpSpeed * 1.5f : jumpSpeed);
-            doubleJump = abilityM.IsAbilityUnlocked(Ability.DoubleJump) && !doubleJump;
+            doubleJump = aM.IsAbilityUnlocked(Ability.DoubleJump) && !doubleJump;
             jumpPressed = false;
         }
         if (onGround && rb.velocity.y <= 0f)
@@ -295,25 +299,50 @@ public class PlayerBehaviour : MonoBehaviour
         playerAnim.SetTrigger("Moving");
 
         bc.size = new Vector2(bcSize.x, 0.2f);
+        playerCollider.size = new Vector2(bcSize.x, 0.2f);
         rb.gravityScale = 0;
-        rb.velocity = new Vector2(sr.flipX ? -dashSpeed : dashSpeed, 0);
+        rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0);
         if (Mathf.Abs(initPos - transform.position.x) >= 5f)
             StopDashing();
     }
 
+    private void HandleSwimming(float xInput, float yInput)
+    {
+        playerAnim.SetTrigger("Moving");
+
+        rb.velocity = new Vector2(xInput * runSpeed, yInput * runSpeed);
+
+        transform.localScale = new Vector2(rb.velocity.x < 0f ? -1f : rb.velocity.x > 0f ? 1f : rb.transform.localScale.x, rb.transform.localScale.y);
+    }
+
     public void ChangeElement(string typeElement)
     {
+        Element previousElement = pD.currentElement;
         if (Enum.TryParse(typeElement, true, out Element newElement))
         {
-            currentElement = newElement;
+            pD.currentElement = previousElement != newElement ? newElement : Element.None;
+            ElemChanged?.Invoke(pD.currentElement);
             //Debug.Log("Element changed to: " + currentElement);
         }
+    }
+
+    private void BubbleFinished()
+    {
+        healthM.UpdateLife(1);
+        StopSwimming();
+    }
+
+    private void StopSwimming()
+    {
+        rb.gravityScale = 1f;
+        currentState = State.Moving;
     }
 
     private void StopDashing()
     {
         checkCollision.enabled = false;
         bc.size = bcSize;
+        playerCollider.size = bcSize;
         rb.gravityScale = 1;
         rb.velocity = new Vector2(0, 0);
         currentState = State.Idle;
@@ -347,6 +376,7 @@ public class PlayerBehaviour : MonoBehaviour
     private IEnumerator HandleDie()
     {
         rb.velocity = new Vector2(0f, rb.velocity.y);
+        rb.bodyType = RigidbodyType2D.Static;
         playerAnim.SetTrigger("Die");
 
         yield return new WaitUntil(() => playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
@@ -354,6 +384,7 @@ public class PlayerBehaviour : MonoBehaviour
         yield return new WaitUntil(() => !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
 
         Restart?.Invoke("DIED");
+        pD.Reset();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -362,13 +393,29 @@ public class PlayerBehaviour : MonoBehaviour
         {
             healthM.UpdateLife(-1);
         }
+
+        if (collision.CompareTag("Water") && currentState != State.Diying && currentState != State.Immobile)
+        {
+            rb.gravityScale = 5f;
+            currentState = State.Swimming;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water") && currentState != State.Diying && currentState != State.Immobile)
+        {
+            StopSwimming();
+        }
     }
 
     private void OnDestroy()
     {
         CheckCollision.Stamp -= StopDashing;
         HealthManager.Die -= Die;
-        BubblePlatform.Bubble -= () => healthM.UpdateLife(1);
+        BubblePlatform.Bubble -= BubbleFinished;
         Zephyros.StopMove -= StopMovePlayer;
+        IgnarionSceneryManagement.StopMove -= StopMovePlayer;
+        ZephyrosSceneryManagement.StopMove -= StopMovePlayer;
     }
 }

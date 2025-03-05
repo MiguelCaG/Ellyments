@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class Aeroide : Enemy
 {
+    // LIFE PERCENTAGE
     private float lifePercenatage = 0.5f;
+
+    // ESCAPING TIMER
     private float escapingTime = 0f;
 
+    // FSM
     public AeroideFSM aeroideFSM;
+
     private new void Start()
     {
         maxLife = 30f;
+
+        elemStrength = PlayerBehaviour.Element.Earth;
+        elemWeakness = PlayerBehaviour.Element.Fire;
+
         base.Start();
+
         aeroideFSM = GetComponent<AeroideFSM>();
     }
 
+    // PATROL STATE
     public new void Patrol()
     {
         if (currentLife <= maxLife * lifePercenatage)
@@ -38,6 +49,7 @@ public class Aeroide : Enemy
         }
     }
 
+    // CHASE STATE
     public new void Chase()
     {
         if (currentLife <= maxLife * lifePercenatage)
@@ -65,6 +77,7 @@ public class Aeroide : Enemy
         }
     }
 
+    // ATTACK STATE
     public new void Attack()
     {
         if (restAttack <= Time.time)
@@ -96,6 +109,7 @@ public class Aeroide : Enemy
         }
     }
 
+    // ESCAPE STATE
     public void Escape()
     {
         if (escapingTime <= Time.time - 1f && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))

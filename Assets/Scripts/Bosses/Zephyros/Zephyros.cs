@@ -64,10 +64,11 @@ public class Zephyros : Boss
     {
         transform.position = rightFixedPos;
         restTime = 4f;
-        maxLife = 200f;
+        //maxLife = 200f;
+        maxLife = 20f;
         changePhasePercentage = 0.5f;
         base.Start();
-        life = 105f;
+        //life = 105f;
         zephyrosAnim = GetComponent<Animator>();
 
         galeForcePS = transform.GetChild(0).gameObject;

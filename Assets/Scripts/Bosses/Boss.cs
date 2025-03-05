@@ -25,7 +25,7 @@ public class Boss : MonoBehaviour
     protected int lookAtPlayer;
     protected GameObject player;
 
-    public static event Action<string> Restart;
+    public static event Action BossKilled;
 
     protected void Start()
     {
@@ -90,7 +90,7 @@ public class Boss : MonoBehaviour
         {
             player.GetComponent<HealthManager>().AddHeart();
             player.GetComponent<AuraManager>().AddAura();
-            Restart?.Invoke("WIN");
+            BossKilled?.Invoke();
             Destroy(this.gameObject);
         }
     }

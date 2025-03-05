@@ -61,7 +61,7 @@ public class Ignarion : Boss
 
         volcanicRocks = GameObject.FindGameObjectsWithTag("VolcanicRock");
 
-        IgnarionSceneryManagement.sceneryChanged += () => { secondPhase = true; changingPhase = false; };
+        IgnarionSceneryManagement.SceneryChanged += () => { secondPhase = true; changingPhase = false; };
     }
 
     // EMERGIN FIRE ATTACK
@@ -375,6 +375,6 @@ public class Ignarion : Boss
     private void OnDestroy()
     {
         EmerginFire.EmerginCompleted -= () => emerging++;
-        IgnarionSceneryManagement.sceneryChanged -= () => { secondPhase = true; changingPhase = false; };
+        IgnarionSceneryManagement.SceneryChanged -= () => { secondPhase = true; changingPhase = false; };
     }
 }

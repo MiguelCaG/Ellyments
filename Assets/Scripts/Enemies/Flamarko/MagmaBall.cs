@@ -8,6 +8,7 @@ public class MagmaBall : MonoBehaviour
     private Vector2 playerPos;
 
     private float magmaSpeed = 5f;
+    private int magmaDamage = -1;
     private Vector2 origin;
     private Vector2 direction;
 
@@ -36,7 +37,11 @@ public class MagmaBall : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            collision.gameObject.GetComponent<HealthManager>().UpdateLife(flamarko.GetComponent<Flamarko>().magmaBallDamage);
+        {
+            //HealthManager hm = collision.gameObject.GetComponent<HealthManager>();
+            //Debug.Log("Objeto colisionado: " + collision.gameObject.name + " ¿Tiene HealthManager?: " + (hm != null));
+            collision.gameObject.GetComponent<HealthManager>().UpdateLife(magmaDamage);
+        }
 
         if (collision.gameObject != flamarko)
             Destroy(gameObject);
