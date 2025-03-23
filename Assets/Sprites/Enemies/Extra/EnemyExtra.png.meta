@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: 5c5dd9bcfc519f6439a705572fad97bb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2623115438173578648
+    second: EnemyExtra_0
+  - first:
+      213: 3914675334058856173
+    second: EnemyExtra_1
+  - first:
+      213: -3247308988516037301
+    second: EnemyExtra_2
+  - first:
+      213: -8914924576338112957
+    second: EnemyExtra_3
+  - first:
+      213: 7434569342870726290
+    second: EnemyExtra_4
+  - first:
+      213: -7629374955367689529
+    second: EnemyExtra_5
+  - first:
+      213: -110948700134260478
+    second: EnemyExtra_6
+  - first:
+      213: -5877234506374981883
+    second: EnemyExtra_7
+  - first:
+      213: 2998296384341195045
+    second: EnemyExtra_8
+  - first:
+      213: -5244596027608797206
+    second: EnemyExtra_9
+  - first:
+      213: -7821532113202839325
+    second: EnemyExtra_10
+  - first:
+      213: 174204713357074823
+    second: EnemyExtra_11
+  - first:
+      213: 3412291387962225355
+    second: EnemyExtra_12
+  - first:
+      213: -6210144053298057184
+    second: EnemyExtra_13
+  - first:
+      213: 6061819406921513015
+    second: EnemyExtra_14
+  - first:
+      213: -6621628494555703166
+    second: EnemyExtra_15
+  - first:
+      213: 4272203296928851959
+    second: EnemyExtra_16
+  - first:
+      213: -5686848473364848891
+    second: EnemyExtra_17
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyExtra_0
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 25
+        width: 431
+        height: 362
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 895ed29d79d276420800000000000000
+      internalID: 2623115438173578648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_1
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 25
+        width: 451
+        height: 368
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deecf89b978b35630800000000000000
+      internalID: 3914675334058856173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_2
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 25
+        width: 438
+        height: 375
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4d819f0ead3fe2d0800000000000000
+      internalID: -3247308988516037301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_3
+      rect:
+        serializedVersion: 2
+        x: 2348
+        y: 25
+        width: 406
+        height: 413
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34e87f3c453d74480800000000000000
+      internalID: -8914924576338112957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_4
+      rect:
+        serializedVersion: 2
+        x: 3071
+        y: 25
+        width: 406
+        height: 413
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 296a1d36d65ec2760800000000000000
+      internalID: 7434569342870726290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_5
+      rect:
+        serializedVersion: 2
+        x: 3795
+        y: 25
+        width: 412
+        height: 406
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c21c0776e30f1690800000000000000
+      internalID: -7629374955367689529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_6
+      rect:
+        serializedVersion: 2
+        x: 4518
+        y: 25
+        width: 419
+        height: 400
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201c43cbeb4d57ef0800000000000000
+      internalID: -110948700134260478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_7
+      rect:
+        serializedVersion: 2
+        x: 5242
+        y: 25
+        width: 418
+        height: 394
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 507d9d9fa5edf6ea0800000000000000
+      internalID: -5877234506374981883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_8
+      rect:
+        serializedVersion: 2
+        x: 5965
+        y: 25
+        width: 425
+        height: 387
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529bef70da61c9920800000000000000
+      internalID: 2998296384341195045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_9
+      rect:
+        serializedVersion: 2
+        x: 6688
+        y: 25
+        width: 426
+        height: 381
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefe3ff23b37737b0800000000000000
+      internalID: -5244596027608797206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_10
+      rect:
+        serializedVersion: 2
+        x: 7405
+        y: 25
+        width: 426
+        height: 387
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e00c39bbf5547390800000000000000
+      internalID: -7821532113202839325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_11
+      rect:
+        serializedVersion: 2
+        x: 8129
+        y: 25
+        width: 419
+        height: 394
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 781e8d98346ea6200800000000000000
+      internalID: 174204713357074823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_12
+      rect:
+        serializedVersion: 2
+        x: 8846
+        y: 25
+        width: 419
+        height: 400
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc2fc9130f4ea5f20800000000000000
+      internalID: 3412291387962225355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_13
+      rect:
+        serializedVersion: 2
+        x: 9569
+        y: 25
+        width: 413
+        height: 400
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0203a23e2e221d9a0800000000000000
+      internalID: -6210144053298057184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_14
+      rect:
+        serializedVersion: 2
+        x: 10293
+        y: 25
+        width: 406
+        height: 406
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 738302a32a8ef1450800000000000000
+      internalID: 6061819406921513015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_15
+      rect:
+        serializedVersion: 2
+        x: 11010
+        y: 25
+        width: 406
+        height: 413
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 288176397ff3b14a0800000000000000
+      internalID: -6621628494555703166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_16
+      rect:
+        serializedVersion: 2
+        x: 11740
+        y: 25
+        width: 437
+        height: 375
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f762b1734ae94b30800000000000000
+      internalID: 4272203296928851959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExtra_17
+      rect:
+        serializedVersion: 2
+        x: 12476
+        y: 25
+        width: 450
+        height: 368
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50f9d9591714411b0800000000000000
+      internalID: -5686848473364848891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

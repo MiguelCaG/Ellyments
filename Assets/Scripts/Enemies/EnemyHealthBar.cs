@@ -23,6 +23,8 @@ public class EnemyHealthBar : MonoBehaviour
 
     private void Update()
     {
+        transform.localScale = new Vector2(transform.parent.localScale.x, transform.localScale.y);
+
         health = transform.GetComponentInParent<Enemy>().currentLife;
 
         if (healthSlider.value > health)

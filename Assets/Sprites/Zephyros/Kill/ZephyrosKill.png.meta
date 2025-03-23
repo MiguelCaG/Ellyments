@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: b35b2fe92229e7341be0a30d77e35442
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5186886818706891268
+    second: ZephyrosKill_0
+  - first:
+      213: -4403622437888549662
+    second: ZephyrosKill_1
+  - first:
+      213: 7142976479533669279
+    second: ZephyrosKill_2
+  - first:
+      213: -8826028564334732739
+    second: ZephyrosKill_3
+  - first:
+      213: -285593099331180271
+    second: ZephyrosKill_4
+  - first:
+      213: 4950803745834067333
+    second: ZephyrosKill_5
+  - first:
+      213: -2334528496759748359
+    second: ZephyrosKill_6
+  - first:
+      213: -6378513743219987463
+    second: ZephyrosKill_7
+  - first:
+      213: 3046684502281544526
+    second: ZephyrosKill_8
+  - first:
+      213: -2128885584350562600
+    second: ZephyrosKill_9
+  - first:
+      213: -4116190309521219003
+    second: ZephyrosKill_10
+  - first:
+      213: 629261083559002640
+    second: ZephyrosKill_11
+  - first:
+      213: -48686958598931872
+    second: ZephyrosKill_12
+  - first:
+      213: -5460533687762684662
+    second: ZephyrosKill_13
+  - first:
+      213: -8108673676375763488
+    second: ZephyrosKill_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ZephyrosKill_0
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 138
+        width: 396
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4022e2f84168bf740800000000000000
+      internalID: 5186886818706891268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_1
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 165
+        width: 403
+        height: 539
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec96b069b033e2c0800000000000000
+      internalID: -4403622437888549662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_2
+      rect:
+        serializedVersion: 2
+        x: 2068
+        y: 184
+        width: 403
+        height: 547
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9b13955343f02360800000000000000
+      internalID: 7142976479533669279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_3
+      rect:
+        serializedVersion: 2
+        x: 2993
+        y: 204
+        width: 409
+        height: 553
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a906578c5a38580800000000000000
+      internalID: -8826028564334732739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_4
+      rect:
+        serializedVersion: 2
+        x: 3838
+        y: 224
+        width: 403
+        height: 553
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 119ef0cd69e590cf0800000000000000
+      internalID: -285593099331180271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_5
+      rect:
+        serializedVersion: 2
+        x: 4710
+        y: 237
+        width: 417
+        height: 553
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 585ec1fb6c9c4b440800000000000000
+      internalID: 4950803745834067333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_6
+      rect:
+        serializedVersion: 2
+        x: 5543
+        y: 257
+        width: 495
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f8cb9873b61a9fd0800000000000000
+      internalID: -2334528496759748359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_7
+      rect:
+        serializedVersion: 2
+        x: 6408
+        y: 230
+        width: 529
+        height: 530
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fbec6c9b87fa77a0800000000000000
+      internalID: -6378513743219987463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_8
+      rect:
+        serializedVersion: 2
+        x: 7294
+        y: 191
+        width: 541
+        height: 530
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e43ed2da96ff74a20800000000000000
+      internalID: 3046684502281544526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_9
+      rect:
+        serializedVersion: 2
+        x: 8185
+        y: 99
+        width: 555
+        height: 530
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d6b55127dda472e0800000000000000
+      internalID: -2128885584350562600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_10
+      rect:
+        serializedVersion: 2
+        x: 9090
+        y: 66
+        width: 555
+        height: 530
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5422515d8ba50e6c0800000000000000
+      internalID: -4116190309521219003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_11
+      rect:
+        serializedVersion: 2
+        x: 10002
+        y: 53
+        width: 548
+        height: 530
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 012038c1f959bb800800000000000000
+      internalID: 629261083559002640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_12
+      rect:
+        serializedVersion: 2
+        x: 10901
+        y: 53
+        width: 555
+        height: 530
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06a34871877035ff0800000000000000
+      internalID: -48686958598931872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_13
+      rect:
+        serializedVersion: 2
+        x: 11806
+        y: 53
+        width: 548
+        height: 530
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05f9d8ca894834b0800000000000000
+      internalID: -5460533687762684662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosKill_14
+      rect:
+        serializedVersion: 2
+        x: 12704
+        y: 59
+        width: 555
+        height: 530
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e5df00c044387f80800000000000000
+      internalID: -8108673676375763488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

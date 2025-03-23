@@ -13,9 +13,9 @@ public class ZephyrosBT : MonoBehaviour
     private Zephyros zephyros;
 
     private Selector firstPhaseSelector;
-    private List<float> firstPhaseBaseWeights = new List<float> { 30f, 20f, 20f, 30f };
+    private List<float> firstPhaseBaseWeights = new List<float> { /*30f, */20f, 20f/*, 30f*/ };
     private Selector secondPhaseSelector;
-    private List<float> secondPhaseBaseWeights = new List<float> { 25f, 25f, 25f, 25f };
+    private List<float> secondPhaseBaseWeights = new List<float> { 25f/*, 25f, 25f, 25f*/ };
 
     private void Start()
     {
@@ -95,10 +95,10 @@ public class ZephyrosBT : MonoBehaviour
         // FIRST PHASE SELECTOR
         firstPhaseSelector = new Selector(new List<BTNode>()
         {
-            tornadoSequence,
+            //tornadoSequence,
             galeForceSequence,
             devouringGaleSequence,
-            aerialRush
+            //aerialRush
         }, firstPhaseBaseWeights);
 
         Sequence firstPhaseSequence = new Sequence(new List<BTNode>()
@@ -171,9 +171,15 @@ public class ZephyrosBT : MonoBehaviour
 
     private void Update()
     {
-        rootNode.Execute();
+        if (zephyros.alive)
+        {
+            BTStatus status = rootNode.Execute();
 
-        UpdateWeights();
+            if (status != BTStatus.Running)
+            {
+                //UpdateWeights();
+            }
+        }
     }
 
     private void UpdateWeights()
@@ -185,10 +191,10 @@ public class ZephyrosBT : MonoBehaviour
         firstPhaseSelector.SetWeights(
             firstPhaseSelector.Childrens,
             new List<float> {
-                Mathf.Clamp(firstPhaseBaseWeights[0] + pAD.attackingDistance, 0f, 100f),
-                Mathf.Clamp(firstPhaseBaseWeights[1] - pAD.attackingDistance, 0f, 100f),
-                Mathf.Clamp(firstPhaseBaseWeights[2] - pAD.attackingDistance, 0f, 100f),
-                Mathf.Clamp(firstPhaseBaseWeights[3] + pAD.attackingDistance, 0f, 100f)
+                Mathf.Clamp(firstPhaseBaseWeights[0] + pAD.attackingDistance, 5f, 50f),
+                Mathf.Clamp(firstPhaseBaseWeights[1] - pAD.attackingDistance, 5f, 50f),
+                Mathf.Clamp(firstPhaseBaseWeights[2] - pAD.attackingDistance, 5f, 50f),
+                Mathf.Clamp(firstPhaseBaseWeights[3] + pAD.attackingDistance, 5f, 50f)
             }
         );
     }

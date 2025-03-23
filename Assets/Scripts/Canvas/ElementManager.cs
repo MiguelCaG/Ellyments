@@ -33,6 +33,11 @@ public class ElementManager : MonoBehaviour
             elements[i].GetComponent<Button>().interactable = aM.IsAbilityUnlocked(abilities[i]);
             elements[i].GetComponent<Image>().color = aM.IsAbilityUnlocked(abilities[i]) ? Color.white : Color.black;
         }
+
+        if (SceneController.stopTime)
+        {
+            Close();
+        }
     }
 
     private void ElementChanged(PlayerBehaviour.Element element)
@@ -65,6 +70,6 @@ public class ElementManager : MonoBehaviour
     private void Close()
     {
         elementMenu.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = SceneController.stopTime ? 0f : 1f;
     }
 }

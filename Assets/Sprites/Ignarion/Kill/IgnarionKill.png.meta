@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 56b57cba6fd7e4d4496ad7281fef9a3c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9180820508414500610
+    second: IgnarionKill_0
+  - first:
+      213: -2751483891797914697
+    second: IgnarionKill_1
+  - first:
+      213: 7091885011052355940
+    second: IgnarionKill_2
+  - first:
+      213: 9017481341321646435
+    second: IgnarionKill_3
+  - first:
+      213: -9118074745613382717
+    second: IgnarionKill_4
+  - first:
+      213: 3688108688394212156
+    second: IgnarionKill_5
+  - first:
+      213: -8292399687097080562
+    second: IgnarionKill_6
+  - first:
+      213: -6297181618278362058
+    second: IgnarionKill_7
+  - first:
+      213: 2922495967659953574
+    second: IgnarionKill_8
+  - first:
+      213: -8173711134225616945
+    second: IgnarionKill_9
+  - first:
+      213: -9089881048010932370
+    second: IgnarionKill_10
+  - first:
+      213: -8607652865213276151
+    second: IgnarionKill_11
+  - first:
+      213: 781262196273714104
+    second: IgnarionKill_12
+  - first:
+      213: 4014341467617223395
+    second: IgnarionKill_13
+  - first:
+      213: -7420046215960500427
+    second: IgnarionKill_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IgnarionKill_0
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 145
+        width: 377
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef02551c36c279080800000000000000
+      internalID: -9180820508414500610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_1
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 165
+        width: 377
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bb0d287af3c0d9d0800000000000000
+      internalID: -2751483891797914697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_2
+      rect:
+        serializedVersion: 2
+        x: 2101
+        y: 184
+        width: 376
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46161b7d7df6b6260800000000000000
+      internalID: 7091885011052355940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_3
+      rect:
+        serializedVersion: 2
+        x: 3026
+        y: 211
+        width: 383
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3619036d087842d70800000000000000
+      internalID: 9017481341321646435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_4
+      rect:
+        serializedVersion: 2
+        x: 3871
+        y: 224
+        width: 370
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cb01481457167180800000000000000
+      internalID: -9118074745613382717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_5
+      rect:
+        serializedVersion: 2
+        x: 4710
+        y: 237
+        width: 417
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c33d4c8cf4bce2330800000000000000
+      internalID: 3688108688394212156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_6
+      rect:
+        serializedVersion: 2
+        x: 5556
+        y: 257
+        width: 476
+        height: 494
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e05a40b6b6a7bec80800000000000000
+      internalID: -8292399687097080562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_7
+      rect:
+        serializedVersion: 2
+        x: 6421
+        y: 224
+        width: 509
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634166c9eaaeb98a0800000000000000
+      internalID: -6297181618278362058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_8
+      rect:
+        serializedVersion: 2
+        x: 7307
+        y: 184
+        width: 528
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad02e9399ace8820800000000000000
+      internalID: 2922495967659953574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_9
+      rect:
+        serializedVersion: 2
+        x: 8199
+        y: 132
+        width: 541
+        height: 533
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcfa3d39705219e80800000000000000
+      internalID: -8173711134225616945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_10
+      rect:
+        serializedVersion: 2
+        x: 9104
+        y: 99
+        width: 541
+        height: 533
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fb0cad8514ad180800000000000000
+      internalID: -9089881048010932370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_11
+      rect:
+        serializedVersion: 2
+        x: 10009
+        y: 86
+        width: 535
+        height: 533
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 900e61b03597b8880800000000000000
+      internalID: -8607652865213276151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_12
+      rect:
+        serializedVersion: 2
+        x: 10907
+        y: 86
+        width: 542
+        height: 533
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b3165504d997da00800000000000000
+      internalID: 781262196273714104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_13
+      rect:
+        serializedVersion: 2
+        x: 11812
+        y: 86
+        width: 542
+        height: 533
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e2e170cb4ec5b730800000000000000
+      internalID: 4014341467617223395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IgnarionKill_14
+      rect:
+        serializedVersion: 2
+        x: 12711
+        y: 86
+        width: 542
+        height: 533
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53761b89743b60990800000000000000
+      internalID: -7420046215960500427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

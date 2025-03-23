@@ -24,7 +24,9 @@ public class ZephyrosSceneryManagement : MonoBehaviour
 
     private string sceneName;
 
-    public static event Action StopMove;
+    [SerializeField] private GameObject nextScene;
+    [SerializeField] private GameObject finalScene;
+
     public static event Action InitHealthBar;
 
     private void Start()
@@ -42,14 +44,20 @@ public class ZephyrosSceneryManagement : MonoBehaviour
 
         sceneName = SceneManager.GetActiveScene().name;
 
-        if (sD.IsObjectDestroyed(sceneName, firstFloor.name) && sD.IsObjectDestroyed(sceneName, oneWayFloor.name))
+        if (sD.HasObjectFinalized(sceneName, firstFloor.name) && sD.HasObjectFinalized(sceneName, oneWayFloor.name))
         {
             firstFloor.SetActive(false);
             oneWayFloor.SetActive(true);
         }
 
+        if (sD.HasObjectFinalized(sceneName, zephyros.name) && sD.HasObjectFinalized("IgnarionBossFight", "Ignarion"))
+        {
+            nextScene.SetActive(false);
+            finalScene.SetActive(true);
+        }
+
         Zephyros.Swap += SwapFloor;
-        Boss.BossKilled += () => StartCoroutine(HandleFinishFight());
+        Boss.BossKilled += FinishFight;
     }
 
     private void Update()
@@ -60,7 +68,7 @@ public class ZephyrosSceneryManagement : MonoBehaviour
             {
                 fightStarted = true;
 
-                if (!sD.IsObjectDestroyed(sceneName, zephyros.name))
+                if (!sD.HasObjectFinalized(sceneName, zephyros.name))
                     StartCoroutine(HandleCloseDoors());
             }
 
@@ -76,7 +84,7 @@ public class ZephyrosSceneryManagement : MonoBehaviour
 
     private IEnumerator HandleCloseDoors()
     {
-        StopMove?.Invoke();
+        EventManager.InvokeStopMove();
 
         while (bossDoors.transform.position.y > -1.91f)
         {
@@ -88,14 +96,21 @@ public class ZephyrosSceneryManagement : MonoBehaviour
 
         zephyros.SetActive(true);
         InitHealthBar?.Invoke();
-        StopMove?.Invoke();
+        EventManager.InvokeStopMove();
+    }
+
+    private void FinishFight()
+    {
+        StartCoroutine(HandleFinishFight());
     }
 
     private IEnumerator HandleFinishFight()
     {
-        sD.MarkObjectDestroyed(sceneName, zephyros.name);
-        sD.MarkObjectDestroyed(sceneName, firstFloor.name);
-        sD.MarkObjectDestroyed(sceneName, oneWayFloor.name);
+        sD.MarkObjectFinalized(sceneName, zephyros.name);
+        sD.MarkObjectFinalized(sceneName, firstFloor.name);
+        sD.MarkObjectFinalized(sceneName, oneWayFloor.name);
+
+        EventManager.InvokeDestroy();
 
         yield return new WaitForSeconds(2);
 
@@ -106,11 +121,17 @@ public class ZephyrosSceneryManagement : MonoBehaviour
         }
 
         bossDoors.transform.position = originalPosition;
+
+        if (sD.HasObjectFinalized("ZephyrosBossFight", "Zephyros") && sD.HasObjectFinalized("IgnarionBossFight", "Ignarion"))
+        {
+            nextScene.SetActive(false);
+            finalScene.SetActive(true);
+        }
     }
 
     private void OnDestroy()
     {
         Zephyros.Swap -= SwapFloor;
-        Boss.BossKilled -= () => StartCoroutine(HandleFinishFight());
+        Boss.BossKilled -= FinishFight;
     }
 }

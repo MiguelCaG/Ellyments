@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: 4cb47a9d6e204dd46b2f008f777b9d7b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4931029849229424555
+    second: EnemyExpand_0
+  - first:
+      213: 8038875187257742927
+    second: EnemyExpand_1
+  - first:
+      213: 1437402314832579578
+    second: EnemyExpand_2
+  - first:
+      213: -365048268072630934
+    second: EnemyExpand_3
+  - first:
+      213: -696590451818393669
+    second: EnemyExpand_4
+  - first:
+      213: 6923672624230552550
+    second: EnemyExpand_5
+  - first:
+      213: 4078956690261727347
+    second: EnemyExpand_6
+  - first:
+      213: -6475681365244554193
+    second: EnemyExpand_7
+  - first:
+      213: 1885968110562435644
+    second: EnemyExpand_8
+  - first:
+      213: -4981002570900950017
+    second: EnemyExpand_9
+  - first:
+      213: 5657232397175202168
+    second: EnemyExpand_10
+  - first:
+      213: -7050401285936475470
+    second: EnemyExpand_11
+  - first:
+      213: 6646821570275326546
+    second: EnemyExpand_12
+  - first:
+      213: -3308982013720833649
+    second: EnemyExpand_13
+  - first:
+      213: -931794878742041121
+    second: EnemyExpand_14
+  - first:
+      213: 8892163134984864138
+    second: EnemyExpand_15
+  - first:
+      213: -7745832885396620466
+    second: EnemyExpand_16
+  - first:
+      213: -6177182353559743767
+    second: EnemyExpand_17
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EnemyExpand_0
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 108
+        width: 431
+        height: 360
+      alignment: 9
+      pivot: {x: 0.35, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7fa2ca5898e6440800000000000000
+      internalID: 4931029849229424555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_1
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 108
+        width: 451
+        height: 373
+      alignment: 9
+      pivot: {x: 0.35, y: 0.49}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f46133a1462df8f60800000000000000
+      internalID: 8038875187257742927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_2
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 101
+        width: 444
+        height: 386
+      alignment: 9
+      pivot: {x: 0.35, y: 0.48}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afb8be62acda2f310800000000000000
+      internalID: 1437402314832579578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_3
+      rect:
+        serializedVersion: 2
+        x: 2342
+        y: 101
+        width: 418
+        height: 437
+      alignment: 9
+      pivot: {x: 0.35, y: 0.47}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a65c8a7c8861feaf0800000000000000
+      internalID: -365048268072630934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_4
+      rect:
+        serializedVersion: 2
+        x: 3059
+        y: 95
+        width: 431
+        height: 443
+      alignment: 9
+      pivot: {x: 0.35, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf8f6dbca63556f0800000000000000
+      internalID: -696590451818393669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_5
+      rect:
+        serializedVersion: 2
+        x: 3782
+        y: 89
+        width: 438
+        height: 443
+      alignment: 9
+      pivot: {x: 0.35, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e3db5c8193d51060800000000000000
+      internalID: 6923672624230552550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_6
+      rect:
+        serializedVersion: 2
+        x: 4505
+        y: 89
+        width: 451
+        height: 443
+      alignment: 9
+      pivot: {x: 0.35, y: 0.44}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 378d041af7d5b9830800000000000000
+      internalID: 4078956690261727347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_7
+      rect:
+        serializedVersion: 2
+        x: 5223
+        y: 82
+        width: 463
+        height: 443
+      alignment: 9
+      pivot: {x: 0.35, y: 0.43}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f245bf1ab12c126a0800000000000000
+      internalID: -6475681365244554193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_8
+      rect:
+        serializedVersion: 2
+        x: 5946
+        y: 76
+        width: 470
+        height: 449
+      alignment: 9
+      pivot: {x: 0.35, y: 0.42}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c32e9c7110e4c2a10800000000000000
+      internalID: 1885968110562435644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_9
+      rect:
+        serializedVersion: 2
+        x: 6663
+        y: 70
+        width: 482
+        height: 449
+      alignment: 9
+      pivot: {x: 0.35, y: 0.41}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff334206d8cefdab0800000000000000
+      internalID: -4981002570900950017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_10
+      rect:
+        serializedVersion: 2
+        x: 7386
+        y: 70
+        width: 483
+        height: 462
+      alignment: 9
+      pivot: {x: 0.35, y: 0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 871a57554e6828e40800000000000000
+      internalID: 5657232397175202168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_11
+      rect:
+        serializedVersion: 2
+        x: 8103
+        y: 63
+        width: 483
+        height: 475
+      alignment: 9
+      pivot: {x: 0.35, y: 0.39}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b29cc39261f72e90800000000000000
+      internalID: -7050401285936475470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_12
+      rect:
+        serializedVersion: 2
+        x: 8821
+        y: 57
+        width: 488
+        height: 494
+      alignment: 9
+      pivot: {x: 0.35, y: 0.38}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25a3aa570014e3c50800000000000000
+      internalID: 6646821570275326546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_13
+      rect:
+        serializedVersion: 2
+        x: 9538
+        y: 51
+        width: 488
+        height: 512
+      alignment: 9
+      pivot: {x: 0.35, y: 0.37}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f815308e3622412d0800000000000000
+      internalID: -3308982013720833649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_14
+      rect:
+        serializedVersion: 2
+        x: 10255
+        y: 51
+        width: 488
+        height: 525
+      alignment: 9
+      pivot: {x: 0.35, y: 0.36}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdd6d01ae799113f0800000000000000
+      internalID: -931794878742041121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_15
+      rect:
+        serializedVersion: 2
+        x: 10978
+        y: 44
+        width: 482
+        height: 538
+      alignment: 9
+      pivot: {x: 0.35, y: 0.35}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a81c891324f476b70800000000000000
+      internalID: 8892163134984864138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_16
+      rect:
+        serializedVersion: 2
+        x: 11708
+        y: 38
+        width: 527
+        height: 494
+      alignment: 9
+      pivot: {x: 0.35, y: 0.34}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4b3568a706418490800000000000000
+      internalID: -7745832885396620466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyExpand_17
+      rect:
+        serializedVersion: 2
+        x: 12438
+        y: 38
+        width: 552
+        height: 494
+      alignment: 9
+      pivot: {x: 0.35, y: 0.33}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e29247a06d364aa0800000000000000
+      internalID: -6177182353559743767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

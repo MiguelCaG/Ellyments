@@ -19,6 +19,9 @@ public class Terranido : Enemy
     // SLEEPING COLLIDER
     private GameObject rockModeCollider;
 
+    // AUDIO
+    [SerializeField] private AudioClip explosion;
+
     // FSM
     public TerranidoFSM terranidoFSM;
 
@@ -50,6 +53,8 @@ public class Terranido : Enemy
         rockModeCollider.SetActive(true);
         rb.bodyType = RigidbodyType2D.Static;
 
+        ChangeAnim("EnemySleep", "Sleep");
+
         if (stopSleeping)
         {
             terranidoFSM.fsm1State = TerranidoFSM.FSM1State.EXPAND;
@@ -80,16 +85,18 @@ public class Terranido : Enemy
     {
         terranidoAnim.SetTrigger("Expand");
 
-        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("ExpandTerranido"));
+        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("EnemyExpand"));
 
-        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("ExpandTerranido"));
+        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("EnemyExpand"));
 
         expansionHit.SetHitOrigin(transform.position);
         HurtPlayer(expansionHit);
 
-        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("RestoreTerranido"));
+        SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
 
-        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("RestoreTerranido"));
+        yield return new WaitUntil(() => terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("EnemyRestore"));
+
+        yield return new WaitUntil(() => !terranidoAnim.GetCurrentAnimatorStateInfo(0).IsName("EnemyRestore"));
 
         if (playerInRange)
             terranidoFSM.fsm1State = TerranidoFSM.FSM1State.CHASE;
@@ -114,7 +121,7 @@ public class Terranido : Enemy
         if (attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            prepareAttack = Time.time + 2f;
+            prepareAttack = Time.time + 1f;
             restAttack = Time.time;
             terranidoFSM.fsm1State = TerranidoFSM.FSM1State.ATTACK;
         }
@@ -129,8 +136,6 @@ public class Terranido : Enemy
         }
         else
         {
-            Debug.Log("RESTING");
-
             if (!playerInRange)
             {
                 terranidoFSM.fsm1State = TerranidoFSM.FSM1State.SLEEP;

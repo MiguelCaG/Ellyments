@@ -51,8 +51,11 @@ public class HitController : MonoBehaviour
                 else if(c.CompareTag("Boss")) c.GetComponent<Boss>().UpdateLife(damage);
                 if ((c.CompareTag("Enemy") || c.CompareTag("Boss")))
                 {
-                    pAD.attackingDistance -= damage / -10f;
+                    pAD.attackingDistance = Mathf.Clamp(pAD.attackingDistance - (damage / -10f), -25f, 25f);
                     pAD.aggressiveness = Mathf.Round((pAD.aggressiveness + 0.1f) * 10f) / 10f;
+
+                    pAD.SaveState();
+
                     if (restoreAura) attackerGO.GetComponent<AuraManager>().UpdateAura(1f);
                 }
                 if (c.CompareTag("Dummy") && restoreAura) attackerGO.GetComponent<AuraManager>().UpdateAura(2f);
@@ -64,10 +67,6 @@ public class HitController : MonoBehaviour
                 c.gameObject.GetComponent<HealthManager>().UpdateLife((int)damage);
             }
         }
-
-        // TEMPORAL -------------------------------------
-        StartCoroutine(ExampleCoroutine(hit.GetHitDamage()));
-        // ----------------------------------------------
     }
 
     private void OnDestroy()
@@ -85,16 +84,4 @@ public class HitController : MonoBehaviour
             }
         }
     }
-
-    // TEMPORAL -------------------------------------
-    IEnumerator ExampleCoroutine(float damage)
-    {
-        yield return new WaitForSeconds(0.25f);
-
-        if (damage == -5f || damage == -15f)
-        {
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
-    }
-    // ----------------------------------------------
 }

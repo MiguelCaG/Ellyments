@@ -244,8 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8718bda687db32e42b9c143b9de7383d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 6695732668979504203}
   pD: {fileID: 11400000, guid: 9d2b70930e2129545a311872e9ecd13c, type: 2}
-  pressW: {fileID: 6695732668979504203}
   tendAnim: {fileID: 5261930425182656114}
 --- !u!1 &6695732670411056777
 GameObject:

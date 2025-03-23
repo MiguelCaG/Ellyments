@@ -78,28 +78,48 @@ public class PlayerBehaviour : MonoBehaviour
     public static event Action<Hit, bool> Damage;
     public static event Action<string> Restart;
 
+    public static event Action<PolygonCollider2D> OnPlayerRespawnOrTravel;
+    private PolygonCollider2D currentConfiner;
+
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip explosion;
+    [SerializeField] private AudioClip jump;
+    [SerializeField] private AudioClip dash;
+
     private void Start()
     {
-        if(pD.lastCheckpoint.respawn)
+        if (pD.lastCheckpoint.respawn)
         {
             transform.position = pD.lastCheckpoint.position;
             pD.lastCheckpoint.respawn = false;
+
+            Collider2D confinerCollider = Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("CameraBounds"));
+            if (confinerCollider != null)
+            {
+                currentConfiner = confinerCollider.GetComponent<PolygonCollider2D>();
+                OnPlayerRespawnOrTravel?.Invoke(currentConfiner);
+            }
         }
         else if (pD.newTravelZone.travel)
         {
             transform.position = pD.newTravelZone.newPosition;
             transform.localScale = new Vector2(pD.newTravelZone.newDirection, transform.localScale.y);
             pD.newTravelZone.travel = false;
+
+            Collider2D confinerCollider = Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("CameraBounds"));
+            if (confinerCollider != null)
+            {
+                currentConfiner = confinerCollider.GetComponent<PolygonCollider2D>();
+                OnPlayerRespawnOrTravel?.Invoke(currentConfiner);
+            }
         }
 
         healthM = GetComponent<HealthManager>();
 
         CheckCollision.Stamp += StopDashing;
         HealthManager.Die += Die;
-        BubblePlatform.Bubble += BubbleFinished;
-        Zephyros.StopMove += StopMovePlayer;
-        IgnarionSceneryManagement.StopMove += StopMovePlayer;
-        ZephyrosSceneryManagement.StopMove += StopMovePlayer;
+        BubbleShield.Bubble += BubbleFinished;
+        EventManager.StopMove += StopMovePlayer;
 
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -122,7 +142,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentState == State.Diying || currentState == State.Immobile) return;
+        if (currentState == State.Diying)
+        {
+            rb.velocity = new Vector2(0f, onGround ? 0f : rb.velocity.y);
+            return;
+        }
+
+        if (currentState == State.Immobile)
+        {
+            playerAnim.SetTrigger("Idle");
+            return;
+        }
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -148,11 +178,15 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetButton("Fire1") && !radialMenuOpen && lastHitTime <= Time.time - hitCooldown)
         {
-            hitController.GetComponent<SpriteRenderer>().enabled = true;
             hitController.GetComponent<SpriteRenderer>().color = Color.white;
+            hitController.transform.localScale = Vector3.one;
+            playerAnim.SetTrigger("Attacking");
+
             normalHit.SetHitOrigin(hitController.transform.position);
             Damage?.Invoke(normalHit, true);
             lastHitTime = Time.time;
+
+            SoundFXManager.instance.PlaySoundFXClip(hit, transform, 1f);
         }
         if (Input.GetButton("Fire2") && !radialMenuOpen)
         {
@@ -162,14 +196,21 @@ public class PlayerBehaviour : MonoBehaviour
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
                     {
                         auraManager.UpdateAura(-5f);
-                        Instantiate(fireBall, gameObject.transform.position, Quaternion.identity);
+                        GameObject fireBallAttack = Instantiate(fireBall, gameObject.transform.position, Quaternion.identity);
+                        FireBall fB = fireBallAttack.GetComponent<FireBall>();
+                        fB.Initialize(gameObject);
                         lastSkillTime = Time.time;
+
+                        SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
                     }
                     break;
                 case Element.Water:
                     if (lastSkillTime <= Time.time - bubbleCooldown && auraManager.CanUseAura(5f))
                     {
                         pAD.aggressiveness = Mathf.Round((pAD.aggressiveness - 0.1f) * 10f) / 10f;
+
+                        pAD.SaveState();
+
                         auraManager.UpdateAura(-5f);
                         Bubble?.Invoke();
                         transform.GetChild(1).gameObject.SetActive(true);
@@ -180,22 +221,32 @@ public class PlayerBehaviour : MonoBehaviour
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
                     {
                         auraManager.UpdateAura(-5f);
-                        hitController.GetComponent<SpriteRenderer>().enabled = true;
-                        hitController.GetComponent<SpriteRenderer>().color = Color.magenta;
+
+                        hitController.GetComponent<SpriteRenderer>().color = new Color32(255, 75, 0, 255);
+                        hitController.transform.localScale = Vector3.one * 2f;
+                        playerAnim.SetTrigger("Attacking");
+
                         rockPunchHit.SetHitOrigin(hitController.transform.position);
                         Damage?.Invoke(rockPunchHit, false);
                         lastSkillTime = Time.time;
+
+                        SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
                     }
                     break;
                 case Element.Air:
                     if (lastSkillTime <= Time.time - fireCooldown && auraManager.CanUseAura(5f))
                     {
                         pAD.aggressiveness = Mathf.Round((pAD.aggressiveness - 0.1f) * 10f) / 10f;
+
+                        pAD.SaveState();
+
                         auraManager.UpdateAura(-5f);
                         checkCollision.enabled = true;
                         initPos = transform.position.x;
                         currentState = State.Dashing;
                         lastSkillTime = Time.time;
+
+                        SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
                     }
                     break;
                 default:
@@ -212,7 +263,7 @@ public class PlayerBehaviour : MonoBehaviour
             jumpPressed = true;
         }
 
-        if (Input.GetKey(KeyCode.Tab) && currentState != State.Diying)
+        if (Input.GetKey(KeyCode.Tab) && currentState != State.Diying && !SceneController.stopTime)
         {
             radialMenuOpen = true;
             OpenElements?.Invoke();
@@ -223,8 +274,9 @@ public class PlayerBehaviour : MonoBehaviour
             CloseElements?.Invoke();
         }
 
-        if (Input.GetAxis("Vertical") < 0f)
+        if (currentState != State.Diying && currentState != State.Immobile && Input.GetAxis("Vertical") < 0f)
         {
+
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), true);
         }
         else
@@ -236,7 +288,8 @@ public class PlayerBehaviour : MonoBehaviour
     private void HandleIdle(float moveInput)
     {
         rb.velocity = new Vector2(0f, rb.velocity.y);
-        playerAnim.SetTrigger("Idle");
+        if (onGround) { if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) playerAnim.SetTrigger("Idle"); }
+        else playerAnim.SetTrigger("Falling");
 
         if (onGround)
         {
@@ -257,7 +310,9 @@ public class PlayerBehaviour : MonoBehaviour
     private void HandleMoving(float moveInput)
     {
         rb.velocity = new Vector2(moveInput * runSpeed, rb.velocity.y);
-        playerAnim.SetTrigger("Moving");
+
+        if (onGround) playerAnim.SetTrigger("Moving");
+        else if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Jumping")) playerAnim.SetTrigger("Falling");
 
         transform.localScale = new Vector2(rb.velocity.x < 0f ? -1f : rb.velocity.x > 0f ? 1f : rb.transform.localScale.x, rb.transform.localScale.y);
 
@@ -277,13 +332,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void HandleJumping(float moveInput)
     {
-        playerAnim.SetTrigger("Moving");
-
         if (jumpPressed && (onGround || (aM.IsAbilityUnlocked(Ability.DoubleJump) && doubleJump)))
         {
-            rb.velocity = new Vector2(rb.velocity.x, doubleJump? jumpSpeed * 1.5f : jumpSpeed);
+            playerAnim.SetTrigger("Jumping");
+
+            rb.velocity = new Vector2(rb.velocity.x, doubleJump ? jumpSpeed * 1.5f : jumpSpeed);
             doubleJump = aM.IsAbilityUnlocked(Ability.DoubleJump) && !doubleJump;
             jumpPressed = false;
+
+            SoundFXManager.instance.PlaySoundFXClip(jump, transform, 1f);
         }
         if (onGround && rb.velocity.y <= 0f)
         {
@@ -322,12 +379,17 @@ public class PlayerBehaviour : MonoBehaviour
         {
             pD.currentElement = previousElement != newElement ? newElement : Element.None;
             ElemChanged?.Invoke(pD.currentElement);
+
+            pD.SaveState();
+
             //Debug.Log("Element changed to: " + currentElement);
         }
     }
 
     private void BubbleFinished()
     {
+        playerAnim.SetTrigger("Heal");
+
         healthM.UpdateLife(1);
         StopSwimming();
     }
@@ -335,17 +397,29 @@ public class PlayerBehaviour : MonoBehaviour
     private void StopSwimming()
     {
         rb.gravityScale = 1f;
-        currentState = State.Moving;
+        if (currentState != State.Immobile && currentState != State.Diying) currentState = State.Moving;
     }
 
     private void StopDashing()
     {
+        while (IsStuck())
+        {
+            transform.position += new Vector3(transform.localScale.x * 0.1f, 0, 0);
+        }
+
         checkCollision.enabled = false;
         bc.size = bcSize;
         playerCollider.size = bcSize;
         rb.gravityScale = 1;
         rb.velocity = new Vector2(0, 0);
-        currentState = State.Idle;
+        if (currentState != State.Immobile && currentState != State.Diying) currentState = State.Idle;
+    }
+
+    private bool IsStuck()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(bcSize.x, 0.5f), 0f, Vector2.zero, 0f, LayerMask.GetMask("DashingHole"));
+
+        return hit.collider != null;
     }
 
     private void StopMovePlayer()
@@ -367,7 +441,8 @@ public class PlayerBehaviour : MonoBehaviour
         {
             currentState = State.Diying;
             StartCoroutine(HandleDie());
-        } else
+        }
+        else
         {
             playerAnim.SetTrigger("Hit");
         }
@@ -376,7 +451,7 @@ public class PlayerBehaviour : MonoBehaviour
     private IEnumerator HandleDie()
     {
         rb.velocity = new Vector2(0f, rb.velocity.y);
-        rb.bodyType = RigidbodyType2D.Static;
+        //rb.bodyType = RigidbodyType2D.Static;
         playerAnim.SetTrigger("Die");
 
         yield return new WaitUntil(() => playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
@@ -413,9 +488,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         CheckCollision.Stamp -= StopDashing;
         HealthManager.Die -= Die;
-        BubblePlatform.Bubble -= BubbleFinished;
-        Zephyros.StopMove -= StopMovePlayer;
-        IgnarionSceneryManagement.StopMove -= StopMovePlayer;
-        ZephyrosSceneryManagement.StopMove -= StopMovePlayer;
+        BubbleShield.Bubble -= BubbleFinished;
+        EventManager.StopMove -= StopMovePlayer;
     }
 }

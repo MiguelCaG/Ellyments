@@ -33,10 +33,12 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
     private string sceneName;
 
-    public static event Action StopMove;
+    [SerializeField] private GameObject nextScene;
+    [SerializeField] private GameObject finalScene;
+
     public static event Action InitHealthBar;
     public static event Action SceneryChanged;
-    
+
     private void Start()
     {
         grid = FindObjectOfType<Grid>().gameObject;
@@ -55,8 +57,14 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
         sceneName = SceneManager.GetActiveScene().name;
 
+        if (sD.HasObjectFinalized(sceneName, ignarion.name) && sD.HasObjectFinalized("ZephyrosBossFight", "Zephyros"))
+        {
+            nextScene.SetActive(false);
+            finalScene.SetActive(true);
+        }
+
         Ignarion.Flood += Flood;
-        Boss.BossKilled += () => StartCoroutine(HandleFinishFight());
+        Boss.BossKilled += FinishFight;
     }
 
     private void Update()
@@ -65,7 +73,7 @@ public class IgnarionSceneryManagement : MonoBehaviour
         {
             fightStarted = true;
 
-            if (!sD.IsObjectDestroyed(sceneName, ignarion.name))
+            if (!sD.HasObjectFinalized(sceneName, ignarion.name))
                 StartCoroutine(HandleCloseDoors());
         }
 
@@ -79,7 +87,7 @@ public class IgnarionSceneryManagement : MonoBehaviour
             {
                 direction = 1;
             }
-            platform.transform.position += new Vector3(0f, 0.001f * direction, 0f);
+            platform.transform.position += new Vector3(0f, 0.1f * direction, 0f) * Time.deltaTime;
 
             foreach (GameObject rock in volcanicRocks)
             {
@@ -123,9 +131,9 @@ public class IgnarionSceneryManagement : MonoBehaviour
     {
         while (lava.transform.position.y < 4.2f)
         {
-            lava.transform.position += new Vector3(0f, 0.8f, 0f) * Time.fixedDeltaTime;
-            platform.transform.position += new Vector3(0f, 0.8f, 0f) * Time.fixedDeltaTime;
-            wallPlatform.transform.position += new Vector3(0f, -1.2f, 0f) * Time.fixedDeltaTime;
+            lava.transform.position += new Vector3(0f, 1f, 0f) * Time.deltaTime;
+            platform.transform.position += new Vector3(0f, 1f, 0f) * Time.deltaTime;
+            wallPlatform.transform.position += new Vector3(0f, -1.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
@@ -139,11 +147,11 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
     private IEnumerator HandleCloseDoors()
     {
-        StopMove?.Invoke();
+        EventManager.InvokeStopMove();
 
         while (bossDoors.transform.position.y > -1.91f)
         {
-            bossDoors.transform.position -= new Vector3(0f, 1f, 0f) * Time.fixedDeltaTime;
+            bossDoors.transform.position -= new Vector3(0f, 2.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
@@ -151,18 +159,23 @@ public class IgnarionSceneryManagement : MonoBehaviour
 
         ignarion.SetActive(true);
         InitHealthBar?.Invoke();
-        StopMove?.Invoke();
+        EventManager.InvokeStopMove();
+    }
+
+    private void FinishFight()
+    {
+        StartCoroutine(HandleFinishFight());
     }
 
     private IEnumerator HandleFinishFight()
     {
         finishFlood = false;
-        sD.MarkObjectDestroyed(sceneName, ignarion.name);
+        sD.MarkObjectFinalized(sceneName, ignarion.name);
 
         while (lava.transform.position.y > originalPositions[0].y)
         {
-            lava.transform.position -= new Vector3(0f, 0.4f, 0f) * Time.fixedDeltaTime;
-            platform.transform.position -= new Vector3(0f, 0.4f, 0f) * Time.fixedDeltaTime;
+            lava.transform.position -= new Vector3(0f, 1f, 0f) * Time.deltaTime;
+            platform.transform.position -= new Vector3(0f, 1f, 0f) * Time.deltaTime;
             yield return null;
         }
 
@@ -172,26 +185,34 @@ public class IgnarionSceneryManagement : MonoBehaviour
         wallPlatform.GetComponent<CompositeCollider2D>().isTrigger = true;
         while (wallPlatform.transform.position.y < originalPositions[2].y)
         {
-            wallPlatform.transform.position += new Vector3(0f, 0.6f, 0f) * Time.fixedDeltaTime;
+            wallPlatform.transform.position += new Vector3(0f, 1.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
         wallPlatform.transform.position = originalPositions[2];
 
+        EventManager.InvokeDestroy();
+
         yield return new WaitForSeconds(2);
 
         while (bossDoors.transform.position.y < originalPositions[3].y)
         {
-            bossDoors.transform.position += new Vector3(0f, 1f, 0f) * Time.fixedDeltaTime;
+            bossDoors.transform.position += new Vector3(0f, 2.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
         bossDoors.transform.position = originalPositions[3];
+
+        if (sD.HasObjectFinalized("IgnarionBossFight", "Ignarion") && sD.HasObjectFinalized("ZephyrosBossFight", "Zephyros"))
+        {
+            nextScene.SetActive(false);
+            finalScene.SetActive(true);
+        }
     }
 
     private void OnDestroy()
     {
         Ignarion.Flood -= Flood;
-        Boss.BossKilled -= () => StartCoroutine(HandleFinishFight());
+        Boss.BossKilled -= FinishFight;
     }
 }

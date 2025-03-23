@@ -12,14 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b20beb7fcaa3f49ad1dca3a0925422, type: 3}
   m_Name: AbilityManager
   m_EditorClassIdentifier: 
-  abilities:
-  - ability: 0
-    unlocked: 1
-  - ability: 1
-    unlocked: 1
-  - ability: 2
-    unlocked: 1
-  - ability: 3
-    unlocked: 1
-  - ability: 4
-    unlocked: 1
+  abilities: []

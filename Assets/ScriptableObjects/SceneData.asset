@@ -12,9 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca37f855f05aa594ebc034d9dc1506c6, type: 3}
   m_Name: SceneData
   m_EditorClassIdentifier: 
-  sceneObjectsList:
-  - sceneName: ZephyrosBossFight
-    destroyedObjects:
-    - Zephyros
-    - FloorPhase1
-    - OneWayFloor
+  sceneObjectsList: []

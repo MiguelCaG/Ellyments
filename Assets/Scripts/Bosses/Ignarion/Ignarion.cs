@@ -8,8 +8,6 @@ using UnityEngine.UIElements;
 public class Ignarion : Boss
 {
     // BOSS PROPERTIES
-    private Animator ignarionAnim;
-
     private float approachTime = -1f;
     private float attackRange = 4f;
 
@@ -46,22 +44,39 @@ public class Ignarion : Boss
     private Vector3 leftFixedPos = new Vector3(-9f, -0.8f, 0f);
     private Vector3 rightFixedPos = new Vector3(9f, -0.8f, 0f);
 
+    // AUDIOS
+    [SerializeField] private AudioClip explosion;
+
     private new void Start()
     {
-        transform.position = rightFixedPos;
         restTime = 4f;
+        //maxLife = 20f;
         maxLife = 200f;
         changePhasePercentage = 0.6f;
         base.Start();
-        
-        ignarionAnim = GetComponent<Animator>();
-
+        //life = maxLife * changePhasePercentage + 5f;
         emerginFires = GameObject.FindGameObjectsWithTag("EmerginFire");
         EmerginFire.EmerginCompleted += () => emerging++;
 
         volcanicRocks = GameObject.FindGameObjectsWithTag("VolcanicRock");
 
         IgnarionSceneryManagement.SceneryChanged += () => { secondPhase = true; changingPhase = false; };
+
+        StartCoroutine(HandleSpawn());
+    }
+
+    // SPAWN
+    private IEnumerator HandleSpawn()
+    {
+        rb.velocity = new Vector2(0f, 0f);
+        rb.gravityScale = 0f;
+        transform.position = rightFixedPos;
+        Debug.LogWarning("IgnarionPos: " + transform.position);
+
+        yield return new WaitForSeconds(1.5f);
+
+        rb.gravityScale = 1f;
+        alive = true;
     }
 
     // EMERGIN FIRE ATTACK
@@ -86,11 +101,11 @@ public class Ignarion : Boss
         emerging = 0;
 
         rb.velocity = new Vector2(0f, rb.velocity.y);
-        ignarionAnim.SetTrigger("EmerginFire");
+        bossAnim.SetTrigger("EmerginFire");
 
-        yield return new WaitUntil(() => ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Kick"));
+        yield return new WaitUntil(() => bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Kick"));
 
-        yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Kick"));
+        yield return new WaitUntil(() => !bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Kick"));
 
         foreach (GameObject fire in emerginFires)
         {
@@ -126,6 +141,9 @@ public class Ignarion : Boss
 
             fire.GetComponent<EmerginFire>().Emerge(target);
         }
+
+        yield return new WaitForSeconds(0.5f);
+        SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
     }
 
     // VOLCANIC RAIN ATTACK
@@ -136,7 +154,7 @@ public class Ignarion : Boss
             rocksFallen = 0;
             return false;
         }
-        if (rocksFallen == 0) ignarionAnim.SetTrigger("VolcanicRain");
+        if (rocksFallen == 0) bossAnim.SetTrigger("VolcanicRain");
 
         rb.velocity = new Vector2(0f, rb.velocity.y);
         foreach (GameObject rock in volcanicRocks)
@@ -153,6 +171,8 @@ public class Ignarion : Boss
 
                 rock.GetComponent<VolcanicRock>().Fall(maxBottom, maxLeft);
                 rocksFallen++;
+
+                SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
             }
         }
 
@@ -188,10 +208,12 @@ public class Ignarion : Boss
 
         if (Time.time - approachTime >= 6f || changingPhase)
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) bossAnim.SetTrigger("Idle");
             approachTime = -1f;
             return 0;
         }
 
+        if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Move")) bossAnim.SetTrigger("Move");
         transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
         rb.velocity = new Vector2(speed * lookAtPlayer, rb.velocity.y);
 
@@ -227,10 +249,13 @@ public class Ignarion : Boss
         rb.velocity = new Vector2(0f, rb.velocity.y);
         for (int i = 0; i < 2; i++)
         {
-            ignarionAnim.SetTrigger("FlameWhip");
+            bossAnim.SetTrigger("FlameWhip");
 
-            yield return new WaitUntil(() => ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
-            yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
+            yield return new WaitUntil(() => bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
+            SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
+            yield return new WaitForSeconds(0.5f);
+            SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
+            yield return new WaitUntil(() => !bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Whip"));
         }
         whipping = 2;
     }
@@ -243,14 +268,19 @@ public class Ignarion : Boss
 
         if (transform.position.x <= leftFixedPos.x || transform.position.x >= rightFixedPos.x)
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) bossAnim.SetTrigger("Idle");
+            bc.isTrigger = true;
+            rb.gravityScale = 0f;
             rb.velocity = new Vector2(0f, rb.velocity.y);
             transform.position = direction == -1 ? leftFixedPos : rightFixedPos;
             transform.localScale = new Vector2(-direction, transform.localScale.y);
 
-            sr.color -= new Color(0f, 0.02f, 0.02f, 0f);
+            sr.color -= new Color(0f, 0.5f, 0.5f, 0f) * Time.deltaTime;
+            if (sr.color.g <= 0f) sr.color = Color.red;
         }
         else
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Move")) bossAnim.SetTrigger("Move");
             transform.localScale = new Vector2(direction, transform.localScale.y);
             rb.velocity = new Vector2(speed * direction, rb.velocity.y);
         }
@@ -292,10 +322,11 @@ public class Ignarion : Boss
     {
         waving = 1;
 
-        ignarionAnim.SetTrigger("HeatWave");
+        bossAnim.SetTrigger("HeatWave");
 
-        yield return new WaitUntil(() => ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
-        yield return new WaitUntil(() => !ignarionAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
+        yield return new WaitUntil(() => bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
+        SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
+        yield return new WaitUntil(() => !bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Wave"));
 
         waving = 2;
     }
@@ -323,8 +354,6 @@ public class Ignarion : Boss
         if ((transform.position.x == leftFixedPos.x && changeTo == leftFixedPos) || (transform.position.x == rightFixedPos.x && changeTo == rightFixedPos))
         {
             changeTo = Vector3.zero;
-            bc.isTrigger = false;
-            rb.gravityScale = 1f;
             return false;
         }
 
@@ -344,12 +373,9 @@ public class Ignarion : Boss
 
     private IEnumerator HandleChangeSide(Vector3 destiny, int direction)
     {
-        rb.gravityScale = 0f;
-        bc.isTrigger = true;
-
         while (transform.position.y > -2.5f)
         {
-            transform.position += new Vector3(0f, -0.02f, 0f);
+            transform.position += new Vector3(0f, -1.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
@@ -364,12 +390,21 @@ public class Ignarion : Boss
         rb.velocity = new Vector2(0f, rb.velocity.y);
         while (transform.position.y < destiny.y)
         {
-            transform.position += new Vector3(0f, 0.02f, 0f);
+            transform.position += new Vector3(0f, 1.5f, 0f) * Time.deltaTime;
             yield return null;
         }
 
         transform.position = destiny;
         transform.localScale = new Vector2(-direction, transform.localScale.y);
+    }
+
+    protected override void Restore()
+    {
+        transform.position = new Vector3 (transform.position.x, -0.8f, 0f);
+        bc.isTrigger = true;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        sr.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private void OnDestroy()

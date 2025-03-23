@@ -21,15 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Zones/ZephyrosBossFight/ZephyrosBossFight.unity
     guid: 572c2a1a8a682db4c899ff7595976812
   - enabled: 1
-    path: Assets/Scenes/TestScenes/FlamarkoScene.unity
-    guid: 2da1c1e1271e0ef438c7f64dc91fdc97
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/AqualitaScene.unity
-    guid: e6ce582ea99f5a047a9f59ed4eff8ca2
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/AeroideScene.unity
-    guid: ebc5029c55902554fac74fa93836c979
-  - enabled: 1
-    path: Assets/Scenes/TestScenes/TerranidoScene.unity
-    guid: 04d9d8199c3795f4880e0c9b78958151
+    path: Assets/Scenes/Menus/FinalScene.unity
+    guid: c39b539583b781a48aa03b6e822bcfce
   m_configObjects: {}

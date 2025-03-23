@@ -20,12 +20,16 @@ public class CheckCollision : MonoBehaviour
         if (movingGO.CompareTag("Player"))
             Stamp?.Invoke();
         else if (movingGO.CompareTag("Enemy") && !collision.CompareTag("Player"))
+        {
             movingGO.GetComponent<Enemy>().changeDirection = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (movingGO.CompareTag("Enemy") && !collision.CompareTag("Player"))
+        {
             movingGO.GetComponent<Enemy>().changeDirection = false;
+        }
     }
 }

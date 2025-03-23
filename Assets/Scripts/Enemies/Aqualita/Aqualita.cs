@@ -12,6 +12,8 @@ public class Aqualita : Enemy
     // BUBBLE
     private GameObject bubble;
 
+    [SerializeField] private AudioClip heal;
+
     // FSM
     public AqualitaFSM aqualitaFSM;
     private new void Start()
@@ -34,13 +36,14 @@ public class Aqualita : Enemy
         if (currentLife <= maxLife * lifePercenatage)
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            healTime = Time.time + 4f;
+            healTime = Time.time + 3f;
             aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.HEAL;
             return;
         }
 
         if (iddleTime >= Time.time - 3f)
         {
+            ChangeAnim("EnemyIdle", "Idle");
             return;
         }
         else
@@ -60,7 +63,7 @@ public class Aqualita : Enemy
         if (currentLife <= maxLife * lifePercenatage)
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            healTime = Time.time + 4f;
+            healTime = Time.time + 3f;
             aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.HEAL;
             return;
         }
@@ -78,7 +81,7 @@ public class Aqualita : Enemy
         if (attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            prepareAttack = Time.time + 2f;
+            prepareAttack = Time.time + 1f;
             restAttack = Time.time;
             aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.ATTACK;
         }
@@ -93,10 +96,9 @@ public class Aqualita : Enemy
         }
         else
         {
-            //Debug.Log("RESTING");
             if (currentLife <= maxLife * lifePercenatage)
             {
-                healTime = Time.time + 4f;
+                healTime = Time.time + 3f;
                 aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.HEAL;
                 return;
             }
@@ -122,7 +124,7 @@ public class Aqualita : Enemy
         if (currentLife > maxLife * lifePercenatage && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             bubble.SetActive(false);
-            prepareAttack = Time.time + 2f;
+            prepareAttack = Time.time + 1f;
             restAttack = Time.time;
             aqualitaFSM.fsm1State = AqualitaFSM.FSM1State.ATTACK;
             return;
@@ -144,10 +146,16 @@ public class Aqualita : Enemy
         else
         {
             bubble.SetActive(true);
+
+            ChangeAnim("EnemyExtra", "Heal");
+
             if (healTime <= Time.time)
             {
                 UpdateLife(maxLife * healPercentage, PlayerBehaviour.Element.None);
-                healTime = Time.time + 4f;
+                healTime = Time.time + 3f;
+                ChangeAnim("EnemyHeal", "HealFinished");
+
+                SoundFXManager.instance.PlaySoundFXClip(heal, transform, 1f);
             }
         }
     }

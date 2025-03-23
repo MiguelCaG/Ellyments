@@ -27,4 +27,27 @@ public class PlayerActionsData : ScriptableObject
     /// Reflects the player's ability to evade or take hits from Zephyros' attacks.
     /// </summary>
     public float hitByZephyros = 0f;
+
+    public void SaveState()
+    {
+        PlayerPrefs.SetFloat("AttackingDistance", attackingDistance);
+        PlayerPrefs.SetFloat("Aggressiveness", aggressiveness);
+        PlayerPrefs.SetFloat("DodgeZephyros_Up", dodgeZephyros.x);
+        PlayerPrefs.SetFloat("DodgeZephyros_Mid", dodgeZephyros.y);
+        PlayerPrefs.SetFloat("DodgeZephyros_Down", dodgeZephyros.z);
+        PlayerPrefs.SetFloat("HitByZephyros", hitByZephyros);
+
+        PlayerPrefs.Save();
+    }
+
+    public void LoadState()
+    {
+        attackingDistance = PlayerPrefs.GetFloat("AttackingDistance", 0f);
+        aggressiveness = PlayerPrefs.GetFloat("Aggressiveness", 0f);
+        float x = PlayerPrefs.GetFloat("DodgeZephyros_Up", 0.25f);
+        float y = PlayerPrefs.GetFloat("DodgeZephyros_Mid", 0.5f);
+        float z = PlayerPrefs.GetFloat("DodgeZephyros_Down", 0f);
+        dodgeZephyros = new Vector3(x, y, z);
+        hitByZephyros = PlayerPrefs.GetFloat("HitByZephyros", 0f);
+    }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class Zephyros : Boss
 {
     // BOSS PROPERTIES
-    private Animator zephyrosAnim;
     private bool hitsUpdated = false;
 
     // FIGHT ELEMENTS
@@ -17,9 +16,11 @@ public class Zephyros : Boss
     private Vector3 spinStartPos = Vector3.zero;
 
     //// GALE
+    //private float galeDirection = 0f;
+    //private bool push;
     private float galeXOffset = 11f;
     private Vector2 galeEffectArea = new Vector2(20f, 4f);
-    private float galeForce = 20f;
+    private float galeForce = 10f;
 
     ////// GALE FORCE
     private GameObject galeForcePS;
@@ -36,7 +37,6 @@ public class Zephyros : Boss
     private float devouringTime = -1f;
     protected float devourTime = 5f;
     private bool devoured = false;
-    public static event Action StopMove;
     private float throwingTime = -1f;
 
     //// AERIAL RUSH
@@ -57,26 +57,45 @@ public class Zephyros : Boss
     [SerializeField] PlayerActionsData pAD;
 
     // SCENE PROPERTIES
-    private Vector3 leftFixedPos = new Vector3(-9.5f, -0.8f, 0f);
-    private Vector3 rightFixedPos = new Vector3(9.5f, -0.8f, 0f);
+    private Vector3 leftFixedPos = new Vector3(-9.9f, -0.8f, 0f);
+    private Vector3 rightFixedPos = new Vector3(9.9f, -0.8f, 0f);
+
+    //AUDIOS
+    [SerializeField] private AudioClip dash;
+    [SerializeField] private AudioClip wind;
+    private AudioSource windAudio;
+    private float audioTime = 0f;
 
     private new void Start()
     {
-        transform.position = rightFixedPos;
         restTime = 4f;
-        //maxLife = 200f;
-        maxLife = 20f;
+        //maxLife = 20f;
+        maxLife = 200f;
         changePhasePercentage = 0.5f;
         base.Start();
-        //life = 105f;
-        zephyrosAnim = GetComponent<Animator>();
-
+        //life = maxLife * changePhasePercentage + 5f;
         galeForcePS = transform.GetChild(0).gameObject;
         FlyingObject.LimitReached += () => flyingObjectsEnded++;
 
         devouringGalePS = transform.GetChild(1).gameObject;
 
         FlyingObject.PlayerHit += UpdatePlayerHits;
+
+        StartCoroutine(HandleSpawn());
+    }
+
+    // SPAWN
+    private IEnumerator HandleSpawn()
+    {
+        rb.velocity = new Vector2(0f, 0f);
+        rb.gravityScale = 0f;
+        transform.position = rightFixedPos;
+        Debug.LogWarning("ZephyrosPos: " + transform.position);
+
+        yield return new WaitForSeconds(1.5f);
+
+        rb.gravityScale = 1f;
+        alive = true;
     }
 
     private void Update()
@@ -87,8 +106,12 @@ public class Zephyros : Boss
     // TORNADO ATTACK
     public bool TornadoAttack()
     {
-        zephyrosAnim.SetBool("Tornado", true);
-
+        bossAnim.SetBool("Tornado", true);
+        if (audioTime <= Time.time)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
+            audioTime = Time.time + dash.length;
+        }
         if (spinTime < 0f)
         {
             spinTime = Time.time;
@@ -99,13 +122,14 @@ public class Zephyros : Boss
 
         if (Time.time - spinTime >= maxSpinTime || changingPhase)
         {
-            zephyrosAnim.SetBool("Tornado", false);
+            bossAnim.SetBool("Tornado", false);
 
             spinTime = -1f;
             spinDirection = 0;
             spinStartPos = Vector3.zero;
             speed = 1f;
             if (!changingPhase) UpdatePlayerHits(-0.01f);
+            audioTime = 0f;
             return false;
         }
 
@@ -120,24 +144,34 @@ public class Zephyros : Boss
     // GALE FORCE ATTACK
     public bool Onrush()
     {
+        if (audioTime == 0f)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
+            audioTime = Time.time + dash.length;
+        }
+
         int direction = (Vector2.Distance(transform.position, leftFixedPos) < Vector2.Distance(transform.position, rightFixedPos)) ? -1 : 1;
         speed = !secondPhase ? 6f : 8f;
 
         if (changingPhase)
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) bossAnim.SetTrigger("Idle");
             rb.velocity = new Vector2(0f, rb.velocity.y);
             return false;
         }
 
         if (transform.position.x <= leftFixedPos.x || transform.position.x >= rightFixedPos.x)
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle")) bossAnim.SetTrigger("Idle");
             rb.velocity = new Vector2(0f, rb.velocity.y);
             transform.position = direction == -1 ? leftFixedPos : rightFixedPos;
             transform.localScale = new Vector2(-direction, transform.localScale.y);
+            audioTime = 0f;
             return false;
         }
         else
         {
+            if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Move")) bossAnim.SetTrigger("Move");
             transform.localScale = new Vector2(direction, transform.localScale.y);
             rb.velocity = new Vector2(speed * direction, rb.velocity.y);
         }
@@ -146,14 +180,23 @@ public class Zephyros : Boss
 
     public bool GaleForceAttack()
     {
+        if (audioTime <= Time.time)
+        {
+            windAudio = SoundFXManager.instance.PlaySoundFXClip(wind, transform, 0.75f);
+            audioTime = Time.time + wind.length;
+        }
+
         float pushDirection = transform.localScale.x;
         galeForcePS.SetActive(true);
         Collider2D[] galeCollider = Physics2D.OverlapBoxAll(transform.position + new Vector3(galeXOffset * transform.localScale.x, 0f, 0f), galeEffectArea, 0f);
         foreach (var hit in galeCollider)
         {
-            if (hit.CompareTag("Player"))
+            if (hit.CompareTag("Player") && hit.gameObject.layer == 8)
             {
-                player.GetComponent<Rigidbody2D>().AddForce(new Vector2(pushDirection * galeForce, 0f));
+                Transform playerTransform = hit.transform;
+                Vector3 targetPosition = playerTransform.position + new Vector3(pushDirection * galeForce * Time.deltaTime, 0f, 0f);
+                playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, 0.1f);
+                //player.GetComponent<Rigidbody2D>().AddForce(new Vector2(galeDirection * galeForce, 0f));
             }
         }
 
@@ -163,6 +206,8 @@ public class Zephyros : Boss
             flyingObjectsEnded = 0;
             flyingObjects = 0;
             if (!changingPhase) UpdatePlayerHits(-0.01f);
+            if (windAudio != null) Destroy(windAudio.gameObject);
+            audioTime = 0f;
             return false;
         }
         else if (flyingObjects < totalFlyingObjects && Time.time - generatingTime >= generateTime)
@@ -175,6 +220,8 @@ public class Zephyros : Boss
             FlyingObject fo = flyingObject.GetComponent<FlyingObject>();
             fo.Initialize(pushDirection, 13f * pushDirection);
             flyingObjects++;
+
+            SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
         }
 
         return true;
@@ -183,20 +230,32 @@ public class Zephyros : Boss
     // DEVOURING GALE ATTACK
     public int DevouringGaleAttack()
     {
+        if (audioTime <= Time.time)
+        {
+            windAudio = SoundFXManager.instance.PlaySoundFXClip(wind, transform, 0.75f);
+            audioTime = Time.time + wind.length;
+        }
+
         float pullDirection = -transform.localScale.x;
         devouringGalePS.SetActive(true);
         Collider2D[] galeCollider = Physics2D.OverlapBoxAll(transform.position + new Vector3(galeXOffset * transform.localScale.x, 0f, 0f), galeEffectArea, 0f);
         foreach (var hit in galeCollider)
         {
-            if (hit.CompareTag("Player"))
+            if (hit.CompareTag("Player") && hit.gameObject.layer == 8)
             {
-                player.GetComponent<Rigidbody2D>().AddForce(new Vector2(pullDirection * galeForce * 2f, 0f));
+                Transform playerTransform = hit.transform;
+                Vector3 targetPosition = playerTransform.position + new Vector3(pullDirection * galeForce * 2f * Time.deltaTime, 0f, 0f);
+                playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, 0.1f);
+                //player.GetComponent<Rigidbody2D>().AddForce(new Vector2(galeDirection * galeForce, 0f));
             }
         }
+
         if (devoured)
         {
             devouringGalePS.SetActive(false);
             devouringTime = -1f;
+            if (windAudio != null) Destroy(windAudio.gameObject);
+            audioTime = 0f;
             return 2;
         }
         if (devouringTime < 0f)
@@ -208,6 +267,8 @@ public class Zephyros : Boss
             devouringGalePS.SetActive(false);
             devouringTime = -1f;
             if (!changingPhase) UpdatePlayerHits(-0.01f);
+            if (windAudio != null) Destroy(windAudio.gameObject);
+            audioTime = 0f;
             return 0;
         }
 
@@ -218,22 +279,25 @@ public class Zephyros : Boss
     {
         if (devoured)
         {
-            StopMove.Invoke();
+            EventManager.InvokeStopMove();
 
-            zephyrosAnim.SetTrigger("Spit");
+            bossAnim.SetTrigger("Spit");
 
-            Vector2 throwForce = new Vector2(transform.localScale.x * 10f, 10f);
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            player.GetComponent<Rigidbody2D>().AddForce(throwForce, ForceMode2D.Impulse);
+            Vector2 throwVelocity = new Vector2(transform.localScale.x * 10f, 10f);
+            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+
+            playerRb.velocity = throwVelocity;
 
             throwingTime = Time.time;
+
+            SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
 
             devoured = false;
         }
 
         if (Time.time - throwingTime >= 2f)
         {
-            StopMove.Invoke();
+            EventManager.InvokeStopMove();
             return false;
         }
 
@@ -262,6 +326,12 @@ public class Zephyros : Boss
             return false;
         }
 
+        if (audioTime == 0f)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(dash, transform, 1f);
+            audioTime = Time.time + dash.length;
+        }
+
         if (rushes < maxRushes)
         {
             if (Mathf.Abs(destination.x - transform.position.x) < 0.1f)
@@ -275,6 +345,7 @@ public class Zephyros : Boss
                 indexWaypoint = rushDirection == -1 ? 0 : waypoints.Length - 1;
                 nextWay = DecideNextWay();
                 attackDodged = false;
+                audioTime = 0f;
             }
             else
             {
@@ -380,6 +451,8 @@ public class Zephyros : Boss
                 Mathf.Clamp(dodge.y, 0f, 1f),
                 Mathf.Clamp(dodge.z, 0f, 1f)
             );
+
+            pAD.SaveState();
         }
     }
 
@@ -412,6 +485,8 @@ public class Zephyros : Boss
                     pAD.dodgeZephyros.z = Mathf.Clamp(pAD.dodgeZephyros.z + 0.05f, 0f, 1f);
                     break;
             }
+
+            pAD.SaveState();
         }
     }
 
@@ -420,9 +495,9 @@ public class Zephyros : Boss
     {
         rb.velocity = new Vector2(0f, rb.velocity.y);
 
-        if (zephyrosAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            sr.color -= new Color(0.005f, 0.005f, 0.005f, 0f);
+            sr.color -= new Color(0.25f, 0.25f, 0.25f, 0f) * Time.deltaTime;
 
             if (sr.color.r <= 0.3f) sr.color = new Color(0.3f, 0.3f, 0.3f);
         }
@@ -443,6 +518,8 @@ public class Zephyros : Boss
         {
             pAD.hitByZephyros = Mathf.Clamp(Mathf.Round((pAD.hitByZephyros + playerHit) * 100f) / 100f, -1f, 1f);
 
+            pAD.SaveState();
+
             maxSpinTime = 6f - 2f * pAD.hitByZephyros;
             totalFlyingObjects = Mathf.RoundToInt(5 - 2 * pAD.hitByZephyros);
             devourTime = 5f - pAD.hitByZephyros;
@@ -462,6 +539,16 @@ public class Zephyros : Boss
             if (rushes >= 0) AerialRushStruck();
             if (Time.time - devouringTime < devourTime) devoured = true;
         }
+    }
+
+    protected override void Restore()
+    {
+        if (windAudio != null) Destroy(windAudio.gameObject);
+        transform.position = new Vector3(transform.position.x, -0.8f, 0f);
+        bc.isTrigger = true;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        sr.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private void OnDestroy()

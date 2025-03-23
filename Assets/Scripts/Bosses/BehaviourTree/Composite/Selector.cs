@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class Selector : BTNode
 {
@@ -66,6 +67,7 @@ public class Selector : BTNode
                     failedChildrens.Add(currentChild);
                     maxProbability -= childrensProbabilities[currentChild];
                     randomChildren = Random.Range(0f, maxProbability);
+
                     currentProbability = 0;
                     childrenExecuting = -1;
                 }
@@ -80,6 +82,7 @@ public class Selector : BTNode
             randomChildren = Random.Range(0f, totalProbability);
             currentProbability = 0f;
         }
+
         return status;
     }
 

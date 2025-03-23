@@ -36,6 +36,7 @@ public class Aeroide : Enemy
 
         if (iddleTime >= Time.time - 3f)
         {
+            ChangeAnim("EnemyIdle", "Idle");
             return;
         }
         else
@@ -71,7 +72,7 @@ public class Aeroide : Enemy
         if (attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            prepareAttack = Time.time + 2f;
+            prepareAttack = Time.time + 1f;
             restAttack = Time.time;
             aeroideFSM.fsm1State = AeroideFSM.FSM1State.ATTACK;
         }
@@ -86,10 +87,10 @@ public class Aeroide : Enemy
         }
         else
         {
-            Debug.Log("RESTING");
             if (currentLife <= maxLife * lifePercenatage)
             {
                 escapingTime = Time.time;
+                restAttack = Time.time + 0.5f;
                 aeroideFSM.fsm1State = AeroideFSM.FSM1State.ESCAPE;
                 return;
             }
@@ -112,16 +113,23 @@ public class Aeroide : Enemy
     // ESCAPE STATE
     public void Escape()
     {
+        if(restAttack > Time.time)
+        {
+            return;
+        }
+
         if (escapingTime <= Time.time - 1f && attackRange >= Mathf.Abs(playerPos.x - transform.position.x))
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
-            prepareAttack = Time.time + 2f;
+            prepareAttack = Time.time + 1f;
             restAttack = Time.time;
             aeroideFSM.fsm1State = AeroideFSM.FSM1State.ATTACK;
             return;
         }
         else
         {
+            ChangeAnim("EnemyRun", "Escape");
+
             transform.localScale = new Vector2(-lookAtPlayer, transform.localScale.y);
             rb.velocity = new Vector2(speed * 2f * -lookAtPlayer, rb.velocity.y);
         }

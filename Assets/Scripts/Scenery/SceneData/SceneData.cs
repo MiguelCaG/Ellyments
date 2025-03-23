@@ -9,11 +9,13 @@ public class SceneData : ScriptableObject
     public class SceneObjects
     {
         public string sceneName;
-        public List<string> destroyedObjects = new List<string>();
+        public List<string> finalizedObjects = new List<string>();
     }
     public List<SceneObjects> sceneObjectsList = new List<SceneObjects>();
 
-    public void MarkObjectDestroyed(string sceneName, string objectName)
+    private const string SaveKey = "SceneData";
+
+    public void MarkObjectFinalized(string sceneName, string objectName)
     {
         SceneObjects sceneObjects = sceneObjectsList.Find(s => s.sceneName == sceneName);
         if (sceneObjects == null)
@@ -22,15 +24,31 @@ public class SceneData : ScriptableObject
             sceneObjectsList.Add(sceneObjects);
         }
 
-        if (!sceneObjects.destroyedObjects.Contains(objectName))
+        if (!sceneObjects.finalizedObjects.Contains(objectName))
         {
-            sceneObjects.destroyedObjects.Add(objectName);
+            sceneObjects.finalizedObjects.Add(objectName);
+            SaveState();
         }
     }
 
-    public bool IsObjectDestroyed(string sceneName, string objectName)
+    public bool HasObjectFinalized(string sceneName, string objectName)
     {
         SceneObjects sceneObjects = sceneObjectsList.Find(s => s.sceneName == sceneName);
-        return sceneObjects != null && sceneObjects.destroyedObjects.Contains(objectName);
+        return sceneObjects != null && sceneObjects.finalizedObjects.Contains(objectName);
+    }
+
+    public void SaveState()
+    {
+        string json = JsonUtility.ToJson(this);
+        PlayerPrefs.SetString(SaveKey, json);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadState()
+    {
+        if (PlayerPrefs.HasKey(SaveKey))
+        {
+            JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString(SaveKey), this);
+        }
     }
 }

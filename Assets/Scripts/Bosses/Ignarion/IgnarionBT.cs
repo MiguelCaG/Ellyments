@@ -15,6 +15,7 @@ public class IgnarionBT : MonoBehaviour
         // FIRST PHASE
         Leaf lifeChecker = new Leaf(() =>
         {
+            Debug.Log("LIFE CHECKER");
             if (ignarion.life > ignarion.maxLife * ignarion.changePhasePercentage)
                 return BTStatus.Success;
             return BTStatus.Failure;
@@ -22,12 +23,14 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf lookAtPlayer = new Leaf(() =>
         {
+            Debug.Log("LOOK AT PLAYER");
             ignarion.LookAtPlayer();
             return BTStatus.Success;
         });
 
         Leaf emerginFire = new Leaf(() =>
         {
+            Debug.Log("EMERGIN FIRE");
             return ignarion.EmerginFireAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -39,6 +42,7 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf volcanicRain = new Leaf(() =>
         {
+            Debug.Log("VOLCANIC RAIN");
             return ignarion.VolcanicRainAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -50,6 +54,7 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf approachPlayer = new Leaf(() =>
         {
+            Debug.Log("APPROACH PLAYER");
             int status = ignarion.ApproachPlayer();
             return status switch
             {
@@ -62,6 +67,7 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf flameWhip = new Leaf(() =>
         {
+            Debug.Log("FLAME WHIP");
             return ignarion.FlameWhipAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -88,6 +94,7 @@ public class IgnarionBT : MonoBehaviour
         // CHANGE PHASE
         Leaf hasPhaseChanged = new Leaf(() =>
         {
+            Debug.Log("HAS PHASE CHANGED");
             if (ignarion.secondPhase)
                 return BTStatus.Failure;
             return BTStatus.Success;
@@ -95,11 +102,13 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf changeIgnarion = new Leaf(() =>
         {
+            Debug.Log("CHANGE IGNARION");
             return ignarion.ChangeIgnarion() ? BTStatus.Running : BTStatus.Success;
         });
 
         Leaf changeScenery = new Leaf(() =>
         {
+            Debug.Log("CHANGE SCENERY");
             return ignarion.ChangeScenery() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -114,11 +123,13 @@ public class IgnarionBT : MonoBehaviour
         // SECOND PHASE
         Leaf heatWave = new Leaf(() =>
         {
+            Debug.Log("HEAT WAVE");
             return ignarion.HeatWaveAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
         Leaf rest = new Leaf(() =>
         {
+            Debug.Log("REST");
             return ignarion.Rest() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -130,11 +141,13 @@ public class IgnarionBT : MonoBehaviour
 
         Leaf moltenSpires = new Leaf(() =>
         {
+            Debug.Log("MOLTEN SPIRES");
             return ignarion.MoltenSpiresAttack() ? BTStatus.Running : BTStatus.Success;
         });
 
         Leaf changeSide = new Leaf(() =>
         {
+            Debug.Log("CHANGE SIDE");
             return ignarion.ChangeSide() ? BTStatus.Running : BTStatus.Success;
         });
 
@@ -163,6 +176,9 @@ public class IgnarionBT : MonoBehaviour
 
     private void Update()
     {
-        rootNode.Execute();
+        if (ignarion.alive)
+        {
+            rootNode.Execute();
+        }
     }
 }

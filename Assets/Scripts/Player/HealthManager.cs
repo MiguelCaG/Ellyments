@@ -8,9 +8,6 @@ public class HealthManager : MonoBehaviour
 {
     [SerializeField] private PlayerData pD;
 
-    //private int health;
-    //private int heartsCount;
-
     [SerializeField] private Image[] hearts;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
@@ -19,11 +16,11 @@ public class HealthManager : MonoBehaviour
 
     public static event Action<bool> Die;
 
+    [SerializeField] private AudioClip hurt;
+    [SerializeField] private AudioClip heal;
+
     private void Start()
     {
-        //health = pD.health;
-        //heartsCount = pD.heartsCount;
-
         anim = gameObject.GetComponent<Animator>();
     }
 
@@ -52,21 +49,34 @@ public class HealthManager : MonoBehaviour
     }
 
     public int GetHealth() { return pD.health; }
+    public int GetMaxHealth() { return pD.heartsCount; }
 
     public void AddHeart(int add = 1)
     {
         pD.heartsCount += add;
         pD.health = pD.heartsCount;
+
+        pD.SaveState();
     }
 
     public void UpdateLife(int life)
     {
         if (life < 0 && anim.GetCurrentAnimatorStateInfo(1).IsName("Hit")) return;
-        
+
         if (pD.health != 0)
+        {
             pD.health = Mathf.Clamp(pD.health + life, 0, pD.heartsCount);
+            pD.SaveState();
+        }
 
         if (life < 0)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(hurt, transform, 1f);
             Die?.Invoke(pD.health == 0);
+        }
+        else if (life > 0 && pD.health != pD.heartsCount)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(heal, transform, 1f);
+        }
     }
 }

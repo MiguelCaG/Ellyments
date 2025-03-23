@@ -64,7 +64,6 @@ public class ElemDrop : MonoBehaviour
         if (!aM.IsAbilityUnlocked(unlockeableAbility))
         {
             aM.UnlockAbility(unlockeableAbility);
-            gameObject.SetActive(false);
         }
     }
 }

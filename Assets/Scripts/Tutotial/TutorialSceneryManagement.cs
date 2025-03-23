@@ -11,7 +11,13 @@ public class TutorialSceneryManagement : MonoBehaviour
 
     private GameObject player;
 
-    private GameObject[] breakables;
+    [SerializeField] private GameObject[] breakables;
+
+    [SerializeField] private GameObject[] enemies;
+    private int kills = 0;
+
+    [SerializeField] private GameObject fireElem;
+
     private GameObject flammable;
 
     [SerializeField] private TextMeshPro[] tutorials;
@@ -19,20 +25,18 @@ public class TutorialSceneryManagement : MonoBehaviour
 
     private Dictionary<int, System.Func<bool>> tutorialConditions;
 
-    private GameObject[] enemies;
-    private int kills = 0;
-    [SerializeField] private GameObject fireElem;
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        breakables = GameObject.FindGameObjectsWithTag("Breakable");
+        foreach (GameObject enemy in enemies)
+            enemy.GetComponent<Enemy>().Killed += UnlockFireball;
+
         flammable = GameObject.FindGameObjectWithTag("Flammable");
 
         if (aM.IsAbilityUnlocked(Ability.Fireball))
         {
-            tutorials[4].text = "Selecciona el poder elemental <sprite name=\"Fire\"> manteniendo pulsado la tecla <sprite name=\"TabKey\">.";
+            tutorials[4].text = "Abre el menu elemental manteniendo pulsado <sprite name=\"TabKey\"> y selecciona el poder elemental <sprite name=\"Fire\">.";
             StartCoroutine(AppearText(4));
         }
 
@@ -44,11 +48,8 @@ public class TutorialSceneryManagement : MonoBehaviour
             { 3, () => ObstaclesBroken() },
             { 4, () => FireElemSelected() },
             { 5, () => ObstaclesBurned() },
+            { 6, () => CheckpointSet() },
         };
-
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
-            enemy.GetComponent<Enemy>().Killed += UnlockFireball;
     }
 
     private void Update()
@@ -124,6 +125,14 @@ public class TutorialSceneryManagement : MonoBehaviour
 
     private bool ObstaclesBurned()
     {
-        return flammable.activeSelf == false;
+        if (flammable != null)
+            return flammable.activeSelf == false;
+        else
+            return true;
+    }
+
+    private bool CheckpointSet()
+    {
+        return pD.lastCheckpoint.CheckpointEquals("TutorialZone", new Vector2(57.1f, -3.35f));
     }
 }

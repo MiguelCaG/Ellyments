@@ -199,7 +199,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 89cf0d919afc55d448a41b8e8264f8a7, type: 3}
+  m_Sprite: {fileID: -5359155607973902908, guid: 192520338ad08514ca2e0e2895dd1860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cbf30952f045ee4eab53a9901c4fc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floorContacts: 0
 --- !u!1 &9205623007012702042
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +376,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8863701309814406472, guid: d6b7bc4a2b4769e4e8f97558773729cc, type: 3}
+  m_Sprite: {fileID: 978942612559604503, guid: e8ea183264656004c92954603c83a448, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -422,7 +423,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 0.54285717, y: 0.94285715}
     newSize: {x: 1.6, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -469,9 +470,12 @@ MonoBehaviour:
   pD: {fileID: 11400000, guid: 9d2b70930e2129545a311872e9ecd13c, type: 2}
   currentState: 0
   onGround: 0
-  doubleJump: 0
   fireBall: {fileID: 8047802494813223245, guid: cbbe2ac4e2cedc94cbadcf2687c6c032, type: 3}
   fireBallDamage: -5
+  hit: {fileID: 8300000, guid: 3409fd416c46c3b448225e36f9eda7de, type: 3}
+  explosion: {fileID: 8300000, guid: c604f1e5e0ba88b45bb63f8db8b52d93, type: 3}
+  jump: {fileID: 8300000, guid: 57ed350f002a1eb4f96ad5113dd8cda1, type: 3}
+  dash: {fileID: 8300000, guid: a28f21d410d1e5341a9c1526b59f35b6, type: 3}
 --- !u!114 &8263158518593908269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +500,8 @@ MonoBehaviour:
   - {fileID: 0}
   fullHeart: {fileID: -8770001503089466214, guid: dd0fe7c073b4a8c4cb15ff4a0180b254, type: 3}
   emptyHeart: {fileID: 4974403084737825917, guid: dd0fe7c073b4a8c4cb15ff4a0180b254, type: 3}
+  hurt: {fileID: 8300000, guid: f21ea28ad1a86ed468e26f84a4058cc3, type: 3}
+  heal: {fileID: 8300000, guid: 0834fb38a9afed54a8d5ad8f400222e6, type: 3}
 --- !u!114 &4240269875270826844
 MonoBehaviour:
   m_ObjectHideFlags: 0

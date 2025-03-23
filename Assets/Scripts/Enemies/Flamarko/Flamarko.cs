@@ -8,7 +8,7 @@ public class Flamarko : Enemy
     [SerializeField] private GameObject magmaBallPrefab;
     
     // TIMERS
-    private float shootCooldown = -2f;
+    private float shootCooldown = 0f;
     private float reloadTime = 0f;
 
     // RELOAD PROPERTIES
@@ -18,6 +18,9 @@ public class Flamarko : Enemy
     const int maxAmmo = 4;
 
     private GameObject smoke;
+
+    // AUDIO
+    [SerializeField] private AudioClip explosion;
 
     // FSM
     public FlamarkoFSM flamarkoFSM;
@@ -41,6 +44,7 @@ public class Flamarko : Enemy
     {
         if (iddleTime >= Time.time - 3f)
         {
+            ChangeAnim("EnemyIdle", "Idle");
             return;
         }
         else
@@ -51,6 +55,7 @@ public class Flamarko : Enemy
         if (playerInRange)
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
+            shootCooldown = Time.time - 1.5f;
             flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.SHOOT;
         }
     }
@@ -65,21 +70,31 @@ public class Flamarko : Enemy
             return;
         }
 
-        if (ammo > 0 && shootCooldown <= Time.time - 2f)
+        if (ammo > 0 && shootCooldown <= Time.time - 1.5f)
         {
             transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
-            GameObject magmaBall = Instantiate(magmaBallPrefab, gameObject.transform.position, Quaternion.identity);
-            MagmaBall mB = magmaBall.GetComponent<MagmaBall>();
-            mB.Initialize(gameObject, playerPos);
 
-            shootCooldown = Time.time;
-            ammo--;
+            ChangeAnim("EnemyAttack", "Shoot");
+
+            if (shootCooldown <= Time.time - 2f)
+            {
+                Vector2 magmaBallPos = gameObject.transform.position + new Vector3(0f, 0.5f, 0f);
+                GameObject magmaBall = Instantiate(magmaBallPrefab, magmaBallPos, Quaternion.identity);
+                MagmaBall mB = magmaBall.GetComponent<MagmaBall>();
+                mB.Initialize(gameObject, playerPos + new Vector2(0f, 0.5f));
+
+                shootCooldown = Time.time;
+                ammo--;
+
+                SoundFXManager.instance.PlaySoundFXClip(explosion, transform, 1f);
+            }
         }
         else if (ammo <= 0)
         {
             escapeStartPos = transform.position;
             changeDirection = false;
             flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.RELOAD;
+            sr.color = new Color(0.3f, 0f, 0f);
         }
     }
 
@@ -96,6 +111,7 @@ public class Flamarko : Enemy
             }
             else
             {
+                shootCooldown = Time.time - 1.5f;
                 flamarkoFSM.fsm1State = FlamarkoFSM.FSM1State.SHOOT;
             }
             return;
@@ -103,7 +119,9 @@ public class Flamarko : Enemy
 
         if (!changeDirection && (Mathf.Abs(escapeStartPos.x - transform.position.x) <= 3f))
         {
-            rb.velocity = new Vector2(-lookAtPlayer * 2f, rb.velocity.y);
+            ChangeAnim("EnemyRun", "Run");
+
+            rb.velocity = new Vector2(-lookAtPlayer * speed * 2f, rb.velocity.y);
             transform.localScale = new Vector2(-lookAtPlayer, transform.localScale.y);
             reloadTime = Time.time + 5f;
         }
@@ -111,8 +129,15 @@ public class Flamarko : Enemy
         {
             rb.velocity = new Vector2(0f, rb.velocity.y);
             smoke.SetActive(true);
+            sr.color += new Color(0.15f * Time.fixedDeltaTime, 0f, 0f);
+
+            ChangeAnim("EnemyExtra", "Reload");
+
             if (reloadTime <= Time.time)
+            {
                 ammo = maxAmmo;
+                sr.color = new Color(1f, 0f, 0f);
             }
+        }
     }
 }

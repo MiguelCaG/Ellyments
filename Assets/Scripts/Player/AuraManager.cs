@@ -31,6 +31,8 @@ public class AuraManager : MonoBehaviour
     {
         pD.maxAura += add;
         pD.aura = pD.maxAura;
+
+        pD.SaveState();
     }
 
     public void UpdateAura(float aura)
@@ -38,6 +40,8 @@ public class AuraManager : MonoBehaviour
         if (pD.aura + aura < 0f) return;
         else if(pD.aura + aura > pD.maxAura) pD.aura = pD.maxAura;
         else pD.aura += aura;
+
+        pD.SaveState();
     }
 
     public bool CanUseAura(float auraWaste)

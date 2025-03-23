@@ -24,7 +24,7 @@ public class SceneDataEditor : Editor
         {
             EditorGUILayout.LabelField($"Scene: {sceneObjects.sceneName}", EditorStyles.boldLabel);
 
-            foreach (var objName in sceneObjects.destroyedObjects)
+            foreach (var objName in sceneObjects.finalizedObjects)
             {
                 EditorGUILayout.LabelField($"- {objName}");
             }

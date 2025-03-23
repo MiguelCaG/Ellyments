@@ -14,7 +14,7 @@ public class Destructibleobject : MonoBehaviour
     {
         sceneName = SceneManager.GetActiveScene().name;
 
-        if (sD.IsObjectDestroyed(sceneName, gameObject.name))
+        if (sD.HasObjectFinalized(sceneName, gameObject.name))
         {
             gameObject.SetActive(false);
         }
@@ -24,7 +24,7 @@ public class Destructibleobject : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        sD.MarkObjectDestroyed(sceneName, gameObject.name);
+        sD.MarkObjectFinalized(sceneName, gameObject.name);
 
         gameObject.SetActive(false);
     }

@@ -50,6 +50,7 @@ public class AbilityManager : ScriptableObject
         if (abilityState != null)
         {
             abilityState.unlocked = true;
+            SaveState();
         }
     }
 
@@ -62,5 +63,22 @@ public class AbilityManager : ScriptableObject
     {
         var abilityState = abilities.Find(a => a.ability == ability);
         return abilityState != null && abilityState.unlocked;
+    }
+
+    public void SaveState()
+    {
+        foreach (var abilityState in abilities)
+        {
+            PlayerPrefs.SetInt(abilityState.ability.ToString(), abilityState.unlocked ? 1 : 0);
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadState()
+    {
+        foreach (var abilityState in abilities)
+        {
+            abilityState.unlocked = PlayerPrefs.GetInt(abilityState.ability.ToString(), 0) == 1;
+        }
     }
 }

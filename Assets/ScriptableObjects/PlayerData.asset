@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db612a841aaf7d4fb265e984e6c2432, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  currentElement: 2
-  health: 8
-  heartsCount: 21
-  aura: 21
-  maxAura: 25
+  currentElement: 4
+  health: 5
+  heartsCount: 5
+  aura: 0
+  maxAura: 20
   lastCheckpoint:
     respawn: 0
-    scene: DemoZone
-    position: {x: 2, y: 4.95}
+    scene: TutorialZone
+    position: {x: 0, y: -2.1}
   newTravelZone:
     travel: 0
     newScene: TutorialZone

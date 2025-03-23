@@ -3,59 +3,53 @@ guid: e13975e8fbdaa264bbd3c25307f7710f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1106929026853576201
-    second: ZephyrosIdle_0
+      213: 1482198093548740237
+    second: ZephyrosSpin_0
   - first:
-      213: 960113263120686795
-    second: ZephyrosIdle_1
+      213: 34171071361500084
+    second: ZephyrosSpin_1
   - first:
-      213: 8778194533501035707
-    second: ZephyrosIdle_2
+      213: 678188034531365863
+    second: ZephyrosSpin_2
   - first:
-      213: -1842056250561536287
-    second: ZephyrosIdle_3
+      213: -8636888096051310828
+    second: ZephyrosSpin_2
   - first:
-      213: 4366504941553291333
-    second: ZephyrosIdle_4
+      213: 8143416429402081106
+    second: ZephyrosSpin_2
   - first:
-      213: -1842953671044326430
-    second: ZephyrosIdle_5
+      213: 762919601099220398
+    second: ZephyrosSpin_2
   - first:
-      213: 4968229931026605831
-    second: ZephyrosIdle_6
+      213: 9125768407085432061
+    second: ZephyrosSpin_14
   - first:
-      213: 6234327459358039130
-    second: ZephyrosIdle_7
+      213: 539929385607615427
+    second: ZephyrosSpin_2
   - first:
-      213: 1405103645928950681
-    second: ZephyrosIdle_8
+      213: -6895338226613471550
+    second: ZephyrosSpin_14
   - first:
-      213: 1135708327170168312
-    second: ZephyrosIdle_9
+      213: -3065125997911344778
+    second: ZephyrosSpin_2
   - first:
-      213: -8914581714827585322
-    second: ZephyrosIdle_10
+      213: 692227591749371595
+    second: ZephyrosSpin_6
   - first:
-      213: -8617135899649445479
-    second: ZephyrosIdle_11
+      213: -3271497074119392850
+    second: ZephyrosSpin_14
   - first:
-      213: -8464109763355273743
-    second: ZephyrosIdle_12
+      213: 2800131897314192489
+    second: ZephyrosSpin_2
   - first:
-      213: -4068934415703569528
-    second: ZephyrosIdle_13
+      213: -8213015217661814103
+    second: ZephyrosSpin_6
   - first:
-      213: 7768169583473198029
-    second: ZephyrosIdle_14
+      213: 5866526541117029103
+    second: ZephyrosSpin_10
   - first:
-      213: 1552243146075679424
-    second: ZephyrosIdle_15
-  - first:
-      213: 4303209579016211405
-    second: ZephyrosIdle_16
-  - first:
-      213: -1795139343266826431
-    second: ZephyrosIdle_17
+      213: 3213608375277540073
+    second: ZephyrosSpin_14
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -145,379 +139,337 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ZephyrosIdle_0
+      name: ZephyrosSpin_0
       rect:
         serializedVersion: 2
-        x: 74
-        y: 0
+        x: 226
+        y: 134
+        width: 394
+        height: 557
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8edbb42053d19410800000000000000
+      internalID: 1482198093548740237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_1
+      rect:
+        serializedVersion: 2
+        x: 1233
+        y: 141
+        width: 212
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b3c81a8866697000800000000000000
+      internalID: 34171071361500084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_3
+      rect:
+        serializedVersion: 2
+        x: 3065
+        y: 141
+        width: 212
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e399299c68696900800000000000000
+      internalID: 678188034531365863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_4
+      rect:
+        serializedVersion: 2
+        x: 3890
+        y: 134
         width: 395
-        height: 537
+        height: 557
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90e1d2dc51a9c5f00800000000000000
-      internalID: 1106929026853576201
+      spriteID: 41fcf0e690c932880800000000000000
+      internalID: -8636888096051310828
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ZephyrosIdle_1
+      name: ZephyrosSpin_5
       rect:
         serializedVersion: 2
-        x: 675
-        y: 0
-        width: 396
-        height: 537
+        x: 4876
+        y: 149
+        width: 205
+        height: 550
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bce13780de1035d00800000000000000
-      internalID: 960113263120686795
+      spriteID: 257479cc81a330170800000000000000
+      internalID: 8143416429402081106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ZephyrosIdle_2
+      name: ZephyrosSpin_7
       rect:
         serializedVersion: 2
-        x: 1276
-        y: 0
-        width: 396
-        height: 537
+        x: 6645
+        y: 141
+        width: 205
+        height: 550
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb4ea9a5b6962d970800000000000000
-      internalID: 8778194533501035707
+      spriteID: ea5a3b7c55f669a00800000000000000
+      internalID: 762919601099220398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ZephyrosIdle_3
+      name: ZephyrosSpin_8
       rect:
         serializedVersion: 2
-        x: 1872
-        y: 0
-        width: 401
-        height: 537
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1eeddf88993bf66e0800000000000000
-      internalID: -1842056250561536287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_4
-      rect:
-        serializedVersion: 2
-        x: 2473
-        y: 0
-        width: 396
-        height: 537
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 540954f0c11f89c30800000000000000
-      internalID: 4366504941553291333
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_5
-      rect:
-        serializedVersion: 2
-        x: 3069
-        y: 0
-        width: 396
-        height: 537
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2eb96eb86638c66e0800000000000000
-      internalID: -1842953671044326430
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_6
-      rect:
-        serializedVersion: 2
-        x: 3670
-        y: 0
-        width: 396
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 707ed49acc2b2f440800000000000000
-      internalID: 4968229931026605831
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_7
-      rect:
-        serializedVersion: 2
-        x: 4266
-        y: 0
-        width: 396
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a5cdf7c1bc7c48650800000000000000
-      internalID: 6234327459358039130
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_8
-      rect:
-        serializedVersion: 2
-        x: 4867
-        y: 0
-        width: 391
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99b8338425eef7310800000000000000
-      internalID: 1405103645928950681
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_9
-      rect:
-        serializedVersion: 2
-        x: 5463
-        y: 0
-        width: 396
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f55e61d4b8d2cf00800000000000000
-      internalID: 1135708327170168312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_10
-      rect:
-        serializedVersion: 2
-        x: 6064
-        y: 0
-        width: 391
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d8528e692b094480800000000000000
-      internalID: -8914581714827585322
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_11
-      rect:
-        serializedVersion: 2
-        x: 6666
-        y: 0
-        width: 390
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 991f0280e88c96880800000000000000
-      internalID: -8617135899649445479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_12
-      rect:
-        serializedVersion: 2
-        x: 7267
-        y: 0
-        width: 390
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f51b47d301798a80800000000000000
-      internalID: -8464109763355273743
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_13
-      rect:
-        serializedVersion: 2
-        x: 7868
-        y: 0
-        width: 390
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88b80a105bd3887c0800000000000000
-      internalID: -4068934415703569528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_14
-      rect:
-        serializedVersion: 2
-        x: 8469
-        y: 0
-        width: 390
-        height: 542
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc30ae124151ecb60800000000000000
-      internalID: 7768169583473198029
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_15
-      rect:
-        serializedVersion: 2
-        x: 9070
-        y: 0
-        width: 391
-        height: 537
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ca20eecaecaa8510800000000000000
-      internalID: 1552243146075679424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_16
-      rect:
-        serializedVersion: 2
-        x: 9671
-        y: 0
-        width: 396
-        height: 537
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dcbc15f005218bb30800000000000000
-      internalID: 4303209579016211405
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ZephyrosIdle_17
-      rect:
-        serializedVersion: 2
-        x: 10273
-        y: 0
+        x: 7434
+        y: 134
         width: 395
-        height: 537
+        height: 564
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 147b04247426617e0800000000000000
-      internalID: -1795139343266826431
+      spriteID: dfc3fce040e35ae70800000000000000
+      internalID: 9125768407085432061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_9
+      rect:
+        serializedVersion: 2
+        x: 8449
+        y: 141
+        width: 205
+        height: 557
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c3dfe06ae63e7700800000000000000
+      internalID: 539929385607615427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_11
+      rect:
+        serializedVersion: 2
+        x: 10288
+        y: 141
+        width: 205
+        height: 557
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c6388c7a66de40a0800000000000000
+      internalID: -6895338226613471550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_12
+      rect:
+        serializedVersion: 2
+        x: 11120
+        y: 134
+        width: 388
+        height: 564
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 679fda6052c7675d0800000000000000
+      internalID: -3065125997911344778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_13
+      rect:
+        serializedVersion: 2
+        x: 12092
+        y: 141
+        width: 205
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc602fdb3594b9900800000000000000
+      internalID: 692227591749371595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_15
+      rect:
+        serializedVersion: 2
+        x: 13861
+        y: 141
+        width: 205
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea142658ebe4992d0800000000000000
+      internalID: -3271497074119392850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_2
+      rect:
+        serializedVersion: 2
+        x: 2125
+        y: 149
+        width: 90
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96c27a7ff111cd620800000000000000
+      internalID: 2800131897314192489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_6
+      rect:
+        serializedVersion: 2
+        x: 5868
+        y: 141
+        width: 90
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aad3688c22850e80800000000000000
+      internalID: -8213015217661814103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_10
+      rect:
+        serializedVersion: 2
+        x: 9378
+        y: 141
+        width: 90
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fea7ea49ec61a6150800000000000000
+      internalID: 5866526541117029103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZephyrosSpin_14
+      rect:
+        serializedVersion: 2
+        x: 12978
+        y: 141
+        width: 90
+        height: 550
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e253a77ac7099c20800000000000000
+      internalID: 3213608375277540073
       vertices: []
       indices: 
       edges: []

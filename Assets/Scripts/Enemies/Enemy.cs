@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
 
     // ENEMY PROPERTIES
     protected Rigidbody2D rb;
+    protected SpriteRenderer sr;
+    protected Animator enemyAnim;
 
     /// MOVING
     protected float speed = 1f;
@@ -20,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     /// ATTACKING
     private GameObject hitController;
-    protected float attackRange = 1f;
+    protected float attackRange = 1.2f;
     protected float attackDamage = -1f;
     private Hit attackHit;
 
@@ -44,9 +46,14 @@ public class Enemy : MonoBehaviour
     protected PlayerBehaviour.Element elemStrength = PlayerBehaviour.Element.None;
     protected PlayerBehaviour.Element elemWeakness = PlayerBehaviour.Element.None;
 
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip hurt;
+
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        enemyAnim = GetComponent<Animator>();
 
         hitController = transform.GetChild(4).gameObject;
         attackHit = new Hit(hitController.transform.position, attackRange / 2f, attackDamage, PlayerBehaviour.Element.None);
@@ -68,6 +75,8 @@ public class Enemy : MonoBehaviour
     // PATROL STATE
     protected void Patrol()
     {
+        ChangeAnim("EnemyPatrol", "Patrol");
+
         if (changeDirection)
         {
             direction = direction == 1 ? -1 : 1;
@@ -80,24 +89,25 @@ public class Enemy : MonoBehaviour
     protected void Attack()
     {
         transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
-        // TEMPORAL
-        hitController.GetComponent<SpriteRenderer>().enabled = true;
-        hitController.GetComponent<SpriteRenderer>().color += new Color(0.005f, 0f, 0f);
-        /////////////
+
+        ChangeAnim("EnemyPreparedAttack", "Attack");
+
         if (prepareAttack <= Time.time)
         {
             attackHit.SetHitOrigin(hitController.transform.position);
             HurtPlayer(attackHit);
-            hitController.GetComponent<SpriteRenderer>().enabled = false;
-            hitController.GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f);
-            restAttack = Time.time + 5f;
-            prepareAttack = restAttack + 2f;
+            restAttack = Time.time + 2f;
+            prepareAttack = restAttack + 1f;
+
+            SoundFXManager.instance.PlaySoundFXClip(hit, transform, 1f);
         }
     }
 
     // CHASE STATE
     protected void Chase()
     {
+        ChangeAnim("EnemyRun", "Chase");
+
         transform.localScale = new Vector2(lookAtPlayer, transform.localScale.y);
         rb.velocity = new Vector2(speed * 2f * lookAtPlayer, rb.velocity.y);
     }
@@ -109,6 +119,8 @@ public class Enemy : MonoBehaviour
         {
             Damaged?.Invoke();
             if (!healthBar.activeSelf) healthBar.SetActive(true);
+
+            SoundFXManager.instance.PlaySoundFXClip(hurt, transform, 1f);
         }
 
         Color32 color = new Color32(188, 139, 0, 255);
@@ -140,5 +152,10 @@ public class Enemy : MonoBehaviour
     protected void HurtPlayer(Hit hit)
     {
         Damage?.Invoke(hit);
+    }
+
+    protected void ChangeAnim(string animation, string trigger)
+    {
+        if (!enemyAnim.GetCurrentAnimatorStateInfo(0).IsName(animation)) enemyAnim.SetTrigger(trigger);
     }
 }

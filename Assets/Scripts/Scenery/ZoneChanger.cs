@@ -18,10 +18,18 @@ public class ZoneChanger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (newScene != null || newScene != "")
+            if(newScene == "FinalScene")
+            {
+                ChangeScene?.Invoke(newScene);
+            }
+            else if (newScene != null || newScene != "")
             {
                 pD.newTravelZone = new PlayerData.TravelZone(true, newScene, newPosition, newDirection);
+                
+                pD.SaveState();
+
                 ChangeScene?.Invoke(pD.newTravelZone.newScene);
+
             }
         }
     }

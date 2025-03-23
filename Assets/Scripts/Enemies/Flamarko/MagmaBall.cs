@@ -22,11 +22,14 @@ public class MagmaBall : MonoBehaviour
     {
         origin = transform.position;
         direction = (playerPos - origin).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(magmaSpeed * Time.deltaTime * direction);
+        transform.Translate(magmaSpeed * Time.deltaTime * Vector3.right);
 
         if (Vector2.Distance(origin, transform.position) >= 5)
         {

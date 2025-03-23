@@ -12,13 +12,13 @@ public class Water : MonoBehaviour
     {
         tmc = GetComponent<TilemapCollider2D>();
         PlayerBehaviour.Bubble += Swim;
-        BubblePlatform.Bubble += Shink;
+        BubbleShield.Bubble += Shink;
     }
 
     private void OnDestroy()
     {
         PlayerBehaviour.Bubble -= Swim;
-        BubblePlatform.Bubble -= Shink;
+        BubbleShield.Bubble -= Shink;
     }
 
     public void Swim()

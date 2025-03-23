@@ -5,12 +5,18 @@ using UnityEngine;
 public class CheckGround : MonoBehaviour
 {
     private GameObject movingGO;
-    private int floorContacts = 0;
-    private Vector3 lastSafeZone;
+    [SerializeField] private int floorContacts = 0;
+    private GameObject[] safeZones;
+    private Vector3 closestSafeZone;
 
     private void Start()
     {
         movingGO = transform.parent.gameObject;
+
+        if (movingGO.CompareTag("Player"))
+        {
+            safeZones = GameObject.FindGameObjectsWithTag("SafeZone");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,11 +29,18 @@ public class CheckGround : MonoBehaviour
                 movingGO.GetComponent<PlayerBehaviour>().onGround = true;
             else if (movingGO.CompareTag("Enemy") && !collision.CompareTag("Player"))
                 movingGO.GetComponent<Enemy>().changeDirection = false;
-        } else if (collision.gameObject.CompareTag("Hazzard") && movingGO.CompareTag("Player"))
+        }
+        else if (collision.gameObject.CompareTag("Hazzard"))
         {
-            movingGO.gameObject.GetComponent<HealthManager>().UpdateLife(-1);
-            Debug.LogWarning("TODO: LINE BELOW DOESN'T WORK");
-            movingGO.transform.position = lastSafeZone; // DOESN'T WORK AS EXPECTED
+            if (movingGO.CompareTag("Player"))
+            {
+                movingGO.gameObject.GetComponent<HealthManager>().UpdateLife(-1);
+                movingGO.transform.position = closestSafeZone;
+            }
+            else if (movingGO.CompareTag("Enemy"))
+            {
+                movingGO.gameObject.GetComponent<Enemy>().UpdateLife(-movingGO.gameObject.GetComponent<Enemy>().maxLife, PlayerBehaviour.Element.None);
+            }
         }
     }
 
@@ -42,11 +55,32 @@ public class CheckGround : MonoBehaviour
                 if (movingGO.CompareTag("Player"))
                 {
                     movingGO.GetComponent<PlayerBehaviour>().onGround = false;
-                    lastSafeZone = movingGO.transform.position;
+                    if (safeZones.Length > 0)
+                    {
+                        closestSafeZone = ClosestSafeZone();
+                    }
                 }
                 else if (movingGO.CompareTag("Enemy") && !collision.CompareTag("Player"))
                     movingGO.GetComponent<Enemy>().changeDirection = true;
             }
         }
+    }
+
+    private Vector3 ClosestSafeZone()
+    {
+        Vector3 safeZone = movingGO.transform.position;
+        float distance = Mathf.Infinity;
+
+        for (int i = 0; i < safeZones.Length; i++)
+        {
+            float newDistance = Mathf.Abs(Vector3.Distance(safeZones[i].transform.position, movingGO.transform.position));
+            if (newDistance < distance)
+            {
+                distance = newDistance;
+                safeZone = safeZones[i].transform.position;
+            }
+        }
+
+        return safeZone;
     }
 }

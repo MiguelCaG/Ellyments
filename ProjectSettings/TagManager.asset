@@ -16,6 +16,8 @@ TagManager:
   - Breakable
   - Dummy
   - Water
+  - SafeZone
+  - Dialogue
   layers:
   - Default
   - TransparentFX
@@ -30,7 +32,7 @@ TagManager:
   - FriendlyAttack
   - OneWayPlatform
   - IgnoreNotEnemy
-  - 
+  - DashingHole
   - 
   - 
   - 

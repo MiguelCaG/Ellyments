@@ -49,7 +49,7 @@ public class StatueElection : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !gameObject.GetComponent<DialogueManager>().dialogueStarted)
         {
             StartCoroutine(AppearText(electionTexts[0]));
             if (collision.transform.position.x - transform.position.x < 0f)

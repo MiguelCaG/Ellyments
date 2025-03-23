@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
@@ -11,17 +12,27 @@ public class SceneController : MonoBehaviour
     [SerializeField] private GameObject quitPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject restartPanel;
+    [SerializeField] private GameObject audioPanel;
     private TextMeshProUGUI restartText;
+
+    public static bool stopTime;
+
+    [SerializeField] private AudioClip newMusic;
 
     private void Start()
     {
+        stopTime = false;
         Time.timeScale = 1f;
 
         ZoneChanger.ChangeScene += ChangeScene;
         PlayerBehaviour.Restart += RestartPanel;
 
-        if (restartPanel != null)
-            restartText = restartPanel.GetComponentInChildren<TextMeshProUGUI>();
+        if (restartPanel != null) restartText = restartPanel.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (MusicManager.instance != null && newMusic != null)
+        {
+            MusicManager.instance.ChangeMusic(newMusic);
+        }
     }
 
     private void Update()
@@ -31,6 +42,9 @@ public class SceneController : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "MainMenu") ShowPanel(quitPanel);
             else ShowPanel(optionsPanel);
         }
+        // DEVELOPER MODE ONLY
+        DeveloperMode();
+        //
     }
 
     public void StartButton()
@@ -62,16 +76,28 @@ public class SceneController : MonoBehaviour
 
     public void ShowPanel(GameObject panel)
     {
-        if (panel.activeSelf)
-        {
-            panel.SetActive(false);
-            Time.timeScale = 1f;
-        }
+        if (audioPanel.activeSelf) audioPanel.SetActive(false);
         else
         {
-            panel.SetActive(true);
-            Time.timeScale = 0f;
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+                Time.timeScale = 1f;
+                stopTime = false;
+            }
+            else
+            {
+                panel.SetActive(true);
+                Time.timeScale = 0f;
+                stopTime = true;
+            }
         }
+    }
+
+    public void OpenCloseAudioSettings()
+    {
+        if (audioPanel.activeSelf) audioPanel.SetActive(false);
+        else audioPanel.SetActive(true);
     }
 
     private void RestartPanel(string result)
@@ -86,6 +112,75 @@ public class SceneController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    // DEVELOPER MODE ONLY ///////////////
+
+    public void DeleteData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        ReloadScene();
+    }
+
+    [SerializeField] private Button changeBossLifeScale;
+    private GameObject boss;
+
+    [SerializeField] private AbilityManager aM;
+    [SerializeField] private Button unlockNotSelectedAbility;
+
+    private void DeveloperMode()
+    {
+        if(changeBossLifeScale != null)
+        {
+            if (changeBossLifeScale.interactable == false)
+            {
+                boss = GameObject.FindGameObjectWithTag("Boss");
+                if (boss != null)
+                {
+                    if (boss.activeSelf)
+                    {
+                        changeBossLifeScale.interactable = true;
+                        changeBossLifeScale.onClick.AddListener(ChangeBossLifeScale);
+                    }
+                }
+                else changeBossLifeScale.interactable = false;
+            }
+        }
+
+        if (unlockNotSelectedAbility == null) return;
+        if (unlockNotSelectedAbility.interactable == true) return;
+        if ((aM.IsAbilityUnlocked(AbilityManager.Ability.Dash) && !aM.IsAbilityUnlocked(AbilityManager.Ability.DoubleJump)) || (!aM.IsAbilityUnlocked(AbilityManager.Ability.Dash) && aM.IsAbilityUnlocked(AbilityManager.Ability.DoubleJump)))
+        {
+            unlockNotSelectedAbility.interactable = true;
+            unlockNotSelectedAbility.onClick.AddListener(UnlockNotSelectedAbility);
+        }
+    }
+
+    private void ChangeBossLifeScale()
+    {
+        Boss bossComp = boss.GetComponent<Boss>();
+        if (bossComp.maxLife == 200f)
+        {
+            bossComp.maxLife /= 10f;
+            bossComp.life /= 10f;
+        }
+        else
+        {
+            bossComp.maxLife *= 10f;
+            bossComp.life *= 10f;
+        }
+    }
+
+    private void UnlockNotSelectedAbility()
+    {
+        unlockNotSelectedAbility.interactable = false;
+        if (!aM.IsAbilityUnlocked(AbilityManager.Ability.DoubleJump)) aM.UnlockAbility(AbilityManager.Ability.DoubleJump);
+        if (!aM.IsAbilityUnlocked(AbilityManager.Ability.Dash)) aM.UnlockAbility(AbilityManager.Ability.Dash);
+        aM.SaveState();
+    }
+    //////////////////////////////////////
+
 
     private void OnDestroy()
     {
