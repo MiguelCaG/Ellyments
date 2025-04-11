@@ -142,7 +142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225172701916765583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: -0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 225172703051006509}
@@ -285,6 +285,7 @@ MonoBehaviour:
   changePhasePercentage: 0
   secondPhase: 0
   changingPhase: 0
+  player: {fileID: 0}
   hurt: {fileID: 8300000, guid: f21ea28ad1a86ed468e26f84a4058cc3, type: 3}
   explosion: {fileID: 8300000, guid: c604f1e5e0ba88b45bb63f8db8b52d93, type: 3}
 --- !u!114 &225172701916765616

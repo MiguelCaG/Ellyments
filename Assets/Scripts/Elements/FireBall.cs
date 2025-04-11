@@ -55,7 +55,7 @@ public class FireBall : MonoBehaviour
             }
             else if (collision.gameObject.CompareTag("Boss"))
             {
-                collision.GetComponent<Boss>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage);
+                collision.GetComponent<Boss>().UpdateLife(player.GetComponent<PlayerBehaviour>().fireBallDamage, PlayerBehaviour.Element.Fire);
             }
         }
 

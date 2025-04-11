@@ -17,6 +17,8 @@ public class SceneController : MonoBehaviour
 
     public static bool stopTime;
 
+    private bool playerDead = false;
+
     [SerializeField] private AudioClip newMusic;
 
     private void Start()
@@ -26,6 +28,7 @@ public class SceneController : MonoBehaviour
 
         ZoneChanger.ChangeScene += ChangeScene;
         PlayerBehaviour.Restart += RestartPanel;
+        EventManager.PlayerDead += () => playerDead = true;
 
         if (restartPanel != null) restartText = restartPanel.GetComponentInChildren<TextMeshProUGUI>();
 
@@ -37,7 +40,9 @@ public class SceneController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if(restartPanel != null) if (restartPanel.activeSelf == true) return;
+
+        if (Input.GetButtonDown("Cancel") && !playerDead)
         {
             if (SceneManager.GetActiveScene().name == "MainMenu") ShowPanel(quitPanel);
             else ShowPanel(optionsPanel);
@@ -186,5 +191,6 @@ public class SceneController : MonoBehaviour
     {
         ZoneChanger.ChangeScene -= ChangeScene;
         PlayerBehaviour.Restart -= RestartPanel;
+        EventManager.PlayerDead -= () => playerDead = true;
     }
 }

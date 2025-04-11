@@ -439,6 +439,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (dead)
         {
+            EventManager.InvokePlayerDead();
             currentState = State.Diying;
             StartCoroutine(HandleDie());
         }

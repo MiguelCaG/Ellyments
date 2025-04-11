@@ -53,6 +53,10 @@ public class Ignarion : Boss
         //maxLife = 20f;
         maxLife = 200f;
         changePhasePercentage = 0.6f;
+
+        elemStrength = PlayerBehaviour.Element.Air;
+        elemWeakness = PlayerBehaviour.Element.Water;
+
         base.Start();
         //life = maxLife * changePhasePercentage + 5f;
         emerginFires = GameObject.FindGameObjectsWithTag("EmerginFire");

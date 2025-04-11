@@ -13,7 +13,7 @@ public class ZephyrosBT : MonoBehaviour
     private Zephyros zephyros;
 
     private Selector firstPhaseSelector;
-    private List<float> firstPhaseBaseWeights = new List<float> { /*30f, */20f, 20f/*, 30f*/ };
+    private List<float> firstPhaseBaseWeights = new List<float> { 30f, 20f, 20f, 30f };
     private Selector secondPhaseSelector;
     private List<float> secondPhaseBaseWeights = new List<float> { 25f/*, 25f, 25f, 25f*/ };
 
@@ -95,10 +95,10 @@ public class ZephyrosBT : MonoBehaviour
         // FIRST PHASE SELECTOR
         firstPhaseSelector = new Selector(new List<BTNode>()
         {
-            //tornadoSequence,
+            tornadoSequence,
             galeForceSequence,
             devouringGaleSequence,
-            //aerialRush
+            aerialRush
         }, firstPhaseBaseWeights);
 
         Sequence firstPhaseSequence = new Sequence(new List<BTNode>()
@@ -140,7 +140,7 @@ public class ZephyrosBT : MonoBehaviour
 
         //});
 
-        //Leaf sandstrom = new Leaf(() =>
+        //Leaf sandstorm = new Leaf(() =>
         //{
 
         //});
@@ -177,7 +177,7 @@ public class ZephyrosBT : MonoBehaviour
 
             if (status != BTStatus.Running)
             {
-                //UpdateWeights();
+                UpdateWeights();
             }
         }
     }

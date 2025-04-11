@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851240556618533487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: -0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 4089931982342359542}
@@ -173,6 +173,7 @@ MonoBehaviour:
   changePhasePercentage: 0
   secondPhase: 0
   changingPhase: 0
+  player: {fileID: 0}
   hurt: {fileID: 8300000, guid: f21ea28ad1a86ed468e26f84a4058cc3, type: 3}
   rockPrefab: {fileID: 7051147038571903434, guid: 113ca2586be1c7f4385bb442bd43636b, type: 3}
   woodPrefab: {fileID: 8917766098376791273, guid: a039694c8e6b6c9428cc84ea6a785b87, type: 3}

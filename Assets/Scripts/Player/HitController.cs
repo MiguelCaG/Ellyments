@@ -48,7 +48,7 @@ public class HitController : MonoBehaviour
             {
                 if (c.CompareTag("Breakable")) c.gameObject.GetComponent<Destructibleobject>().DestroyObject();
                 if(c.CompareTag("Enemy")) c.GetComponent<Enemy>().UpdateLife(damage, attackType);
-                else if(c.CompareTag("Boss")) c.GetComponent<Boss>().UpdateLife(damage);
+                else if(c.CompareTag("Boss")) c.GetComponent<Boss>().UpdateLife(damage, attackType);
                 if ((c.CompareTag("Enemy") || c.CompareTag("Boss")))
                 {
                     pAD.attackingDistance = Mathf.Clamp(pAD.attackingDistance - (damage / -10f), -25f, 25f);

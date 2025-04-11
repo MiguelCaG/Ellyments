@@ -65,6 +65,7 @@ public class HealthManager : MonoBehaviour
 
         if (pD.health != 0)
         {
+            if (life > 0 && pD.health != pD.heartsCount) SoundFXManager.instance.PlaySoundFXClip(heal, transform, 1f);
             pD.health = Mathf.Clamp(pD.health + life, 0, pD.heartsCount);
             pD.SaveState();
         }
@@ -73,10 +74,6 @@ public class HealthManager : MonoBehaviour
         {
             SoundFXManager.instance.PlaySoundFXClip(hurt, transform, 1f);
             Die?.Invoke(pD.health == 0);
-        }
-        else if (life > 0 && pD.health != pD.heartsCount)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(heal, transform, 1f);
         }
     }
 }

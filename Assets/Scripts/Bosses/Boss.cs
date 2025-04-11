@@ -24,6 +24,10 @@ public class Boss : MonoBehaviour
     [HideInInspector] public bool secondPhase = false;
     [HideInInspector] public bool changingPhase = false;
 
+    // ELEMENTS PROPERTIES
+    protected PlayerBehaviour.Element elemStrength = PlayerBehaviour.Element.None;
+    protected PlayerBehaviour.Element elemWeakness = PlayerBehaviour.Element.None;
+
     // PLAYER PROPERTIES
     protected int lookAtPlayer;
     [SerializeField] protected GameObject player;
@@ -45,6 +49,14 @@ public class Boss : MonoBehaviour
         //player = GameObject.FindGameObjectWithTag("Player");
 
         EventManager.Destroy += () => destroy = true;
+    }
+
+    private void Update()
+    {
+        if(transform.position.y <= -7f)
+        {
+            transform.position = new Vector3(transform.position.x, -0.8f, transform.position.z);
+        }
     }
 
     // LOOK AT PLAYER
@@ -92,9 +104,18 @@ public class Boss : MonoBehaviour
 
     protected virtual void Restore() {}
 
-    public void UpdateLife(float damage)
+    public void UpdateLife(float damage, PlayerBehaviour.Element elemAttack)
     {
         if (changingPhase) return;
+
+        if (elemAttack == elemStrength)
+        {
+            damage /= 2f;
+        }
+        else if (elemAttack == elemWeakness)
+        {
+            damage *= 2f;
+        }
 
         life += damage;
         if (life <= 0f && alive)

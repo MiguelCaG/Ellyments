@@ -9,6 +9,13 @@ public static class EventManager
         StopMove?.Invoke();
     }
 
+    public static event Action PlayerDead;
+
+    public static void InvokePlayerDead()
+    {
+        PlayerDead?.Invoke();
+    }
+
     public static event Action ZoneTriggered;
 
     public static void InvokeZoneTriggered()

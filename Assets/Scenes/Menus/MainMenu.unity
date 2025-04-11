@@ -768,6 +768,9 @@ MonoBehaviour:
   restartPanel: {fileID: 0}
   audioPanel: {fileID: 1309050173}
   newMusic: {fileID: 8300000, guid: 7f039776277ad1044aa575fef6eacf68, type: 3}
+  changeBossLifeScale: {fileID: 0}
+  aM: {fileID: 0}
+  unlockNotSelectedAbility: {fileID: 0}
 --- !u!1 &372568714
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,7 +923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &382709985
 RectTransform:
   m_ObjectHideFlags: 0

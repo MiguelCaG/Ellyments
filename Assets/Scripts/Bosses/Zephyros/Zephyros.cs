@@ -72,6 +72,10 @@ public class Zephyros : Boss
         //maxLife = 20f;
         maxLife = 200f;
         changePhasePercentage = 0.5f;
+
+        elemStrength = PlayerBehaviour.Element.Earth;
+        elemWeakness = PlayerBehaviour.Element.Fire;
+
         base.Start();
         //life = maxLife * changePhasePercentage + 5f;
         galeForcePS = transform.GetChild(0).gameObject;
