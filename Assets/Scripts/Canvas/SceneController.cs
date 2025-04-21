@@ -125,7 +125,7 @@ public class SceneController : MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 
-        ReloadScene();
+        QuitGame();
     }
 
     [SerializeField] private Button changeBossLifeScale;

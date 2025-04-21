@@ -104,7 +104,7 @@ public class Zephyros : Boss
 
     private void Update()
     {
-        restTime = Mathf.Clamp(4f - pAD.aggressiveness, 1f, 6f);
+        restTime = Mathf.Clamp(4f - pAD.aggressiveness, 2f, 6f);
     }
 
     // TORNADO ATTACK

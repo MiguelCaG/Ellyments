@@ -44,7 +44,7 @@ public class FireBall : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
-            pAD.attackingDistance = Mathf.Clamp(pAD.attackingDistance + 1f, -25f, 25f);
+            pAD.attackingDistance = Mathf.Clamp(pAD.attackingDistance + 2f, -25f, 25f);
             pAD.aggressiveness = Mathf.Round((pAD.aggressiveness + 0.1f) * 10f) / 10f;
 
             pAD.SaveState();

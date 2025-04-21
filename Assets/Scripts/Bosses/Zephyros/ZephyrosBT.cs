@@ -60,7 +60,8 @@ public class ZephyrosBT : MonoBehaviour
         Sequence galeForceSequence = new Sequence(new List<BTNode>()
         {
             onrush,
-            galeForce
+            galeForce,
+            rest
         });
 
         Leaf devouringGale = new Leaf(() =>
@@ -84,12 +85,19 @@ public class ZephyrosBT : MonoBehaviour
         {
             onrush,
             devouringGale,
-            throwPlayer
+            throwPlayer,
+            rest
         });
 
         Leaf aerialRush = new Leaf(() =>
         {
             return zephyros.AerialRushAttack() ? BTStatus.Running : BTStatus.Success;
+        });
+
+        Sequence aerialRushSequence = new Sequence(new List<BTNode>()
+        {
+            aerialRush,
+            rest
         });
 
         // FIRST PHASE SELECTOR
@@ -98,7 +106,7 @@ public class ZephyrosBT : MonoBehaviour
             tornadoSequence,
             galeForceSequence,
             devouringGaleSequence,
-            aerialRush
+            aerialRushSequence
         }, firstPhaseBaseWeights);
 
         Sequence firstPhaseSequence = new Sequence(new List<BTNode>()
